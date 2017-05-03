@@ -3,6 +3,8 @@ package niedermeyer.nonogram;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -18,7 +20,7 @@ import niedermeyer.nonogram.logics.NonogramGenerator;
  * @author Elen Niedermeyer, last updated 2017-05-02
  */
 
-public class GameHandler extends Handler {
+public class GameHandler extends Handler implements OnClickListener {
 
     private Activity activity;
 
@@ -63,6 +65,47 @@ public class GameHandler extends Handler {
         generateGameField();
     }
 
+    @Override
+    public void onClick(View v) {
+        int fieldValue;
+
+        TableRow row = (TableRow) v.getParent();
+        int r = row.getId();
+
+        int id = v.getId();
+        String idString = Integer.toString(id);
+
+        int i;
+        int j;
+        if (r == 0) {
+            i = 0;
+            j = id;
+        } else if (r > 0 && r < 10) {
+            String iString = idString.substring(0, 1);
+            i = Integer.parseInt(iString);
+            String jString = idString.substring(1);
+            j = Integer.parseInt(jString);
+        } else {
+            String iString = idString.substring(0, 2);
+            i = Integer.parseInt(iString);
+            String jString = idString.substring(2);
+            j = Integer.parseInt(jString);
+        }
+
+        fieldValue = actualField[i][j];
+
+        if (fieldValue == NonogramFields.NOTHING.getValue()) {
+            v.setBackgroundResource(R.drawable.button_black);
+            actualField[i][j] = NonogramFields.PROVED.getValue();
+        } else if (fieldValue == NonogramFields.PROVED.getValue()) {
+            v.setBackgroundResource(R.drawable.button_cross);
+            actualField[i][j] = NonogramFields.EMPTY.getValue();
+        } else if (fieldValue == NonogramFields.EMPTY.getValue()) {
+            v.setBackgroundResource(R.drawable.button_white);
+            actualField[i][j] = NonogramFields.NOTHING.getValue();
+        }
+    }
+
     /**
      * Makes the game field in the layout.
      * Makes a table row for each row. IDs are the place in the nonogram array.
@@ -82,6 +125,7 @@ public class GameHandler extends Handler {
         for (int i = 0; i < nonogram.length; i++) {
             // new row
             TableRow row = new TableRow(activity);
+            row.setId(i);
             row.setLayoutParams(rowParams);
 
             // add count for this row
@@ -97,6 +141,8 @@ public class GameHandler extends Handler {
                 // set size
                 int buttonSize = (int) activity.getResources().getDimension(R.dimen.button_size);
                 b.setLayoutParams(new TableRow.LayoutParams(buttonSize, buttonSize));
+                // set the onClickListener implemented in this class
+                b.setOnClickListener(this);
                 // add button to row
                 row.addView(b);
                 // initialize field in array
