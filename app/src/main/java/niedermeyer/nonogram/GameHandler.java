@@ -3,12 +3,15 @@ package niedermeyer.nonogram;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -130,6 +133,7 @@ public class GameHandler extends Handler implements OnClickListener {
         table.removeAllViews();
 
         TableRow.LayoutParams rowParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+        rowParams.gravity = Gravity.CENTER_HORIZONTAL;
 
         // add row with counts of the columns
         TableRow columnCounts = makeColumnCountRow();
@@ -186,11 +190,15 @@ public class GameHandler extends Handler implements OnClickListener {
             String countsAsText = "";
             // paste all values for one column to one string
             for (int value : values) {
-                countsAsText += "\n" + value;
+                if (!countsAsText.equals("")) {
+                    countsAsText += "\n" + value;
+                } else {
+                    countsAsText += value;
+                }
             }
 
             // makes the new text view with the pasted text
-            TextView counts = new TextView(activity, null, R.style.CountViews);
+            TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.count_view, null);
             counts.setText(countsAsText);
 
             // add the text view to the row
@@ -211,11 +219,15 @@ public class GameHandler extends Handler implements OnClickListener {
         String countsAsText = "";
         // paste all numbers for this row to one string
         for (int value : values) {
-            countsAsText += "\t" + value;
+            if (!countsAsText.equals("")) {
+                countsAsText += "\t" + value;
+            } else {
+                countsAsText += value;
+            }
         }
 
         // makes the new text view with the pasted string
-        TextView counts = new TextView(activity, null, R.style.CountViews);
+        TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.count_view, null);
         counts.setText(countsAsText);
 
         return counts;
