@@ -11,6 +11,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 import niedermeyer.nonogram.logics.NonogramFields;
@@ -75,34 +76,46 @@ public class GameHandler extends Handler implements OnClickListener {
         int id = v.getId();
         String idString = Integer.toString(id);
 
-        int i;
-        int j;
+        int c;
         if (r == 0) {
-            i = 0;
-            j = id;
+            c = id;
         } else if (r > 0 && r < 10) {
-            String iString = idString.substring(0, 1);
-            i = Integer.parseInt(iString);
             String jString = idString.substring(1);
-            j = Integer.parseInt(jString);
+            c = Integer.parseInt(jString);
         } else {
-            String iString = idString.substring(0, 2);
-            i = Integer.parseInt(iString);
             String jString = idString.substring(2);
-            j = Integer.parseInt(jString);
+            c = Integer.parseInt(jString);
         }
 
-        fieldValue = actualField[i][j];
+        fieldValue = actualField[r][c];
 
         if (fieldValue == NonogramFields.NOTHING.getValue()) {
             v.setBackgroundResource(R.drawable.button_black);
-            actualField[i][j] = NonogramFields.PROVED.getValue();
+            actualField[r][c] = NonogramFields.PROVED.getValue();
         } else if (fieldValue == NonogramFields.PROVED.getValue()) {
             v.setBackgroundResource(R.drawable.button_cross);
-            actualField[i][j] = NonogramFields.EMPTY.getValue();
+            actualField[r][c] = NonogramFields.EMPTY.getValue();
         } else if (fieldValue == NonogramFields.EMPTY.getValue()) {
             v.setBackgroundResource(R.drawable.button_white);
-            actualField[i][j] = NonogramFields.NOTHING.getValue();
+            actualField[r][c] = NonogramFields.NOTHING.getValue();
+        }
+
+        int[][] actualFieldCopy = new int[actualField.length][actualField[0].length];
+        for (int i = 0; i < actualField.length; i++) {
+            for (int j = 0; j < actualField[i].length; j++) {
+                if (actualField[i][j] == -1) {
+                    actualFieldCopy[i][j] = NonogramFields.EMPTY.getValue();
+                } else {
+                    actualFieldCopy[i][j] = actualField[i][j];
+                }
+            }
+        }
+
+        if (Arrays.deepEquals(actualFieldCopy, nonogram)) {
+            Message msg = new Message();
+            int[] gameSize = {nonogram.length, nonogram[0].length};
+            msg.obj = gameSize;
+            this.sendMessage(msg);
         }
     }
 
@@ -113,6 +126,8 @@ public class GameHandler extends Handler implements OnClickListener {
      */
     private void generateGameField() {
         TableLayout table = (TableLayout) activity.findViewById(R.id.game_table);
+        // clear the field, remove all rows from table
+        table.removeAllViews();
 
         TableRow.LayoutParams rowParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
 
