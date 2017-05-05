@@ -11,8 +11,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
@@ -158,7 +156,7 @@ public class GameHandler extends Handler implements OnClickListener {
                 // set background
                 b.setBackgroundResource(R.drawable.button_white);
                 // set size
-                int buttonSize = (int) activity.getResources().getDimension(R.dimen.button_size);
+                int buttonSize = (int) activity.getResources().getDimension(R.dimen.field_button_size);
                 b.setLayoutParams(new TableRow.LayoutParams(buttonSize, buttonSize));
                 // set the onClickListener implemented in this class
                 b.setOnClickListener(this);

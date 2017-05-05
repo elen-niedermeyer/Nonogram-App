@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Nonogram</string>
+
+    <string name="play">Play</string>
+    <string name="howto">How to play</string>
+    <string name="options">Options</string>
 </resources>
