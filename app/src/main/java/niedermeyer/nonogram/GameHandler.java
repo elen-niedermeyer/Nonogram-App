@@ -19,7 +19,7 @@ import niedermeyer.nonogram.logics.NonogramFields;
 import niedermeyer.nonogram.logics.NonogramGenerator;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-05-02
+ * @author Elen Niedermeyer, last updated 2017-05-06
  */
 
 public class GameHandler extends Handler implements OnClickListener {
@@ -114,14 +114,14 @@ public class GameHandler extends Handler implements OnClickListener {
 
         if (Arrays.deepEquals(actualFieldCopy, nonogram)) {
             Message msg = new Message();
-            int[] gameSize = {nonogram.length, nonogram[0].length};
+            int[] gameSize = {NonogramActivity.numberOfRows, NonogramActivity.numberOfColumns};
             msg.obj = gameSize;
             this.sendMessage(msg);
         }
     }
 
     /**
-     * Makes the game field in the layout.
+     * Makes the game field in the menu_popup.
      * Makes a table row for each row. IDs are the place in the nonogram array.
      * Adds the counts left for the rows and on the top for the columns.
      */
@@ -133,7 +133,7 @@ public class GameHandler extends Handler implements OnClickListener {
         TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
         rowParams.gravity = Gravity.CENTER_HORIZONTAL;
         int screenBorders = (int) activity.getResources().getDimension(R.dimen.screen_border_margin);
-        rowParams.setMargins(screenBorders,0,screenBorders,0);
+        rowParams.setMargins(screenBorders, 0, screenBorders, 0);
 
         // add row with counts of the columns
         TableRow columnCounts = makeColumnCountRow();

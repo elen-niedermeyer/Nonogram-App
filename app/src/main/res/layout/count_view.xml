@@ -2,5 +2,4 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/CountViews"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/around_a_count_number" />
+    android:layout_height="match_parent"/>

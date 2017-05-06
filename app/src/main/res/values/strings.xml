@@ -4,4 +4,11 @@
     <string name="play">Play</string>
     <string name="howto">How to play</string>
     <string name="options">Options</string>
+
+    <string name="number_of_rows">number of rows</string>
+    <string name="number_of_columns">number of columns</string>
+
+    <!-- preferences -->
+    <string name="prefs_rows">number_of_rows</string>
+    <string name="prefs_columns">number_of_columns</string>
 </resources>

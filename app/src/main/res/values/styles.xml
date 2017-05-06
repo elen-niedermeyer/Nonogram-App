@@ -13,5 +13,6 @@
         <item name="android:gravity">center</item>
         <item name="android:lineSpacingExtra">@dimen/around_a_count_number</item>
         <item name="android:textSize">@dimen/count_numbers</item>
+        <item name="android:padding">@dimen/around_a_count_number</item>
     </style>
 </resources>
