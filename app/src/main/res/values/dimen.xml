@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="screen_border_margin">10dp</dimen>
+
     <dimen name="field_button_size">30dp</dimen>
+
     <dimen name="around_a_count_number">5dp</dimen>
+    <dimen name="count_numbers">14dp</dimen>
 </resources>

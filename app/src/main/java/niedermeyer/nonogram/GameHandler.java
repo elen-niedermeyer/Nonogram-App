@@ -130,8 +130,10 @@ public class GameHandler extends Handler implements OnClickListener {
         // clear the field, remove all rows from table
         table.removeAllViews();
 
-        TableRow.LayoutParams rowParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+        TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
         rowParams.gravity = Gravity.CENTER_HORIZONTAL;
+        int screenBorders = (int) activity.getResources().getDimension(R.dimen.screen_border_margin);
+        rowParams.setMargins(screenBorders,0,screenBorders,0);
 
         // add row with counts of the columns
         TableRow columnCounts = makeColumnCountRow();
