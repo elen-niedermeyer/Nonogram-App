@@ -12,7 +12,7 @@
             <!-- button -->
             <item android:bottom="@dimen/button_corners">
                 <shape>
-                    <padding android:bottom="@dimen/around_a_count_number" android:left="@dimen/around_a_count_number" android:right="@dimen/around_a_count_number" android:top="@dimen/around_a_count_number" />
+                    <padding android:bottom="@dimen/button_corners" android:left="@dimen/screen_border_margin" android:right="@dimen/screen_border_margin" android:top="@dimen/button_corners" />
                     <solid android:color="@color/lightGray" />
                     <corners android:radius="@dimen/button_corners" />
                 </shape>

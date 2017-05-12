@@ -4,22 +4,49 @@
     android:id="@+id/root_view_game"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/screen_border_margin"
+    android:layout_marginRight="@dimen/screen_border_margin"
     android:orientation="horizontal"
     tools:context="niedermeyer.nonogram.NonogramActivity">
 
-    <ImageButton
-        android:id="@+id/menu_button"
+    <LinearLayout
+        android:id="@+id/around_menu_buttons_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/ic_menu_black_24dp" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/new_game_button"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/new_game" />
+
+        <Button
+            android:id="@+id/reset_button"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/reset_game" />
+
+        <ImageButton
+            android:id="@+id/menu_button"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/nothing"
+            android:contentDescription="@string/options"
+            android:src="@drawable/ic_menu_black_24dp" />
+    </LinearLayout>
 
     <TableLayout
         android:id="@+id/game_table"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/menu_button">
+        android:layout_below="@id/around_menu_buttons_layout">
 
     </TableLayout>
 

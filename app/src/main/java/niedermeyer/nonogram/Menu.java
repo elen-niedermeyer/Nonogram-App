@@ -33,7 +33,7 @@ public class Menu implements View.OnClickListener {
 
     public void showMenu(View v) {
         PopupWindow popup = makePopupWindow();
-        popup.showAsDropDown(v, -40, 0);
+        popup.showAsDropDown(v, -40, 20);
     }
 
     @Override

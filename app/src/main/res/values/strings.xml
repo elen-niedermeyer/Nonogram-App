@@ -7,9 +7,12 @@
     <string name="play">Play</string>
     <string name="howto">How to play</string>
     <string name="options">Options</string>
+    <string name="new_game">New game</string>
+    <string name="reset_game">Reset game</string>
 
-    <string name="number_of_rows">number of rows</string>
-    <string name="number_of_columns">number of columns</string>
+    <!-- menu items -->
+    <string name="number_of_rows">Number of rows</string>
+    <string name="number_of_columns">Number of columns</string>
 
     <!-- preferences -->
     <string name="prefs_rows">number_of_rows</string>
