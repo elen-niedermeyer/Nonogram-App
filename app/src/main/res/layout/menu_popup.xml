@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gray"
+    android:background="@color/lightGray"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/menu_size_row"
+        style="@style/MenuItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -14,20 +15,21 @@
 
         <TextView
             android:id="@+id/menu_size_row_text"
-            style="@style/CountViews"
+            style="@style/CountViewsLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/number_of_rows" />
 
         <TextView
             android:id="@+id/menu_size_row_text_number"
-            style="@style/CountViews"
+            style="@style/CountViewsLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/menu_size_column"
+        style="@style/MenuItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -35,14 +37,14 @@
 
         <TextView
             android:id="@+id/menu_size_column_text"
-            style="@style/CountViews"
+            style="@style/CountViewsLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/number_of_columns" />
 
         <TextView
             android:id="@+id/menu_size_column_text_number"
-            style="@style/CountViews"
+            style="@style/CountViewsLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

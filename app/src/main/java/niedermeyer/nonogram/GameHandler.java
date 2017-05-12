@@ -202,7 +202,7 @@ public class GameHandler extends Handler implements OnClickListener {
             }
 
             // makes the new text view with the pasted text
-            TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.count_view, null);
+            TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.count_view_top, null);
             counts.setText(countsAsText);
 
             // add the text view to the row
@@ -224,14 +224,14 @@ public class GameHandler extends Handler implements OnClickListener {
         // paste all numbers for this row to one string
         for (int value : values) {
             if (!countsAsText.equals("")) {
-                countsAsText += "\t" + value;
+                countsAsText += "   " + value;
             } else {
                 countsAsText += value;
             }
         }
 
         // makes the new text view with the pasted string
-        TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.count_view, null);
+        TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.count_view_left, null);
         counts.setText(countsAsText);
 
         return counts;

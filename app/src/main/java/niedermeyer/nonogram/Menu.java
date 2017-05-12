@@ -43,6 +43,7 @@ public class Menu implements View.OnClickListener {
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.menu_number_picker, null);
         final NumberPicker picker = (NumberPicker) layout.findViewById(R.id.menu_number_picker);
+        picker.setMinValue(1);
         if (view == rowsMenuLayout) {
             picker.setValue(NonogramActivity.numberOfRows);
             picker.setMaxValue(10);
