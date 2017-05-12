@@ -25,6 +25,11 @@
     </style>
 
     <style name="MenuItems">
+        <item name="android:background">@drawable/menu_items_style</item>
         <item name="android:padding">@dimen/around_a_count_number</item>
+    </style>
+
+    <style name="ButtonStyle">
+        <item name="android:background">@drawable/button_style</item>
     </style>
 </resources>

@@ -6,4 +6,6 @@
 
     <dimen name="around_a_count_number">5dp</dimen>
     <dimen name="count_numbers">14dp</dimen>
+
+    <dimen name="button_corners">3dp</dimen>
 </resources>

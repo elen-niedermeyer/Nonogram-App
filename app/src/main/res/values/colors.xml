@@ -8,4 +8,7 @@
     <color name="lightGray">#DDDDDD</color>
     <color name="gray">#AAAAAA</color>
     <color name="black">#000000</color>
+
+    <color name="background_color">#FFFFFF</color>
+    <color name="background_color_popup">#FFFFFF</color>
 </resources>

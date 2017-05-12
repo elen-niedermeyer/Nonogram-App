@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <layer-list>
+            <!-- shadow -->
+            <item>
+                <shape>
+                    <solid android:color="@color/gray" />
+                    <corners android:radius="@dimen/button_corners" />
+                </shape>
+            </item>
+            <!-- button -->
+            <item android:bottom="@dimen/button_corners">
+                <shape>
+                    <padding android:bottom="@dimen/around_a_count_number" android:left="@dimen/around_a_count_number" android:right="@dimen/around_a_count_number" android:top="@dimen/around_a_count_number" />
+                    <solid android:color="@color/lightGray" />
+                    <corners android:radius="@dimen/button_corners" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

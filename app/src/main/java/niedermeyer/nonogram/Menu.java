@@ -33,23 +33,22 @@ public class Menu implements View.OnClickListener {
 
     public void showMenu(View v) {
         PopupWindow popup = makePopupWindow();
-        popup.showAsDropDown(v, -40, 18);
+        popup.showAsDropDown(v, -40, 0);
     }
 
     @Override
     public void onClick(View v) {
         final View view = v;
 
-        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.menu_number_picker, null);
+        View layout = activity.getLayoutInflater().inflate(R.layout.menu_number_picker, null);
         final NumberPicker picker = (NumberPicker) layout.findViewById(R.id.menu_number_picker);
         picker.setMinValue(1);
         if (view == rowsMenuLayout) {
+            picker.setMaxValue(10);
             picker.setValue(NonogramActivity.numberOfRows);
-            picker.setMaxValue(10);
         } else if (view == columnsMenuLayout) {
-            picker.setValue(NonogramActivity.numberOfColumns);
             picker.setMaxValue(10);
+            picker.setValue(NonogramActivity.numberOfColumns);
         }
 
         new AlertDialog.Builder(activity)
@@ -81,11 +80,8 @@ public class Menu implements View.OnClickListener {
     }
 
     private PopupWindow makePopupWindow() {
-        PopupWindow popupWindow = new PopupWindow(activity);
-
         // get the layout
-        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.menu_popup, null);
+        View view = activity.getLayoutInflater().inflate(R.layout.menu_popup, null);
 
         // set the on click listener for the row menu item
         rowsMenuLayout = (LinearLayout) view.findViewById(R.id.menu_size_row);
@@ -101,11 +97,13 @@ public class Menu implements View.OnClickListener {
         numberOfColumnsText = (TextView) view.findViewById(R.id.menu_size_column_text_number);
         numberOfColumnsText.setText(Integer.toString(NonogramActivity.numberOfColumns));
 
-        // set popup window attributes
+        // make popup window
+        PopupWindow popupWindow = new PopupWindow(activity);
         popupWindow.setFocusable(true);
         popupWindow.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
         popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         popupWindow.setContentView(view);
+        popupWindow.setBackgroundDrawable(null);
 
         return popupWindow;
     }

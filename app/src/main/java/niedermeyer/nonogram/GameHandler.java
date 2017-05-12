@@ -98,13 +98,13 @@ public class GameHandler extends Handler implements OnClickListener {
         fieldValue = actualField[r][c];
 
         if (fieldValue == NonogramFields.NOTHING.getValue()) {
-            v.setBackgroundResource(R.drawable.button_black);
+            v.setBackgroundResource(R.drawable.button_field_black);
             actualField[r][c] = NonogramFields.PROVED.getValue();
         } else if (fieldValue == NonogramFields.PROVED.getValue()) {
-            v.setBackgroundResource(R.drawable.button_cross);
+            v.setBackgroundResource(R.drawable.button_field_cross);
             actualField[r][c] = NonogramFields.EMPTY.getValue();
         } else if (fieldValue == NonogramFields.EMPTY.getValue()) {
-            v.setBackgroundResource(R.drawable.button_white);
+            v.setBackgroundResource(R.drawable.button_field_white);
             actualField[r][c] = NonogramFields.NOTHING.getValue();
         }
 
@@ -160,7 +160,7 @@ public class GameHandler extends Handler implements OnClickListener {
                 String id = i + "" + j;
                 b.setId(Integer.parseInt(id));
                 // set background
-                b.setBackgroundResource(R.drawable.button_white);
+                b.setBackgroundResource(R.drawable.button_field_white);
                 // set size
                 int buttonSize = (int) activity.getResources().getDimension(R.dimen.field_button_size);
                 b.setLayoutParams(new TableRow.LayoutParams(buttonSize, buttonSize));
