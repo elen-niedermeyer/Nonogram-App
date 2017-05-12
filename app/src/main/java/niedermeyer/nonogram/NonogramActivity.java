@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-05-06
+ * @author Elen Niedermeyer, last updated 2017-05-12
  */
 public class NonogramActivity extends AppCompatActivity implements OnClickListener {
 
@@ -20,6 +20,14 @@ public class NonogramActivity extends AppCompatActivity implements OnClickListen
     private GameHandler game = new GameHandler(this);
 
     private ImageButton menuButton;
+
+    @Override
+    public void onClick(View v) {
+        if (v == menuButton) {
+            Menu menu = new Menu(this);
+            menu.showMenu(v);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,18 +40,7 @@ public class NonogramActivity extends AppCompatActivity implements OnClickListen
 
         initializeFieldSizes();
 
-        Message msg = new Message();
-        int[] gameSize = {numberOfRows, numberOfColumns};
-        msg.obj = gameSize;
-        game.sendMessage(msg);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v == menuButton) {
-            Menu menu = new Menu(this);
-            menu.showMenu(v);
-        }
+        game.newGame();
     }
 
     private void initializeFieldSizes() {

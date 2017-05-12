@@ -19,7 +19,7 @@ import niedermeyer.nonogram.logics.NonogramFields;
 import niedermeyer.nonogram.logics.NonogramGenerator;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-05-06
+ * @author Elen Niedermeyer, last updated 2017-05-12
  */
 
 public class GameHandler extends Handler implements OnClickListener {
@@ -40,6 +40,13 @@ public class GameHandler extends Handler implements OnClickListener {
      */
     public GameHandler(Activity pActivity) {
         activity = pActivity;
+    }
+
+    public void newGame() {
+        Message msg = new Message();
+        int[] gameSize = {NonogramActivity.numberOfRows, NonogramActivity.numberOfColumns};
+        msg.obj = gameSize;
+        this.sendMessage(msg);
     }
 
     /**
@@ -113,10 +120,7 @@ public class GameHandler extends Handler implements OnClickListener {
         }
 
         if (Arrays.deepEquals(actualFieldCopy, nonogram)) {
-            Message msg = new Message();
-            int[] gameSize = {NonogramActivity.numberOfRows, NonogramActivity.numberOfColumns};
-            msg.obj = gameSize;
-            this.sendMessage(msg);
+            newGame();
         }
     }
 
