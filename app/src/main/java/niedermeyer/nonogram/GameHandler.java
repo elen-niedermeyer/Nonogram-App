@@ -49,6 +49,10 @@ public class GameHandler extends Handler implements OnClickListener {
         this.sendMessage(msg);
     }
 
+    public void resetGame() {
+        generateGameField();
+    }
+
     /**
      * Overrides the method handleMessage in the class Handler.
      * Creates a new game field with the size which is given by the message.
