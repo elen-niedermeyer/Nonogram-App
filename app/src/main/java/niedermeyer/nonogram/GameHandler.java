@@ -129,7 +129,7 @@ public class GameHandler extends Handler implements OnClickListener {
     }
 
     /**
-     * Makes the game field in the menu_popup.
+     * Makes the game field.
      * Makes a table row for each row. IDs are the place in the nonogram array.
      * Adds the counts left for the rows and on the top for the columns.
      */
