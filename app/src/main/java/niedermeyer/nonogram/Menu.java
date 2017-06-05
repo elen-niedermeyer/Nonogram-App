@@ -27,6 +27,8 @@ public class Menu implements View.OnClickListener {
     private LinearLayout columnsMenuLayout;
     private TextView numberOfColumnsText;
 
+    private int maxNumberOfColumnsAndRows = 30;
+
     public Menu(Activity pActivity) {
         activity = pActivity;
     }
@@ -44,10 +46,10 @@ public class Menu implements View.OnClickListener {
         final NumberPicker picker = (NumberPicker) layout.findViewById(R.id.menu_number_picker);
         picker.setMinValue(1);
         if (view == rowsMenuLayout) {
-            picker.setMaxValue(10);
+            picker.setMaxValue(maxNumberOfColumnsAndRows);
             picker.setValue(NonogramActivity.numberOfRows);
         } else if (view == columnsMenuLayout) {
-            picker.setMaxValue(10);
+            picker.setMaxValue(maxNumberOfColumnsAndRows);
             picker.setValue(NonogramActivity.numberOfColumns);
         }
 
