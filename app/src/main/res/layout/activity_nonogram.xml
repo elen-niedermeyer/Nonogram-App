@@ -4,8 +4,7 @@
     android:id="@+id/root_view_game"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/screen_border_margin"
-    android:layout_marginRight="@dimen/screen_border_margin"
+    android:background="@color/background_color"
     android:orientation="horizontal"
     tools:context="niedermeyer.nonogram.NonogramActivity">
 
@@ -16,6 +15,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:background="@color/background_color"
         android:orientation="horizontal">
 
         <Button
@@ -49,17 +49,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/around_menu_buttons_layout"
-        android:layout_margin="@dimen/margin_for_views">
+        android:layout_margin="@dimen/margin_for_views"
+        android:background="@color/background_color">
 
         <HorizontalScrollView
             android:id="@+id/game_scroll_horizontal_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/background_color">
 
             <TableLayout
                 android:id="@+id/game_table"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:background="@color/background_color" />
 
         </HorizontalScrollView>
     </ScrollView>
