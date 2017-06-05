@@ -31,9 +31,26 @@ public class NonogramGenerator {
     }
 
     public void makeNewGame(int pNumberOfRows, int pNumberOfColumns) {
-        nonogram = generateNonogram(pNumberOfRows, pNumberOfColumns);
-        countsRow = countProvedFieldsPerRow();
-        countsColumn = countProvedFieldsPerColumn();
+        boolean isOnlyZero;
+        do {
+            nonogram = generateNonogram(pNumberOfRows, pNumberOfColumns);
+            countsRow = countProvedFieldsPerRow();
+            countsColumn = countProvedFieldsPerColumn();
+
+            // prove if there is at least one field proved
+            isOnlyZero = true;
+            for (ArrayList<Integer> list : countsRow.values()) {
+                for (Integer count : list) {
+                    if (count != 0) {
+                        isOnlyZero = false;
+                        break;
+                    }
+                }
+                if (!isOnlyZero) {
+                    break;
+                }
+            }
+        } while (isOnlyZero);
     }
 
     private int[][] generateNonogram(int pNumberOfRows, int pNumberOfColumns) {
