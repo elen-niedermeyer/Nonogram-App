@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_color"
     android:gravity="center"
-    tools:context="niedermeyer.nonogram.StartActivity">
+    tools:context="niedermeyer.nonogram.activities.StartActivity">
 
     <LinearLayout
         android:id="@+id/buttons_start"

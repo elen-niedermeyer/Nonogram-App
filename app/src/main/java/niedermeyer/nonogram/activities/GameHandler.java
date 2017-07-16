@@ -1,8 +1,6 @@
-package niedermeyer.nonogram;
+package niedermeyer.nonogram.activities;
 
 import android.app.Activity;
-import android.os.Handler;
-import android.os.Message;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,14 +13,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
+import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.logics.NonogramFields;
 import niedermeyer.nonogram.logics.NonogramGenerator;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-05-12
+ * @author Elen Niedermeyer, last updated 2017-07-16
  */
 
-public class GameHandler extends Handler implements OnClickListener {
+public class GameHandler implements OnClickListener {
 
     private Activity activity;
 
@@ -42,29 +41,17 @@ public class GameHandler extends Handler implements OnClickListener {
         activity = pActivity;
     }
 
+    public int[][] getNonogram() {
+        return nonogram;
+    }
+
+    public int[][] getActualField() {
+        return actualField;
+    }
+
     public void newGame() {
-        Message msg = new Message();
-        int[] gameSize = {NonogramActivity.numberOfRows, NonogramActivity.numberOfColumns};
-        msg.obj = gameSize;
-        this.sendMessage(msg);
-    }
-
-    public void resetGame() {
-        generateGameField();
-    }
-
-    /**
-     * Overrides the method handleMessage in the class Handler.
-     * Creates a new game field with the size which is given by the message.
-     *
-     * @param msg
-     */
-    @Override
-    public void handleMessage(Message msg) {
-        // get message object
-        int[] numbers = (int[]) msg.obj;
-        int numberOfRows = numbers[0];
-        int numberOfColumns = numbers[1];
+        int numberOfRows = NonogramActivity.numberOfRows;
+        int numberOfColumns = NonogramActivity.numberOfColumns;
 
         // make new game field and initialize the private fields
         generator.makeNewGame(numberOfRows, numberOfColumns);
@@ -75,7 +62,29 @@ public class GameHandler extends Handler implements OnClickListener {
         // make a new array for the actual game field
         actualField = new int[numberOfRows][numberOfColumns];
 
-        generateGameField();
+        generateNewGameField();
+    }
+
+    public void newGame(int[][] pNonogram, int[][] pActualField) {
+        if (pNonogram != null) {
+            // initialize arrays
+            nonogram = pNonogram;
+            actualField = pActualField;
+            // initialize field counts arrays
+            generator.setNonogram(pNonogram);
+            rowCounts = generator.getCountsRow();
+            columnCounts = generator.getCountsColumn();
+
+            generateSavedGameField();
+
+        } else {
+            // make new game if the field couldn' be loaded
+            newGame();
+        }
+    }
+
+    public void resetGame() {
+        generateNewGameField();
     }
 
     @Override
@@ -133,7 +142,7 @@ public class GameHandler extends Handler implements OnClickListener {
      * Makes a table row for each row. IDs are the place in the nonogram array.
      * Adds the counts left for the rows and on the top for the columns.
      */
-    private void generateGameField() {
+    private void generateNewGameField() {
         TableLayout table = (TableLayout) activity.findViewById(R.id.game_table);
         // clear the field, remove all rows from table
         table.removeAllViews();
@@ -172,6 +181,56 @@ public class GameHandler extends Handler implements OnClickListener {
                 row.addView(b);
                 // initialize field in array
                 actualField[i][j] = NonogramFields.NOTHING.getValue();
+            }
+            // add row to table
+            table.addView(row);
+        }
+    }
+
+    private void generateSavedGameField() {
+        TableLayout table = (TableLayout) activity.findViewById(R.id.game_table);
+        // clear the field, remove all rows from table
+        table.removeAllViews();
+
+        TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
+        rowParams.gravity = Gravity.CENTER_HORIZONTAL;
+
+        // add row with counts of the columns
+        TableRow columnCounts = makeColumnCountRow();
+        columnCounts.setLayoutParams(rowParams);
+        table.addView(columnCounts);
+
+        // add rows of nonogram
+        for (int i = 0; i < nonogram.length; i++) {
+            // new row
+            TableRow row = new TableRow(activity);
+            row.setId(i);
+            row.setLayoutParams(rowParams);
+
+            // add count for this row
+            row.addView(makeRowCountView(i));
+            // add a button for each field in this row
+            for (int j = 0; j < nonogram[i].length; j++) {
+                Button b = new Button(activity);
+                // make and set id
+                String id = i + "" + j;
+                b.setId(Integer.parseInt(id));
+                // set size
+                int buttonSize = (int) activity.getResources().getDimension(R.dimen.field_button_size);
+                b.setLayoutParams(new TableRow.LayoutParams(buttonSize, buttonSize));
+                // set the onClickListener implemented in this class
+                b.setOnClickListener(this);
+                // add button to row
+                row.addView(b);
+
+                // set background resource for the given field in actualField
+                if (actualField[i][j] == NonogramFields.NOTHING.getValue()) {
+                    b.setBackgroundResource(R.drawable.button_field_white);
+                } else if (actualField[i][j] == NonogramFields.PROVED.getValue()) {
+                    b.setBackgroundResource(R.drawable.button_field_black);
+                } else if (actualField[i][j] == NonogramFields.EMPTY.getValue()) {
+                    b.setBackgroundResource(R.drawable.button_field_cross);
+                }
             }
             // add row to table
             table.addView(row);

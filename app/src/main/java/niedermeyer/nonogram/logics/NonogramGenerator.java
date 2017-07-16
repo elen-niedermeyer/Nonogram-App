@@ -22,11 +22,17 @@ public class NonogramGenerator {
         return nonogram;
     }
 
+    public void setNonogram(int[][] pNonogram) {
+        nonogram = pNonogram;
+    }
+
     public Map<Integer, ArrayList<Integer>> getCountsRow() {
+        countsRow = countProvedFieldsPerRow();
         return countsRow;
     }
 
     public Map<Integer, ArrayList<Integer>> getCountsColumn() {
+        countsColumn = countProvedFieldsPerColumn();
         return countsColumn;
     }
 
