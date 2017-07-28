@@ -10,6 +10,8 @@
     <string name="new_game">New game</string>
     <string name="reset_game">Reset game</string>
 
+    <string name="game_size_text">%1$s x %2$s</string>
+
     <!-- menu items -->
     <string name="number_of_rows">Number of rows</string>
     <string name="number_of_columns">Number of columns</string>

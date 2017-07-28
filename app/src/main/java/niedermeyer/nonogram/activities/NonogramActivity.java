@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.ObjectInputStream;
@@ -34,8 +35,13 @@ public class NonogramActivity extends AppCompatActivity {
     private File actualFieldFile;
 
     private ImageButton menuButton;
+    private TextView fieldSizeView;
     private Button newGameButton;
     private Button resetGameButton;
+
+    public void updateGameSizeView() {
+        fieldSizeView.setText(numberOfColumns + " x " + numberOfRows);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +79,9 @@ public class NonogramActivity extends AppCompatActivity {
         });
 
         initializeFieldSizes();
+        // initialize size view
+        fieldSizeView = (TextView) findViewById(R.id.game_field_size_view);
+        updateGameSizeView();
 
         loadLastNonogramAndField();
     }
@@ -141,8 +150,7 @@ public class NonogramActivity extends AppCompatActivity {
             }
         }
 
-
-        // start gme with loaded arrays
+        // start game with loaded arrays
         game.newGame(nonogram, actualField);
     }
 

@@ -23,7 +23,7 @@ import niedermeyer.nonogram.logics.NonogramGenerator;
 
 public class GameHandler implements OnClickListener {
 
-    private Activity activity;
+    private NonogramActivity activity;
 
     private NonogramGenerator generator = new NonogramGenerator();
     private int[][] nonogram;
@@ -37,7 +37,7 @@ public class GameHandler implements OnClickListener {
      *
      * @param pActivity the activity in which the game handler is used
      */
-    public GameHandler(Activity pActivity) {
+    public GameHandler(NonogramActivity pActivity) {
         activity = pActivity;
     }
 
@@ -52,6 +52,7 @@ public class GameHandler implements OnClickListener {
     public void newGame() {
         int numberOfRows = NonogramActivity.numberOfRows;
         int numberOfColumns = NonogramActivity.numberOfColumns;
+        activity.updateGameSizeView();
 
         // make new game field and initialize the private fields
         generator.makeNewGame(numberOfRows, numberOfColumns);

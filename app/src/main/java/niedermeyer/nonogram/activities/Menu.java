@@ -18,7 +18,7 @@ import niedermeyer.nonogram.R;
 
 public class Menu implements View.OnClickListener {
 
-    private Activity activity;
+    private NonogramActivity activity;
 
     private LinearLayout rowsMenuLayout;
     private TextView numberOfRowsText;
@@ -27,7 +27,7 @@ public class Menu implements View.OnClickListener {
 
     private int maxNumberOfColumnsAndRows = 30;
 
-    public Menu(Activity pActivity) {
+    public Menu(NonogramActivity pActivity) {
         activity = pActivity;
     }
 
