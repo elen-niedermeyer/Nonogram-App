@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Nonogram</string>
 
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
     <string name="play">Play</string>

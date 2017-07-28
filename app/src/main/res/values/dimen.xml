@@ -8,5 +8,5 @@
     <dimen name="field_button_size">30dp</dimen>
     <dimen name="count_numbers">14dp</dimen>
 
-    <dimen name="button_corners">3dp</dimen>
+    <dimen name="button_corners">6dp</dimen>
 </resources>

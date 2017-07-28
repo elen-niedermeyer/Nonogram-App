@@ -4,7 +4,7 @@
     <item android:state_pressed="false">
         <layer-list>
             <!-- button -->
-            <item android:bottom="@dimen/button_corners">
+            <item>
                 <shape>
                     <gradient android:angle="270" android:endColor="@color/colorPrimary" android:startColor="@color/colorPrimaryDark" />
                     <padding android:bottom="@dimen/button_corners" android:left="@dimen/margin_for_views_twice" android:right="@dimen/margin_for_views_twice" android:top="@dimen/button_corners" />
