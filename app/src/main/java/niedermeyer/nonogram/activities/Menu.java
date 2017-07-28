@@ -1,9 +1,7 @@
 package niedermeyer.nonogram.activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,8 +11,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.activities.GameHandler;
-import niedermeyer.nonogram.activities.NonogramActivity;
 
 /**
  * @author Elen Niedermeyer, last updated 2017-07-16
