@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_color"
     android:orientation="horizontal"
-    tools:context="niedermeyer.nonogram.NonogramActivity">
+    tools:context="niedermeyer.nonogram.activities.NonogramActivity">
 
     <LinearLayout
         android:id="@+id/around_menu_buttons_layout"
