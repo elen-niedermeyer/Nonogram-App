@@ -29,7 +29,7 @@ public class StartActivity extends AppCompatActivity implements OnClickListener 
      * Sets the layout.
      * Initializes the button {@link #playButton}, {@link #howToPlayButton} and {@link #optionsButton} and sets the listener {@link #onClick(View)} for all buttons.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState saved informations about the activity given by the system
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
