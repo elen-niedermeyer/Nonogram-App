@@ -10,6 +10,9 @@ import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import niedermeyer.nonogram.R;
 
 /**
@@ -18,19 +21,12 @@ import niedermeyer.nonogram.R;
 
 public class Menu {
 
-    private NonogramActivity activity;
-
-    private LinearLayout rowsMenuLayout;
-    private TextView numberOfRowsText;
-    private LinearLayout columnsMenuLayout;
-    private TextView numberOfColumnsText;
+    private Activity activity;
 
     private int minNumberOfColumnsAndRows = 3;
     private int maxNumberOfColumnsAndRows = 30;
 
-    public static int dialogResult = 0;
-
-    public Menu(NonogramActivity pActivity) {
+    public Menu(Activity pActivity) {
         activity = pActivity;
     }
 
@@ -71,11 +67,11 @@ public class Menu {
         View view = activity.getLayoutInflater().inflate(R.layout.menu_popup, null);
 
         // set the actual number of rows
-        numberOfRowsText = (TextView) view.findViewById(R.id.menu_popup_size_row_number);
+        final TextView numberOfRowsText = (TextView) view.findViewById(R.id.menu_popup_size_row_number);
         numberOfRowsText.setText(Integer.toString(NonogramActivity.numberOfRows));
 
         // set the on click listener for the row menu item
-        rowsMenuLayout = (LinearLayout) view.findViewById(R.id.menu_popup_size_row);
+        LinearLayout rowsMenuLayout = (LinearLayout) view.findViewById(R.id.menu_popup_size_row);
         rowsMenuLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,8 +82,12 @@ public class Menu {
                     public void onDismiss(DialogInterface dialog) {
                         if (saveNumber != NonogramActivity.numberOfRows) {
                             numberOfRowsText.setText(Integer.toString(NonogramActivity.numberOfRows));
-                            GameHandler game = new GameHandler(activity);
-                            game.newGame();
+                            if (activity instanceof NonogramActivity) {
+                                GameHandler game = new GameHandler((NonogramActivity) activity);
+                                game.newGame();
+                            } else {
+                                Logger.getLogger(NonogramActivity.class.getName()).log(Level.FINER, null, "New game should be started from another activity than NonogramActivity");
+                            }
                         }
                     }
                 });
@@ -97,11 +97,11 @@ public class Menu {
 
 
         // set the actual number of columns
-        numberOfColumnsText = (TextView) view.findViewById(R.id.menu_popup_size_column_number);
+        final TextView numberOfColumnsText = (TextView) view.findViewById(R.id.menu_popup_size_column_number);
         numberOfColumnsText.setText(Integer.toString(NonogramActivity.numberOfColumns));
 
         // set the on click listener for the column menu item
-        columnsMenuLayout = (LinearLayout) view.findViewById(R.id.menu_popup_size_column);
+        LinearLayout columnsMenuLayout = (LinearLayout) view.findViewById(R.id.menu_popup_size_column);
         columnsMenuLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,8 +112,12 @@ public class Menu {
                     public void onDismiss(DialogInterface dialog) {
                         if (saveNumber != NonogramActivity.numberOfColumns) {
                             numberOfColumnsText.setText(Integer.toString(NonogramActivity.numberOfColumns));
-                            GameHandler game = new GameHandler(activity);
-                            game.newGame();
+                            if (activity instanceof NonogramActivity) {
+                                GameHandler game = new GameHandler((NonogramActivity) activity);
+                                game.newGame();
+                            } else {
+                                Logger.getLogger(NonogramActivity.class.getName()).log(Level.FINER, null, "New game should be started from another activity than NonogramActivity");
+                            }
                         }
                     }
                 });

@@ -18,6 +18,7 @@ import niedermeyer.nonogram.R;
 public class StartActivity extends AppCompatActivity implements OnClickListener {
 
     private Button playButton;
+    private Button optionsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +27,18 @@ public class StartActivity extends AppCompatActivity implements OnClickListener 
 
         playButton = (Button) findViewById(R.id.activity_start_buttons_play);
         playButton.setOnClickListener(this);
+
+        optionsButton = (Button) findViewById(R.id.activity_start_buttons_options);
+        optionsButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if (v == playButton) {
             Intent i = new Intent(this, NonogramActivity.class);
+            startActivity(i);
+        } else if (v == optionsButton) {
+            Intent i = new Intent(this, OptionsActivity.class);
             startActivity(i);
         }
     }
