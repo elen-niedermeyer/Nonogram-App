@@ -1,5 +1,6 @@
 package niedermeyer.nonogram.logics;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,12 +27,17 @@ public class NonogramGenerator {
         return nonogram;
     }
 
+    public void setNonogram(int[][] pNonogram) {
+        nonogram = pNonogram;
+    }
+
     /**
      * Returns the map which contains the counts for the rows.
      *
      * @return {@link #countsRow}
      */
     public Map<Integer, ArrayList<Integer>> getCountsRow() {
+        countsRow = countProvedFieldsPerRow();
         return countsRow;
     }
 
@@ -41,6 +47,7 @@ public class NonogramGenerator {
      * @return {@link #countsColumn}
      */
     public Map<Integer, ArrayList<Integer>> getCountsColumn() {
+        countsColumn = countProvedFieldsPerColumn();
         return countsColumn;
     }
 
@@ -52,9 +59,26 @@ public class NonogramGenerator {
      * @param pNumberOfColumns the number of columns the new game field should have
      */
     public void makeNewGame(int pNumberOfRows, int pNumberOfColumns) {
-        nonogram = generateNonogram(pNumberOfRows, pNumberOfColumns);
-        countsRow = countProvedFieldsPerRow();
-        countsColumn = countProvedFieldsPerColumn();
+        boolean isOnlyZero;
+        do {
+            nonogram = generateNonogram(pNumberOfRows, pNumberOfColumns);
+            countsRow = countProvedFieldsPerRow();
+            countsColumn = countProvedFieldsPerColumn();
+
+            // prove if there is at least one field proved
+            isOnlyZero = true;
+            for (ArrayList<Integer> list : countsRow.values()) {
+                for (Integer count : list) {
+                    if (count != 0) {
+                        isOnlyZero = false;
+                        break;
+                    }
+                }
+                if (!isOnlyZero) {
+                    break;
+                }
+            }
+        } while (isOnlyZero);
     }
 
     /**

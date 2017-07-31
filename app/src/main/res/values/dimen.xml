@@ -3,13 +3,13 @@
     <dimen name="nothing">0dp</dimen>
 
     <!-- general -->
-    <dimen name="screen_border_margin">10dp</dimen>
     <dimen name="margin_for_views">5dp</dimen>
+    <dimen name="margin_for_views_twice">10dp</dimen>
 
     <!-- game field -->
     <dimen name="field_button_size">30dp</dimen>
     <dimen name="count_numbers">14dp</dimen>
 
     <!-- buttons -->
-    <dimen name="button_corners">3dp</dimen>
+    <dimen name="button_corners">6dp</dimen>
 </resources>

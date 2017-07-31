@@ -4,10 +4,9 @@
     android:id="@+id/activity_nonogram_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/screen_border_margin"
-    android:layout_marginRight="@dimen/screen_border_margin"
+    android:background="@color/background_color"
     android:orientation="horizontal"
-    tools:context="niedermeyer.nonogram.NonogramActivity">
+    tools:context="niedermeyer.nonogram.activities.NonogramActivity">
 
     <LinearLayout
         android:id="@+id/activity_nonogram_buttons_menu"
@@ -16,7 +15,14 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:background="@color/background_color"
         android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/game_field_size_view"
+            style="@style/CountViewsTop"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
         <Button
             android:id="@+id/activity_nonogram_buttons_menu_new"
@@ -37,18 +43,33 @@
             style="@style/ButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/nothing"
             android:layout_marginRight="@dimen/nothing"
             android:contentDescription="@string/options"
             android:src="@drawable/ic_menu_black" />
     </LinearLayout>
 
-    <TableLayout
-        android:id="@+id/activity_nonogram_field"
+    <ScrollView
+        android:id="@+id/activity_nonogram_scroll_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/activity_nonogram_buttons_menu">
+        android:layout_below="@id/activity_nonogram_buttons_menu"
+        android:layout_margin="@dimen/margin_for_views"
+        android:background="@color/background_color">
 
-    </TableLayout>
+        <HorizontalScrollView
+            android:id="@+id/activity_nonogram_scroll_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/background_color">
 
+            <TableLayout
+                android:id="@+id/activity_nonogram_field"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/background_color" />
+
+        </HorizontalScrollView>
+    </ScrollView>
 </RelativeLayout>
 

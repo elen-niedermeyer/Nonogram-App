@@ -1,9 +1,7 @@
-package niedermeyer.nonogram;
+package niedermeyer.nonogram.activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,20 +10,24 @@ import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import niedermeyer.nonogram.R;
+
 /**
- * @author Elen Niedermeyer, last updated 2017-05-12
+ * @author Elen Niedermeyer, last updated 2017-07-16
  */
 
 public class Menu implements View.OnClickListener {
 
-    private Activity activity;
+    private NonogramActivity activity;
 
     private LinearLayout rowsMenuLayout;
     private TextView numberOfRowsText;
     private LinearLayout columnsMenuLayout;
     private TextView numberOfColumnsText;
 
-    public Menu(Activity pActivity) {
+    private int maxNumberOfColumnsAndRows = 30;
+
+    public Menu(NonogramActivity pActivity) {
         activity = pActivity;
     }
 
@@ -42,10 +44,10 @@ public class Menu implements View.OnClickListener {
         final NumberPicker picker = (NumberPicker) layout.findViewById(R.id.menu_number_picker);
         picker.setMinValue(1);
         if (view == rowsMenuLayout) {
-            picker.setMaxValue(10);
+            picker.setMaxValue(maxNumberOfColumnsAndRows);
             picker.setValue(NonogramActivity.numberOfRows);
         } else if (view == columnsMenuLayout) {
-            picker.setMaxValue(10);
+            picker.setMaxValue(maxNumberOfColumnsAndRows);
             picker.setValue(NonogramActivity.numberOfColumns);
         }
 
@@ -55,18 +57,13 @@ public class Menu implements View.OnClickListener {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         int newValue = picker.getValue();
-                        SharedPreferences prefs = activity.getPreferences(Context.MODE_PRIVATE);
-                        SharedPreferences.Editor prefsEdit = prefs.edit();
                         if (view == rowsMenuLayout) {
-                            prefsEdit.putInt(activity.getString(R.string.prefs_rows), newValue);
                             NonogramActivity.numberOfRows = newValue;
                             numberOfRowsText.setText(Integer.toString(newValue));
                         } else if (view == columnsMenuLayout) {
-                            prefsEdit.putInt(activity.getString(R.string.prefs_columns), newValue);
                             NonogramActivity.numberOfColumns = newValue;
                             numberOfColumnsText.setText(Integer.toString(newValue));
                         }
-                        prefsEdit.commit();
 
                         GameHandler game = new GameHandler(activity);
                         game.newGame();
