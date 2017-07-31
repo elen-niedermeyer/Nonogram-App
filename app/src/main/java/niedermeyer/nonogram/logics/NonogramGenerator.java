@@ -1,6 +1,5 @@
 package niedermeyer.nonogram.logics;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +26,11 @@ public class NonogramGenerator {
         return nonogram;
     }
 
+    /**
+     * Sets the {@link #nonogram}.
+     *
+     * @param pNonogram a two-dimensional array that represents a nonogram
+     */
     public void setNonogram(int[][] pNonogram) {
         nonogram = pNonogram;
     }

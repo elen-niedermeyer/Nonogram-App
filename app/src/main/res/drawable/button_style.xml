@@ -6,7 +6,7 @@
             <!-- button -->
             <item>
                 <shape>
-                    <gradient android:angle="270" android:endColor="@color/colorPrimary" android:startColor="@color/colorPrimaryDark" />
+                    <gradient android:angle="270" android:endColor="@color/color_primary" android:startColor="@color/color_primary_dark" />
                     <padding android:bottom="@dimen/button_corners" android:left="@dimen/margin_for_views_twice" android:right="@dimen/margin_for_views_twice" android:top="@dimen/button_corners" />
                     <corners android:radius="@dimen/button_corners" />
                 </shape>
@@ -20,7 +20,7 @@
             <!-- button -->
             <item android:bottom="@dimen/button_corners">
                 <shape>
-                    <gradient android:angle="270" android:endColor="@color/colorAccent" android:startColor="@color/colorAccentDark" />
+                    <gradient android:angle="270" android:endColor="@color/color_accent" android:startColor="@color/color_accent_dark" />
                     <padding android:bottom="@dimen/button_corners" android:left="@dimen/margin_for_views_twice" android:right="@dimen/margin_for_views_twice" android:top="@dimen/button_corners" />
                     <corners android:radius="@dimen/button_corners" />
                 </shape>

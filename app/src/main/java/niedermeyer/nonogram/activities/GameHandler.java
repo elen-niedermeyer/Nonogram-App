@@ -144,7 +144,7 @@ public class GameHandler implements OnClickListener {
      * Adds the counts left for the rows and on the top for the columns.
      */
     private void generateNewGameField() {
-        TableLayout table = (TableLayout) activity.findViewById(R.id.game_table);
+        TableLayout table = (TableLayout) activity.findViewById(R.id.activity_nonogram_field);
         // clear the field, remove all rows from table
         table.removeAllViews();
 
@@ -189,7 +189,7 @@ public class GameHandler implements OnClickListener {
     }
 
     private void generateSavedGameField() {
-        TableLayout table = (TableLayout) activity.findViewById(R.id.game_table);
+        TableLayout table = (TableLayout) activity.findViewById(R.id.activity_nonogram_field);
         // clear the field, remove all rows from table
         table.removeAllViews();
 
@@ -226,11 +226,11 @@ public class GameHandler implements OnClickListener {
 
                 // set background resource for the given field in actualField
                 if (actualField[i][j] == NonogramFields.NOTHING.getValue()) {
-                    b.setBackgroundResource(R.drawable.button_field_white);
+                    b.setBackgroundResource(R.drawable.game_field_btn_white);
                 } else if (actualField[i][j] == NonogramFields.PROVED.getValue()) {
-                    b.setBackgroundResource(R.drawable.button_field_black);
+                    b.setBackgroundResource(R.drawable.game_field_btn_black);
                 } else if (actualField[i][j] == NonogramFields.EMPTY.getValue()) {
-                    b.setBackgroundResource(R.drawable.button_field_cross);
+                    b.setBackgroundResource(R.drawable.game_field_btn_cross);
                 }
             }
             // add row to table
