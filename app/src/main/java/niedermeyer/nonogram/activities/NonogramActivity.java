@@ -73,7 +73,7 @@ public class NonogramActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (v == menuButton) {
-                    menu.showMenu(v);
+                    menu.showPopupMenu(v);
                 }
             }
         });
