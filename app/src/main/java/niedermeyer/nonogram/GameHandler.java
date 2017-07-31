@@ -19,7 +19,7 @@ import niedermeyer.nonogram.logics.NonogramFields;
 import niedermeyer.nonogram.logics.NonogramGenerator;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-05-02
+ * @author Elen Niedermeyer, last updated 2017-05-12
  */
 
 public class GameHandler extends Handler implements OnClickListener {
@@ -40,6 +40,17 @@ public class GameHandler extends Handler implements OnClickListener {
      */
     public GameHandler(Activity pActivity) {
         activity = pActivity;
+    }
+
+    public void newGame() {
+        Message msg = new Message();
+        int[] gameSize = {NonogramActivity.numberOfRows, NonogramActivity.numberOfColumns};
+        msg.obj = gameSize;
+        this.sendMessage(msg);
+    }
+
+    public void resetGame() {
+        generateGameField();
     }
 
     /**
@@ -91,13 +102,13 @@ public class GameHandler extends Handler implements OnClickListener {
         fieldValue = actualField[r][c];
 
         if (fieldValue == NonogramFields.NOTHING.getValue()) {
-            v.setBackgroundResource(R.drawable.button_black);
+            v.setBackgroundResource(R.drawable.button_field_black);
             actualField[r][c] = NonogramFields.PROVED.getValue();
         } else if (fieldValue == NonogramFields.PROVED.getValue()) {
-            v.setBackgroundResource(R.drawable.button_cross);
+            v.setBackgroundResource(R.drawable.button_field_cross);
             actualField[r][c] = NonogramFields.EMPTY.getValue();
         } else if (fieldValue == NonogramFields.EMPTY.getValue()) {
-            v.setBackgroundResource(R.drawable.button_white);
+            v.setBackgroundResource(R.drawable.button_field_white);
             actualField[r][c] = NonogramFields.NOTHING.getValue();
         }
 
@@ -113,15 +124,12 @@ public class GameHandler extends Handler implements OnClickListener {
         }
 
         if (Arrays.deepEquals(actualFieldCopy, nonogram)) {
-            Message msg = new Message();
-            int[] gameSize = {nonogram.length, nonogram[0].length};
-            msg.obj = gameSize;
-            this.sendMessage(msg);
+            newGame();
         }
     }
 
     /**
-     * Makes the game field in the layout.
+     * Makes the game field in the menu_popup.
      * Makes a table row for each row. IDs are the place in the nonogram array.
      * Adds the counts left for the rows and on the top for the columns.
      */
@@ -132,8 +140,6 @@ public class GameHandler extends Handler implements OnClickListener {
 
         TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
         rowParams.gravity = Gravity.CENTER_HORIZONTAL;
-        int screenBorders = (int) activity.getResources().getDimension(R.dimen.screen_border_margin);
-        rowParams.setMargins(screenBorders,0,screenBorders,0);
 
         // add row with counts of the columns
         TableRow columnCounts = makeColumnCountRow();
@@ -156,7 +162,7 @@ public class GameHandler extends Handler implements OnClickListener {
                 String id = i + "" + j;
                 b.setId(Integer.parseInt(id));
                 // set background
-                b.setBackgroundResource(R.drawable.button_white);
+                b.setBackgroundResource(R.drawable.button_field_white);
                 // set size
                 int buttonSize = (int) activity.getResources().getDimension(R.dimen.field_button_size);
                 b.setLayoutParams(new TableRow.LayoutParams(buttonSize, buttonSize));
@@ -198,7 +204,7 @@ public class GameHandler extends Handler implements OnClickListener {
             }
 
             // makes the new text view with the pasted text
-            TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.count_view, null);
+            TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.count_view_top, null);
             counts.setText(countsAsText);
 
             // add the text view to the row
@@ -220,14 +226,14 @@ public class GameHandler extends Handler implements OnClickListener {
         // paste all numbers for this row to one string
         for (int value : values) {
             if (!countsAsText.equals("")) {
-                countsAsText += "\t" + value;
+                countsAsText += "   " + value;
             } else {
                 countsAsText += value;
             }
         }
 
         // makes the new text view with the pasted string
-        TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.count_view, null);
+        TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.count_view_left, null);
         counts.setText(countsAsText);
 
         return counts;

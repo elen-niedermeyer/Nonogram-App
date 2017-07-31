@@ -1,7 +1,20 @@
 <resources>
     <string name="app_name">Nonogram</string>
 
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+
     <string name="play">Play</string>
     <string name="howto">How to play</string>
     <string name="options">Options</string>
+    <string name="new_game">New game</string>
+    <string name="reset_game">Reset game</string>
+
+    <!-- menu items -->
+    <string name="number_of_rows">Number of rows</string>
+    <string name="number_of_columns">Number of columns</string>
+
+    <!-- preferences -->
+    <string name="prefs_rows">number_of_rows</string>
+    <string name="prefs_columns">number_of_columns</string>
 </resources>
