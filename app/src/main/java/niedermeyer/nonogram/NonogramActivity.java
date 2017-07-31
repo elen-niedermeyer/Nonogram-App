@@ -2,7 +2,6 @@ package niedermeyer.nonogram;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +31,7 @@ public class NonogramActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nonogram);
 
         // initialize new game button
-        newGameButton = (Button) findViewById(R.id.new_game_button);
+        newGameButton = (Button) findViewById(R.id.activity_nonogram_buttons_menu_new);
         newGameButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +40,7 @@ public class NonogramActivity extends AppCompatActivity {
         });
 
         // initialize reset game button
-        resetGameButton = (Button) findViewById(R.id.reset_button);
+        resetGameButton = (Button) findViewById(R.id.activity_nonogram_buttons_menu_reset);
         resetGameButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,7 +49,7 @@ public class NonogramActivity extends AppCompatActivity {
         });
 
         // initialize menu button
-        menuButton = (ImageButton) findViewById(R.id.menu_button);
+        menuButton = (ImageButton) findViewById(R.id.activity_nonogram_buttons_menu_menu);
         menuButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root_view_game"
+    android:id="@+id/activity_nonogram_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="@dimen/screen_border_margin"
@@ -10,7 +10,7 @@
     tools:context="niedermeyer.nonogram.NonogramActivity">
 
     <LinearLayout
-        android:id="@+id/around_menu_buttons_layout"
+        android:id="@+id/activity_nonogram_buttons_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -19,34 +19,34 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/new_game_button"
+            android:id="@+id/activity_nonogram_buttons_menu_new"
             style="@style/ButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/new_game" />
 
         <Button
-            android:id="@+id/reset_button"
+            android:id="@+id/activity_nonogram_buttons_menu_reset"
             style="@style/ButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/reset_game" />
 
         <ImageButton
-            android:id="@+id/menu_button"
+            android:id="@+id/activity_nonogram_buttons_menu_menu"
             style="@style/ButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="@dimen/nothing"
             android:contentDescription="@string/options"
-            android:src="@drawable/ic_menu_black_24dp" />
+            android:src="@drawable/ic_menu_black" />
     </LinearLayout>
 
     <TableLayout
-        android:id="@+id/game_table"
+        android:id="@+id/activity_nonogram_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/around_menu_buttons_layout">
+        android:layout_below="@id/activity_nonogram_buttons_menu">
 
     </TableLayout>
 
