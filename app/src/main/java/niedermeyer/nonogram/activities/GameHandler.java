@@ -16,6 +16,7 @@ import java.util.Map;
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.logics.NonogramFields;
 import niedermeyer.nonogram.logics.NonogramGenerator;
+import niedermeyer.nonogram.persistence.GameSizeHandler;
 
 /**
  * @author Elen Niedermeyer, last updated 2017-07-16
@@ -50,8 +51,8 @@ public class GameHandler implements OnClickListener {
     }
 
     public void newGame() {
-        int numberOfRows = NonogramActivity.numberOfRows;
-        int numberOfColumns = NonogramActivity.numberOfColumns;
+        int numberOfRows = GameSizeHandler.numberOfRows;
+        int numberOfColumns = GameSizeHandler.numberOfColumns;
         activity.updateGameSizeView();
 
         // make new game field and initialize the private fields

@@ -1,7 +1,6 @@
 package niedermeyer.nonogram.activities;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,16 +16,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import niedermeyer.nonogram.R;
+import niedermeyer.nonogram.persistence.GameSizeHandler;
 
 /**
  * @author Elen Niedermeyer, last updated 2017-07-16
  */
 public class NonogramActivity extends AppCompatActivity {
 
-    public static int numberOfRows;
-    public static int numberOfColumns;
-
     private GameHandler game = new GameHandler(this);
+    private GameSizeHandler gameSize = new GameSizeHandler(this);
     private Menu menu = new Menu(this);
 
     private String nonogramFileName = "nonogram";
@@ -40,7 +38,7 @@ public class NonogramActivity extends AppCompatActivity {
     private Button resetGameButton;
 
     public void updateGameSizeView() {
-        fieldSizeView.setText(numberOfColumns + " x " + numberOfRows);
+        fieldSizeView.setText(GameSizeHandler.numberOfColumns + " x " + GameSizeHandler.numberOfRows);
     }
 
     @Override
@@ -78,7 +76,7 @@ public class NonogramActivity extends AppCompatActivity {
             }
         });
 
-        initializeFieldSizes();
+        gameSize.initializeFieldSizes();
         // initialize size view
         fieldSizeView = (TextView) findViewById(R.id.game_field_size_view);
         updateGameSizeView();
@@ -90,23 +88,10 @@ public class NonogramActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        saveGameSize();
+        gameSize.saveGameSize();
         saveNonogramAndField();
     }
 
-    private void initializeFieldSizes() {
-        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
-        numberOfRows = prefs.getInt(getString(R.string.prefs_rows), 5);
-        numberOfColumns = prefs.getInt(getString(R.string.prefs_columns), 5);
-    }
-
-    private void saveGameSize() {
-        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor prefsEdit = prefs.edit();
-        prefsEdit.putInt(getString(R.string.prefs_rows), numberOfRows);
-        prefsEdit.putInt(getString(R.string.prefs_columns), numberOfColumns);
-        prefsEdit.apply();
-    }
 
     private void loadLastNonogramAndField() {
         ObjectInputStream in = null;
