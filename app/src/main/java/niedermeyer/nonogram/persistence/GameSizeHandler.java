@@ -29,7 +29,7 @@ public class GameSizeHandler {
      */
     public GameSizeHandler(Activity pActivity) {
         activity = pActivity;
-        initializeFieldSizes();
+        //initializeFieldSizes();
     }
 
     /**
