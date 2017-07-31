@@ -16,7 +16,7 @@ import niedermeyer.nonogram.R;
  * @author Elen Niedermeyer, last updated 2017-07-16
  */
 
-public class Menu implements View.OnClickListener {
+public class Menu {
 
     private NonogramActivity activity;
 
@@ -25,72 +25,101 @@ public class Menu implements View.OnClickListener {
     private LinearLayout columnsMenuLayout;
     private TextView numberOfColumnsText;
 
+    private int minNumberOfColumnsAndRows = 3;
     private int maxNumberOfColumnsAndRows = 30;
+
+    public static int dialogResult = 0;
 
     public Menu(NonogramActivity pActivity) {
         activity = pActivity;
     }
 
-    public void showMenu(View v) {
+    public void showPopupMenu(View v) {
         PopupWindow popup = makePopupWindow();
         popup.showAsDropDown(v, -40, 20);
     }
 
-    @Override
-    public void onClick(View v) {
-        final View view = v;
-
+    public AlertDialog makeNumberPickerForGameSize(final boolean isRow, final boolean isColumn, int value) {
         View layout = activity.getLayoutInflater().inflate(R.layout.menu_number_picker, null);
         final NumberPicker picker = (NumberPicker) layout.findViewById(R.id.menu_number_picker);
-        picker.setMinValue(1);
-        if (view == rowsMenuLayout) {
-            picker.setMaxValue(maxNumberOfColumnsAndRows);
-            picker.setValue(NonogramActivity.numberOfRows);
-        } else if (view == columnsMenuLayout) {
-            picker.setMaxValue(maxNumberOfColumnsAndRows);
-            picker.setValue(NonogramActivity.numberOfColumns);
-        }
+        picker.setMinValue(minNumberOfColumnsAndRows);
+        picker.setMaxValue(maxNumberOfColumnsAndRows);
+        picker.setValue(value);
 
-        new AlertDialog.Builder(activity)
+        AlertDialog dialog = new AlertDialog.Builder(activity)
                 .setView(layout)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         int newValue = picker.getValue();
-                        if (view == rowsMenuLayout) {
+                        if (isRow) {
                             NonogramActivity.numberOfRows = newValue;
-                            numberOfRowsText.setText(Integer.toString(newValue));
-                        } else if (view == columnsMenuLayout) {
+                        } else if (isColumn) {
                             NonogramActivity.numberOfColumns = newValue;
-                            numberOfColumnsText.setText(Integer.toString(newValue));
                         }
-
-                        GameHandler game = new GameHandler(activity);
-                        game.newGame();
+                        dialog.dismiss();
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
-                .setCancelable(true)
-                .show();
+                .create();
+
+        return dialog;
     }
 
     private PopupWindow makePopupWindow() {
         // get the layout
         View view = activity.getLayoutInflater().inflate(R.layout.menu_popup, null);
 
-        // set the on click listener for the row menu item
-        rowsMenuLayout = (LinearLayout) view.findViewById(R.id.menu_popup_size_row);
-        rowsMenuLayout.setOnClickListener(this);
         // set the actual number of rows
         numberOfRowsText = (TextView) view.findViewById(R.id.menu_popup_size_row_number);
         numberOfRowsText.setText(Integer.toString(NonogramActivity.numberOfRows));
 
-        // set the on click listener for the column menu item
-        columnsMenuLayout = (LinearLayout) view.findViewById(R.id.menu_popup_size_column);
-        columnsMenuLayout.setOnClickListener(this);
+        // set the on click listener for the row menu item
+        rowsMenuLayout = (LinearLayout) view.findViewById(R.id.menu_popup_size_row);
+        rowsMenuLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int saveNumber = NonogramActivity.numberOfRows;
+                AlertDialog dialog = makeNumberPickerForGameSize(true, false, NonogramActivity.numberOfRows);
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (saveNumber != NonogramActivity.numberOfRows) {
+                            numberOfRowsText.setText(Integer.toString(NonogramActivity.numberOfRows));
+                            GameHandler game = new GameHandler(activity);
+                            game.newGame();
+                        }
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+
         // set the actual number of columns
         numberOfColumnsText = (TextView) view.findViewById(R.id.menu_popup_size_column_number);
         numberOfColumnsText.setText(Integer.toString(NonogramActivity.numberOfColumns));
+
+        // set the on click listener for the column menu item
+        columnsMenuLayout = (LinearLayout) view.findViewById(R.id.menu_popup_size_column);
+        columnsMenuLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int saveNumber = NonogramActivity.numberOfColumns;
+                AlertDialog dialog = makeNumberPickerForGameSize(false, true, NonogramActivity.numberOfColumns);
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (saveNumber != NonogramActivity.numberOfColumns) {
+                            numberOfColumnsText.setText(Integer.toString(NonogramActivity.numberOfColumns));
+                            GameHandler game = new GameHandler(activity);
+                            game.newGame();
+                        }
+                    }
+                });
+                dialog.show();
+            }
+        });
 
         // make popup window
         PopupWindow popupWindow = new PopupWindow(activity);
