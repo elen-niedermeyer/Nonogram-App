@@ -16,7 +16,7 @@ public class StartActivity extends AppCompatActivity implements OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        playButton = (Button) findViewById(R.id.play_button);
+        playButton = (Button) findViewById(R.id.activity_start_buttons_play);
         playButton.setOnClickListener(this);
     }
 

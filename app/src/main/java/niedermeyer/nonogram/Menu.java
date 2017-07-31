@@ -5,10 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.PopupWindow;
@@ -84,17 +82,17 @@ public class Menu implements View.OnClickListener {
         View view = activity.getLayoutInflater().inflate(R.layout.menu_popup, null);
 
         // set the on click listener for the row menu item
-        rowsMenuLayout = (LinearLayout) view.findViewById(R.id.menu_size_row);
+        rowsMenuLayout = (LinearLayout) view.findViewById(R.id.menu_popup_size_row);
         rowsMenuLayout.setOnClickListener(this);
         // set the actual number of rows
-        numberOfRowsText = (TextView) view.findViewById(R.id.menu_size_row_text_number);
+        numberOfRowsText = (TextView) view.findViewById(R.id.menu_popup_size_row_number);
         numberOfRowsText.setText(Integer.toString(NonogramActivity.numberOfRows));
 
         // set the on click listener for the column menu item
-        columnsMenuLayout = (LinearLayout) view.findViewById(R.id.menu_size_column);
+        columnsMenuLayout = (LinearLayout) view.findViewById(R.id.menu_popup_size_column);
         columnsMenuLayout.setOnClickListener(this);
         // set the actual number of columns
-        numberOfColumnsText = (TextView) view.findViewById(R.id.menu_size_column_text_number);
+        numberOfColumnsText = (TextView) view.findViewById(R.id.menu_popup_size_column_number);
         numberOfColumnsText.setText(Integer.toString(NonogramActivity.numberOfColumns));
 
         // make popup window

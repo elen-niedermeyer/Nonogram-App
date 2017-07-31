@@ -102,13 +102,13 @@ public class GameHandler extends Handler implements OnClickListener {
         fieldValue = actualField[r][c];
 
         if (fieldValue == NonogramFields.NOTHING.getValue()) {
-            v.setBackgroundResource(R.drawable.button_field_black);
+            v.setBackgroundResource(R.drawable.game_field_btn_black);
             actualField[r][c] = NonogramFields.PROVED.getValue();
         } else if (fieldValue == NonogramFields.PROVED.getValue()) {
-            v.setBackgroundResource(R.drawable.button_field_cross);
+            v.setBackgroundResource(R.drawable.game_field_btn_cross);
             actualField[r][c] = NonogramFields.EMPTY.getValue();
         } else if (fieldValue == NonogramFields.EMPTY.getValue()) {
-            v.setBackgroundResource(R.drawable.button_field_white);
+            v.setBackgroundResource(R.drawable.game_field_btn_white);
             actualField[r][c] = NonogramFields.NOTHING.getValue();
         }
 
@@ -134,7 +134,7 @@ public class GameHandler extends Handler implements OnClickListener {
      * Adds the counts left for the rows and on the top for the columns.
      */
     private void generateGameField() {
-        TableLayout table = (TableLayout) activity.findViewById(R.id.game_table);
+        TableLayout table = (TableLayout) activity.findViewById(R.id.activity_nonogram_field);
         // clear the field, remove all rows from table
         table.removeAllViews();
 
@@ -162,7 +162,7 @@ public class GameHandler extends Handler implements OnClickListener {
                 String id = i + "" + j;
                 b.setId(Integer.parseInt(id));
                 // set background
-                b.setBackgroundResource(R.drawable.button_field_white);
+                b.setBackgroundResource(R.drawable.game_field_btn_white);
                 // set size
                 int buttonSize = (int) activity.getResources().getDimension(R.dimen.field_button_size);
                 b.setLayoutParams(new TableRow.LayoutParams(buttonSize, buttonSize));
@@ -204,7 +204,7 @@ public class GameHandler extends Handler implements OnClickListener {
             }
 
             // makes the new text view with the pasted text
-            TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.count_view_top, null);
+            TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_top, null);
             counts.setText(countsAsText);
 
             // add the text view to the row
@@ -233,7 +233,7 @@ public class GameHandler extends Handler implements OnClickListener {
         }
 
         // makes the new text view with the pasted string
-        TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.count_view_left, null);
+        TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_left, null);
         counts.setText(countsAsText);
 
         return counts;

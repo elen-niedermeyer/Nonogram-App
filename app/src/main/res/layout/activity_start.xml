@@ -2,14 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root_view_start"
+    android:id="@+id/activity_start_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     tools:context="niedermeyer.nonogram.StartActivity">
 
     <LinearLayout
-        android:id="@+id/buttons_start"
+        android:id="@+id/activity_start_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -17,7 +17,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/play_button"
+            android:id="@+id/activity_start_buttons_play"
             style="@style/ButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             android:text="@string/play" />
 
         <Button
-            android:id="@+id/howto_button"
+            android:id="@+id/activity_start_buttons_howto"
             style="@style/ButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,12 +33,11 @@
             android:text="@string/howto" />
 
         <Button
-            android:id="@+id/options_button"
+            android:id="@+id/activity_start_buttons_options"
             style="@style/ButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/field_button_size"
-            android:text="options" />
+            android:text="@string/options" />
     </LinearLayout>
-
 </RelativeLayout>
