@@ -65,7 +65,7 @@ public class Menu implements View.OnClickListener {
                             numberOfColumnsText.setText(Integer.toString(newValue));
                         }
 
-                        GameHandler game = new GameHandler(activity);
+                        GameHandler game = activity.getGameHandler();
                         game.newGame();
                     }
                 })

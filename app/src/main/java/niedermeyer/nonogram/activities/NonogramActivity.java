@@ -39,6 +39,15 @@ public class NonogramActivity extends AppCompatActivity {
     private Button newGameButton;
     private Button resetGameButton;
 
+    /**
+     * Getter for the {@link GameHandler}.
+     *
+     * @return {@link #game}
+     */
+    public GameHandler getGameHandler() {
+        return this.game;
+    }
+
     public void updateGameSizeView() {
         fieldSizeView.setText(numberOfColumns + " x " + numberOfRows);
     }
