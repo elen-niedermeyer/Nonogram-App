@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.NonogramActivity" />
-        <activity android:name=".activities.OptionsActivity"></activity>
+        <activity android:name=".activities.OptionsActivity" />
+        <activity android:name=".activities.HowToPlayActivity"></activity>
     </application>
 
 </manifest>

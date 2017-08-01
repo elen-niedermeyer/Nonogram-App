@@ -18,6 +18,7 @@
     <string name="number_of_columns">Number of columns</string>
 
     <!-- preferences -->
+    <string name="prefs_group_game_size">game_size</string>
     <string name="prefs_rows">number_of_rows</string>
     <string name="prefs_columns">number_of_columns</string>
 </resources>

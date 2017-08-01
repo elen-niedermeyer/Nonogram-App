@@ -1,6 +1,5 @@
 package niedermeyer.nonogram.activities;
 
-import android.app.Activity;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +15,7 @@ import java.util.Map;
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.logics.NonogramFields;
 import niedermeyer.nonogram.logics.NonogramGenerator;
+import niedermeyer.nonogram.persistence.GameSizeHandler;
 
 /**
  * @author Elen Niedermeyer, last updated 2017-07-16
@@ -50,8 +50,8 @@ public class GameHandler implements OnClickListener {
     }
 
     public void newGame() {
-        int numberOfRows = NonogramActivity.numberOfRows;
-        int numberOfColumns = NonogramActivity.numberOfColumns;
+        int numberOfRows = GameSizeHandler.numberOfRows;
+        int numberOfColumns = GameSizeHandler.numberOfColumns;
         activity.updateGameSizeView();
 
         // make new game field and initialize the private fields
@@ -70,7 +70,11 @@ public class GameHandler implements OnClickListener {
         if (pNonogram != null) {
             // initialize arrays
             nonogram = pNonogram;
-            actualField = pActualField;
+            if (pActualField != null) {
+                actualField = pActualField;
+            } else {
+                actualField = new int[nonogram.length][nonogram[0].length];
+            }
             // initialize field counts arrays
             generator.setNonogram(pNonogram);
             rowCounts = generator.getCountsRow();

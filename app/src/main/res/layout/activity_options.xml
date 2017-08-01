@@ -8,12 +8,48 @@
     android:orientation="vertical"
     tools:context="niedermeyer.nonogram.activities.OptionsActivity">
 
+    <!-- Game field size -->
     <TextView
         android:id="@+id/activity_options_heading_field_size"
         style="@style/Heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/field_size_heading" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow>
+
+            <TextView
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/number_of_rows" />
+
+            <Button
+                android:id="@+id/activity_options_btn_rows"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/number_of_columns" />
+
+            <Button
+                android:id="@+id/activity_options_btn_columns"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+    </TableLayout>
 
     <TextView
         style="@style/Heading"
