@@ -24,8 +24,8 @@ import niedermeyer.nonogram.persistence.GameSizeHandler;
 public class NonogramActivity extends AppCompatActivity {
 
     private GameHandler game = new GameHandler(this);
-    private GameSizeHandler gameSize = new GameSizeHandler(this);
     private Menu menu = new Menu(this);
+    private GameSizeHandler gameSize;
 
     private String nonogramFileName = "nonogram";
     private File nonogramFile;
@@ -76,7 +76,7 @@ public class NonogramActivity extends AppCompatActivity {
             }
         });
 
-        gameSize.initializeFieldSizes();
+        gameSize = new GameSizeHandler(this);
         // initialize size view
         fieldSizeView = (TextView) findViewById(R.id.game_field_size_view);
         updateGameSizeView();
@@ -135,8 +135,13 @@ public class NonogramActivity extends AppCompatActivity {
             }
         }
 
-        // start game with loaded arrays
-        game.newGame(nonogram, actualField);
+        if (nonogram != null && nonogram.length == GameSizeHandler.numberOfRows && nonogram[0].length == GameSizeHandler.numberOfColumns) {
+            // start game with loaded arrays if the size haven't changed
+            game.newGame(nonogram, actualField);
+        } else {
+            // start new game if the size was changed
+            game.newGame();
+        }
     }
 
     private void saveNonogramAndField() {

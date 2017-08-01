@@ -23,13 +23,16 @@ public class GameSizeHandler {
     private Activity activity;
 
     /**
-     * Constructor, sets {@link #activity}. Initializes {@link #numberOfRows} and {@link #numberOfColumns}.
+     * Constructor, sets {@link #activity}. Initializes {@link #numberOfRows} and {@link #numberOfColumns} if they aren't initialized yet.
      *
      * @param pActivity the invoking activity
      */
     public GameSizeHandler(Activity pActivity) {
         activity = pActivity;
-        //initializeFieldSizes();
+        if (numberOfRows == 0 && numberOfColumns == 0) {
+            // fields are not initialized
+            initializeFieldSizes();
+        }
     }
 
     /**

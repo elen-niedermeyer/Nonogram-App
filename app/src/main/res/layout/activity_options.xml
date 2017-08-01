@@ -8,6 +8,7 @@
     android:orientation="vertical"
     tools:context="niedermeyer.nonogram.activities.OptionsActivity">
 
+    <!-- Game field size -->
     <TextView
         android:id="@+id/activity_options_heading_field_size"
         style="@style/Heading"
@@ -15,43 +16,40 @@
         android:layout_height="wrap_content"
         android:text="@string/field_size_heading" />
 
-    <LinearLayout
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <TextView
-            style="@style/Text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/number_of_rows" />
+        <TableRow>
 
-        <Button
-            android:id="@+id/activity_options_btn_rows"
-            style="@style/ButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/number_of_rows" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/activity_options_btn_rows"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <TableRow>
 
-        <TextView
-            style="@style/Text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/number_of_columns" />
+            <TextView
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/number_of_columns" />
 
-        <Button
-            android:id="@+id/activity_options_btn_columns"
-            style="@style/ButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+            <Button
+                android:id="@+id/activity_options_btn_columns"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+    </TableLayout>
 
     <TextView
         style="@style/Heading"

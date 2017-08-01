@@ -19,13 +19,12 @@ import niedermeyer.nonogram.persistence.GameSizeHandler;
 /**
  * @author Elen Niedermeyer, last updated 2017-07-16
  */
-
 public class Menu {
 
-    private Activity activity;
+    private static final int MIN_NUMBER_OF_COLUMNS_AND_ROWS = 3;
+    private static final int MAX_NUMBER_OF_COLUMNS_AND_ROWS = 30;
 
-    private int minNumberOfColumnsAndRows = 3;
-    private int maxNumberOfColumnsAndRows = 30;
+    private Activity activity;
 
     public Menu(Activity pActivity) {
         activity = pActivity;
@@ -37,10 +36,10 @@ public class Menu {
     }
 
     public AlertDialog makeNumberPickerForGameSize(final boolean isRow) {
-        View layout = activity.getLayoutInflater().inflate(R.layout.menu_number_picker, null);
+        View layout = activity.getLayoutInflater().inflate(R.layout.dialog_number_picker, null);
         final NumberPicker picker = (NumberPicker) layout.findViewById(R.id.menu_number_picker);
-        picker.setMinValue(minNumberOfColumnsAndRows);
-        picker.setMaxValue(maxNumberOfColumnsAndRows);
+        picker.setMinValue(MIN_NUMBER_OF_COLUMNS_AND_ROWS);
+        picker.setMaxValue(MAX_NUMBER_OF_COLUMNS_AND_ROWS);
         if (isRow) {
             picker.setValue(GameSizeHandler.numberOfRows);
         } else {

@@ -1,6 +1,5 @@
 package niedermeyer.nonogram.activities;
 
-import android.app.Activity;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -71,7 +70,11 @@ public class GameHandler implements OnClickListener {
         if (pNonogram != null) {
             // initialize arrays
             nonogram = pNonogram;
-            actualField = pActualField;
+            if (pActualField != null) {
+                actualField = pActualField;
+            } else {
+                actualField = new int[nonogram.length][nonogram[0].length];
+            }
             // initialize field counts arrays
             generator.setNonogram(pNonogram);
             rowCounts = generator.getCountsRow();
