@@ -87,7 +87,8 @@ public class Menu {
                         if (saveNumber != GameSizeHandler.numberOfRows) {
                             numberOfRowsText.setText(Integer.toString(GameSizeHandler.numberOfRows));
                             if (activity instanceof NonogramActivity) {
-                                GameHandler game = activity.getGameHandler();
+                                NonogramActivity nonogramActivity = (NonogramActivity) activity;
+                                GameHandler game = nonogramActivity.getGameHandler();
                                 game.newGame();
                             } else {
                                 Logger.getLogger(NonogramActivity.class.getName()).log(Level.FINER, null, "New game should be started from another activity than NonogramActivity");
@@ -117,7 +118,8 @@ public class Menu {
                         if (saveNumber != GameSizeHandler.numberOfColumns) {
                             numberOfColumnsText.setText(Integer.toString(GameSizeHandler.numberOfColumns));
                             if (activity instanceof NonogramActivity) {
-                                GameHandler game = activity.getGameHandler();
+                                NonogramActivity nonogramActivity = (NonogramActivity) activity;
+                                GameHandler game = nonogramActivity.getGameHandler();
                                 game.newGame();
                             } else {
                                 Logger.getLogger(NonogramActivity.class.getName()).log(Level.FINER, null, "New game should be started from another activity than NonogramActivity");
