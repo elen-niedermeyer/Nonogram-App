@@ -1,9 +1,14 @@
 package niedermeyer.nonogram.activities;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.Scroller;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -138,7 +143,7 @@ public class GameHandler implements OnClickListener {
         }
 
         if (Arrays.deepEquals(actualFieldCopy, nonogram)) {
-            newGame();
+            showWonAnimation();
         }
     }
 
@@ -301,5 +306,33 @@ public class GameHandler implements OnClickListener {
         counts.setText(countsAsText);
 
         return counts;
+    }
+
+    private void showWonAnimation() {
+        final ScrollView gameLayout = (ScrollView) activity.findViewById(R.id.activity_nonogram_scroll_vertical);
+        final LinearLayout animationLayout = (LinearLayout) activity.findViewById(R.id.activity_nonogram_animation_won);
+        animationLayout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameLayout.setVisibility(View.VISIBLE);
+                animationLayout.setVisibility(View.GONE);
+                activity.getGameHandler().newGame();
+            }
+        });
+
+        crossfade(animationLayout, gameLayout);
+    }
+
+    private void crossfade(View pGoIn, final View pGoOut) {
+        int shortAnimationDuration = activity.getResources().getInteger(android.R.integer.config_shortAnimTime);
+        int mediumAnimationDuration = activity.getResources().getInteger(android.R.integer.config_mediumAnimTime);
+
+        pGoIn.setVisibility(View.VISIBLE);
+        pGoIn.animate()
+                .alpha(1f)
+                .setDuration(mediumAnimationDuration)
+                .setListener(null);
+
+
     }
 }
