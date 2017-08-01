@@ -69,7 +69,7 @@ public class NonogramGenerator {
             countsRow = countProvedFieldsPerRow();
             countsColumn = countProvedFieldsPerColumn();
 
-            // prove if there is at least one field proved
+            // check if there is at least one field proved
             isOnlyZero = true;
             for (ArrayList<Integer> list : countsRow.values()) {
                 for (Integer count : list) {

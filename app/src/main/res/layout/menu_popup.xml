@@ -3,7 +3,7 @@
     android:id="@+id/menu_popup_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background_color_popup"
+    android:background="@color/transparent"
     android:orientation="vertical">
 
     <LinearLayout
@@ -16,14 +16,14 @@
 
         <TextView
             android:id="@+id/menu_popup_size_row_text"
-            style="@style/CountViewsLeft"
+            style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/number_of_rows" />
 
         <TextView
             android:id="@+id/menu_popup_size_row_number"
-            style="@style/CountViewsLeft"
+            style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
@@ -38,14 +38,14 @@
 
         <TextView
             android:id="@+id/menu_popup_size_column_text"
-            style="@style/CountViewsLeft"
+            style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/number_of_columns" />
 
         <TextView
             android:id="@+id/menu_popup_size_column_number"
-            style="@style/CountViewsLeft"
+            style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
