@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_nonogram_root"
     android:layout_width="match_parent"
@@ -8,15 +9,14 @@
     android:orientation="horizontal"
     tools:context="niedermeyer.nonogram.activities.NonogramActivity">
 
-    <LinearLayout
-        android:id="@+id/activity_nonogram_buttons_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="@color/background_color"
-        android:orientation="horizontal">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/activity_nonogram_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <TextView
             android:id="@+id/game_field_size_view"
@@ -24,36 +24,13 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
 
-        <Button
-            android:id="@+id/activity_nonogram_buttons_menu_new"
-            style="@style/ButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/new_game" />
-
-        <Button
-            android:id="@+id/activity_nonogram_buttons_menu_reset"
-            style="@style/ButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/reset_game" />
-
-        <ImageButton
-            android:id="@+id/activity_nonogram_buttons_menu_menu"
-            style="@style/ButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/nothing"
-            android:layout_marginRight="@dimen/nothing"
-            android:contentDescription="@string/options"
-            android:src="@drawable/ic_menu_black" />
-    </LinearLayout>
+    </android.support.v7.widget.Toolbar>
 
     <ScrollView
         android:id="@+id/activity_nonogram_scroll_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/activity_nonogram_buttons_menu"
+        android:layout_below="@id/activity_nonogram_toolbar"
         android:layout_margin="@dimen/margin_for_views"
         android:background="@color/background_color">
 

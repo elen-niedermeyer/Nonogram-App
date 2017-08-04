@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.NonogramActivity">
+
+    <item
+        android:id="@+id/toolbar_game_new"
+        android:title="@string/new_game"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/toolbar_game_reset"
+        android:title="@string/reset_game"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/toolbar_game_rows"
+        android:title="@string/number_of_rows"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/toolbar_game_columns"
+        android:title="@string/number_of_columns"
+        app:showAsAction="never" />
+</menu>

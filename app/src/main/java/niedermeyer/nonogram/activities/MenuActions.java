@@ -19,14 +19,14 @@ import niedermeyer.nonogram.persistence.GameSizeHandler;
 /**
  * @author Elen Niedermeyer, last updated 2017-07-16
  */
-public class Menu {
+public class MenuActions {
 
     private static final int MIN_NUMBER_OF_COLUMNS_AND_ROWS = 3;
     private static final int MAX_NUMBER_OF_COLUMNS_AND_ROWS = 30;
 
     private Activity activity;
 
-    public Menu(Activity pActivity) {
+    public MenuActions(Activity pActivity) {
         activity = pActivity;
     }
 

@@ -35,7 +35,7 @@ public class OptionsActivity extends AppCompatActivity {
      */
     private void setPartForGameSize() {
         final GameSizeHandler gameSizeHandler = new GameSizeHandler(this);
-        final Menu menuHelper = new Menu(this);
+        final MenuActions menuActions = new MenuActions(this);
 
         // initialize the button for the number of rows
         final Button setRows = (Button) findViewById(R.id.activity_options_btn_rows);
@@ -45,7 +45,7 @@ public class OptionsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final int number = GameSizeHandler.numberOfRows;
                 // get the number picker dialog
-                AlertDialog dialog = menuHelper.makeNumberPickerForGameSize(true);
+                AlertDialog dialog = menuActions.makeNumberPickerForGameSize(true);
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
@@ -69,7 +69,7 @@ public class OptionsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final int number = GameSizeHandler.numberOfColumns;
                 // get the number picker dialog
-                AlertDialog dialog = menuHelper.makeNumberPickerForGameSize(false);
+                AlertDialog dialog = menuActions.makeNumberPickerForGameSize(false);
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {

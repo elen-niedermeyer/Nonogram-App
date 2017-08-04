@@ -1,12 +1,14 @@
 package niedermeyer.nonogram.activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageButton;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.io.File;
@@ -19,12 +21,12 @@ import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.persistence.GameSizeHandler;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-07-16
+ * @author Elen Niedermeyer, last updated 2017-08-04
  */
 public class NonogramActivity extends AppCompatActivity {
 
     private GameHandler game = new GameHandler(this);
-    private Menu menu = new Menu(this);
+    private MenuActions menuActions = new MenuActions(this);
     private GameSizeHandler gameSize;
 
     private String nonogramFileName = "nonogram";
@@ -32,10 +34,7 @@ public class NonogramActivity extends AppCompatActivity {
     private String actualFieldFileName = "actual_field";
     private File actualFieldFile;
 
-    private ImageButton menuButton;
     private TextView fieldSizeView;
-    private Button newGameButton;
-    private Button resetGameButton;
 
     /**
      * Getter for the {@link GameHandler}.
@@ -51,39 +50,74 @@ public class NonogramActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        // Inflate the menuActions; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_activity_nonogram, menu);
+
+        MenuItem rowsNumber = menu.findItem(R.id.toolbar_game_rows);
+        rowsNumber.setTitle(getString(R.string.number_of_rows) + ": " + Integer.toString(GameSizeHandler.numberOfRows));
+
+        MenuItem columnsNumber = menu.findItem(R.id.toolbar_game_columns);
+        columnsNumber.setTitle(getString(R.string.number_of_columns) + ": " + Integer.toString(GameSizeHandler.numberOfColumns));
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final MenuItem clickedItem = item;
+        switch (item.getItemId()) {
+            case R.id.toolbar_game_new:
+                game.newGame();
+                return true;
+
+            case R.id.toolbar_game_reset:
+                game.resetGame();
+                return true;
+
+            case R.id.toolbar_game_rows:
+                AlertDialog dialogRows = menuActions.makeNumberPickerForGameSize(true);
+                final int saveNumberRows = GameSizeHandler.numberOfRows;
+                dialogRows.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (saveNumberRows != GameSizeHandler.numberOfRows) {
+                            clickedItem.setTitle(getString(R.string.number_of_rows) + ": " + Integer.toString(GameSizeHandler.numberOfRows));
+                            game.newGame();
+                        }
+                    }
+                });
+                dialogRows.show();
+                return true;
+
+            case R.id.toolbar_game_columns:
+                AlertDialog dialogColumns = menuActions.makeNumberPickerForGameSize(false);
+                final int saveNumberColumns = GameSizeHandler.numberOfColumns;
+                dialogColumns.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (saveNumberColumns != GameSizeHandler.numberOfColumns) {
+                            clickedItem.setTitle(getString(R.string.number_of_columns) + ": " + Integer.toString(GameSizeHandler.numberOfColumns));
+                            game.newGame();
+                        }
+                    }
+                });
+                dialogColumns.show();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_nonogram);
-
-        // initialize new game button
-        newGameButton = (Button) findViewById(R.id.activity_nonogram_buttons_menu_new);
-        newGameButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                game.newGame();
-            }
-        });
-
-        // initialize reset game button
-        resetGameButton = (Button) findViewById(R.id.activity_nonogram_buttons_menu_reset);
-        resetGameButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                game.resetGame();
-            }
-        });
-
-        // initialize menu button
-        menuButton = (ImageButton) findViewById(R.id.activity_nonogram_buttons_menu_menu);
-        menuButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v == menuButton) {
-                    menu.showPopupMenu(v);
-                }
-            }
-        });
 
         gameSize = new GameSizeHandler(this);
         // initialize size view
@@ -91,6 +125,9 @@ public class NonogramActivity extends AppCompatActivity {
         updateGameSizeView();
 
         loadLastNonogramAndField();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_nonogram_toolbar);
+        setSupportActionBar(toolbar);
     }
 
     @Override
@@ -100,7 +137,6 @@ public class NonogramActivity extends AppCompatActivity {
         gameSize.saveGameSize();
         saveNonogramAndField();
     }
-
 
     private void loadLastNonogramAndField() {
         ObjectInputStream in = null;
