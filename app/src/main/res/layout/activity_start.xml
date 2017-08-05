@@ -20,7 +20,7 @@
         <Button
             android:id="@+id/activity_start_buttons_play"
             style="@style/ButtonStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/field_button_size"
             android:text="@string/play" />

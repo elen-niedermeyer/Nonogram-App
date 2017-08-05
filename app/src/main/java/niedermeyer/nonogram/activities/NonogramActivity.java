@@ -2,14 +2,12 @@ package niedermeyer.nonogram.activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import java.io.File;
 import java.io.ObjectInputStream;
@@ -33,8 +31,6 @@ public class NonogramActivity extends AppCompatActivity {
     private File nonogramFile;
     private String actualFieldFileName = "actual_field";
     private File actualFieldFile;
-
-    private Toolbar toolbar;
 
     /**
      * Getter for the {@link GameHandler}.
@@ -122,7 +118,7 @@ public class NonogramActivity extends AppCompatActivity {
 
         gameSize = new GameSizeHandler(this);
 
-        toolbar = (Toolbar) findViewById(R.id.activity_nonogram_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_nonogram_toolbar);
         setSupportActionBar(toolbar);
         updateToolbarTitle();
 
