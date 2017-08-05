@@ -16,15 +16,7 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-        <TextView
-            android:id="@+id/game_field_size_view"
-            style="@style/CountViewsTop"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-
-    </android.support.v7.widget.Toolbar>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <ScrollView
         android:id="@+id/activity_nonogram_scroll_vertical"

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Nonogram</string>
+    <string name="toolbar_title">Nonogram %1$d x %2$d</string>
 
+    <string name="empty"></string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
@@ -9,8 +11,6 @@
     <string name="options">Options</string>
     <string name="new_game">New game</string>
     <string name="reset_game">Reset game</string>
-
-    <string name="game_size_text">%1$s x %2$s</string>
 
     <!-- menu items -->
     <string name="field_size_heading">Game field size</string>

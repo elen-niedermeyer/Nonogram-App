@@ -2,7 +2,7 @@ package niedermeyer.nonogram.activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v7.app.ActionBar;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,7 +34,7 @@ public class NonogramActivity extends AppCompatActivity {
     private String actualFieldFileName = "actual_field";
     private File actualFieldFile;
 
-    private TextView fieldSizeView;
+    private Toolbar toolbar;
 
     /**
      * Getter for the {@link GameHandler}.
@@ -45,8 +45,9 @@ public class NonogramActivity extends AppCompatActivity {
         return this.game;
     }
 
-    public void updateGameSizeView() {
-        fieldSizeView.setText(GameSizeHandler.numberOfColumns + " x " + GameSizeHandler.numberOfRows);
+    public void updateToolbarTitle() {
+        String title = String.format(getString(R.string.toolbar_title), GameSizeHandler.numberOfColumns, GameSizeHandler.numberOfRows);
+        getSupportActionBar().setTitle(title);
     }
 
     @Override
@@ -120,14 +121,12 @@ public class NonogramActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nonogram);
 
         gameSize = new GameSizeHandler(this);
-        // initialize size view
-        fieldSizeView = (TextView) findViewById(R.id.game_field_size_view);
-        updateGameSizeView();
+
+        toolbar = (Toolbar) findViewById(R.id.activity_nonogram_toolbar);
+        setSupportActionBar(toolbar);
+        updateToolbarTitle();
 
         loadLastNonogramAndField();
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_nonogram_toolbar);
-        setSupportActionBar(toolbar);
     }
 
     @Override

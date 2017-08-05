@@ -52,7 +52,7 @@ public class GameHandler implements OnClickListener {
     public void newGame() {
         int numberOfRows = GameSizeHandler.numberOfRows;
         int numberOfColumns = GameSizeHandler.numberOfColumns;
-        activity.updateGameSizeView();
+        activity.updateToolbarTitle();
 
         // make new game field and initialize the private fields
         generator.makeNewGame(numberOfRows, numberOfColumns);
