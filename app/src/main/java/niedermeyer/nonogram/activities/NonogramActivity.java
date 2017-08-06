@@ -81,6 +81,7 @@ public class NonogramActivity extends AppCompatActivity {
                     public void onDismiss(DialogInterface dialog) {
                         if (saveNumberRows != GameSizeHandler.numberOfRows) {
                             clickedItem.setTitle(getString(R.string.number_of_rows) + ": " + Integer.toString(GameSizeHandler.numberOfRows));
+                            updateToolbarTitle();
                             game.newGame();
                         }
                     }
@@ -96,6 +97,7 @@ public class NonogramActivity extends AppCompatActivity {
                     public void onDismiss(DialogInterface dialog) {
                         if (saveNumberColumns != GameSizeHandler.numberOfColumns) {
                             clickedItem.setTitle(getString(R.string.number_of_columns) + ": " + Integer.toString(GameSizeHandler.numberOfColumns));
+                            updateToolbarTitle();
                             game.newGame();
                         }
                     }

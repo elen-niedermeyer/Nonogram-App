@@ -18,22 +18,31 @@ import niedermeyer.nonogram.logics.NonogramGenerator;
 import niedermeyer.nonogram.persistence.GameSizeHandler;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-07-16
+ * @author Elen Niedermeyer, last updated 2017-08-06
  */
-
 public class GameHandler implements OnClickListener {
 
+    /**
+     * Context activity
+     */
     private NonogramActivity activity;
 
+    /**
+     * Logical elements
+     */
     private NonogramGenerator generator = new NonogramGenerator();
     private int[][] nonogram;
     private Map<Integer, ArrayList<Integer>> rowCounts;
     private Map<Integer, ArrayList<Integer>> columnCounts;
 
+    /**
+     * Field that the users creates
+     */
     private int[][] actualField;
 
     /**
      * Constructor.
+     * Initializes {@link #activity}
      *
      * @param pActivity the activity in which the game handler is used
      */
@@ -41,17 +50,35 @@ public class GameHandler implements OnClickListener {
         activity = pActivity;
     }
 
+    /**
+     * Getter for the nonogram
+     *
+     * @return {@link #nonogram}
+     */
     public int[][] getNonogram() {
         return nonogram;
     }
 
+    /**
+     * Getter for the field that the user creates
+     *
+     * @return {@link #actualField}
+     */
     public int[][] getActualField() {
         return actualField;
     }
 
+    /**
+     * Creates a new nonogram game field.
+     * Generates a new nonogram by {@link #generator}. Sets {@link #nonogram}, {@link #rowCounts} and {@link #columnCounts}.
+     * Resets {@link #actualField}.
+     * Generates the GUI by {@link #generateNewGameField()}.
+     */
     public void newGame() {
         int numberOfRows = GameSizeHandler.numberOfRows;
         int numberOfColumns = GameSizeHandler.numberOfColumns;
+
+        // ToDo look if this row is necessary
         activity.updateToolbarTitle();
 
         // make new game field and initialize the private fields
@@ -66,6 +93,17 @@ public class GameHandler implements OnClickListener {
         generateNewGameField();
     }
 
+    /**
+     * Creates a nonogram field by a given nonogram and field.
+     * Sets {@link #nonogram} and {@link #actualField} by the given parameters.
+     * Sets {@link #rowCounts} and {@link #columnCounts} with {@link #generator}.
+     * Generates the GUI by {@link #generateSavedGameField()}.
+     * <p>
+     * Generates a new game field by {@link #newGame()}, if the parameters are null.
+     *
+     * @param pNonogram    an array that should represent {@link #nonogram}
+     * @param pActualField an array that should represent {@link #actualField}
+     */
     public void newGame(int[][] pNonogram, int[][] pActualField) {
         if (pNonogram != null) {
             // initialize arrays
@@ -83,38 +121,57 @@ public class GameHandler implements OnClickListener {
             generateSavedGameField();
 
         } else {
-            // make new game if the field couldn' be loaded
+            // make new game if the field couldn't be loaded
             newGame();
         }
     }
 
+    /**
+     * Resets the game.
+     * Just makes a new GUI for the current nonogram by {@link #generateNewGameField()}.
+     */
     public void resetGame() {
         generateNewGameField();
     }
 
+    /**
+     * Overrides {@link OnClickListener#onClick(View)}.
+     * Parses the clicked field's id.
+     * Changes the background:
+     * If the field was {@link NonogramFields#NOTHING} it becomes {@link NonogramFields#PROVED}.
+     * If it was {@link NonogramFields#PROVED} it becomes {@link NonogramFields#EMPTY}.
+     * If it was {@link NonogramFields#EMPTY} it becomes {@link NonogramFields#NOTHING}.
+     * <p>
+     * Looks if the nonogram is solved by comparing the updated {@link #actualField} with {@link #nonogram}.
+     *
+     * @param v the clicked view, given by the system
+     */
     @Override
     public void onClick(View v) {
-        int fieldValue;
-
+        // get position of the clicked view
+        // get the views parent to get the row number
         TableRow row = (TableRow) v.getParent();
         int r = row.getId();
-
+        // get the view id, it's [row number][column number]
         int id = v.getId();
         String idString = Integer.toString(id);
-
+        // get the column number
         int c;
         if (r == 0) {
+            // if the row is 0, the column number is just the view id
             c = id;
         } else if (r > 0 && r < 10) {
+            // if the row number has one digit, the column number is the view id without the first digit
             String jString = idString.substring(1);
             c = Integer.parseInt(jString);
         } else {
+            // if the row number has two digits, the column number is the view id without the two first digits
             String jString = idString.substring(2);
             c = Integer.parseInt(jString);
         }
 
-        fieldValue = actualField[r][c];
-
+        // changes the clicked field
+        int fieldValue = actualField[r][c];
         if (fieldValue == NonogramFields.NOTHING.getValue()) {
             v.setBackgroundResource(R.drawable.game_field_btn_black);
             actualField[r][c] = NonogramFields.PROVED.getValue();
@@ -126,18 +183,21 @@ public class GameHandler implements OnClickListener {
             actualField[r][c] = NonogramFields.NOTHING.getValue();
         }
 
+        // prove if the nonogram is solved now
+        // make a copy, replace all -1 with 0 (these are empty fields but in the GUI they have different meanings)
         int[][] actualFieldCopy = new int[actualField.length][actualField[0].length];
         for (int i = 0; i < actualField.length; i++) {
             for (int j = 0; j < actualField[i].length; j++) {
-                if (actualField[i][j] == -1) {
+                if (actualField[i][j] == NonogramFields.NOTHING.getValue()) {
                     actualFieldCopy[i][j] = NonogramFields.EMPTY.getValue();
                 } else {
                     actualFieldCopy[i][j] = actualField[i][j];
                 }
             }
         }
-
+        // if the copy of the array is equals the nonogram, the game is solved
         if (Arrays.deepEquals(actualFieldCopy, nonogram)) {
+            // game solved, start a new one
             newGame();
         }
     }
@@ -192,6 +252,11 @@ public class GameHandler implements OnClickListener {
         }
     }
 
+    /**
+     * Makes the game field.
+     * Makes a table row for each row. IDs are the place in the nonogram array. The value and so the style of the fields is given by {@link #actualField}.
+     * Adds the counts left for the rows and on the top for the columns.
+     */
     private void generateSavedGameField() {
         TableLayout table = (TableLayout) activity.findViewById(R.id.activity_nonogram_field);
         // clear the field, remove all rows from table
