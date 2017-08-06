@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/activity_nonogram_toolbar"
-        android:layout_margin="@dimen/margin_for_views"
+        android:layout_margin="@dimen/distance_views_1"
         android:background="@color/background_color">
 
         <HorizontalScrollView

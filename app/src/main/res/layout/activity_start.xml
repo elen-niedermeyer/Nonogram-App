@@ -22,23 +22,30 @@
             style="@style/ButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/field_button_size"
+            android:layout_margin="@dimen/distance_views_3"
             android:text="@string/play" />
 
-        <Button
-            android:id="@+id/activity_start_buttons_howto"
-            style="@style/ButtonStyle"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/field_button_size"
-            android:text="@string/howto" />
+            android:layout_margin="@dimen/distance_views_3"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/activity_start_buttons_options"
-            style="@style/ButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/field_button_size"
-            android:text="@string/options" />
+            <Button
+                android:id="@+id/activity_start_buttons_howto"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/distance_views_3"
+                android:text="@string/howto" />
+
+            <Button
+                android:id="@+id/activity_start_buttons_options"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/distance_views_3"
+                android:text="@string/options" />
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
