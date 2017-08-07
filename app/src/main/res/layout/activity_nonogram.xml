@@ -45,7 +45,7 @@
         android:id="@+id/activity_nonogram_animation_won"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/activity_nonogram_buttons_menu"
+        android:layout_below="@id/activity_nonogram_toolbar"
         android:background="@color/transparent_nearly"
         android:clickable="true"
         android:gravity="center"
