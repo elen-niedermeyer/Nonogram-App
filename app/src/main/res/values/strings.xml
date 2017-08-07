@@ -17,6 +17,10 @@
     <string name="number_of_rows">Number of rows</string>
     <string name="number_of_columns">Number of columns</string>
 
+    <!-- won animation -->
+    <string name="won">You solved the puzzle</string>
+    <string name="click_here">Click to start a new puzzle</string>
+
     <!-- preferences -->
     <string name="prefs_group_game_size">game_size</string>
     <string name="prefs_rows">number_of_rows</string>

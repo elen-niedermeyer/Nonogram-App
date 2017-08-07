@@ -1,9 +1,14 @@
 package niedermeyer.nonogram.activities;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.Scroller;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -20,6 +25,7 @@ import niedermeyer.nonogram.persistence.GameSizeHandler;
 /**
  * @author Elen Niedermeyer, last updated 2017-08-06
  */
+
 public class GameHandler implements OnClickListener {
 
     /**
@@ -197,8 +203,8 @@ public class GameHandler implements OnClickListener {
         }
         // if the copy of the array is equals the nonogram, the game is solved
         if (Arrays.deepEquals(actualFieldCopy, nonogram)) {
-            // game solved, start a new one
-            newGame();
+            //ToDo: code docu
+            showWonAnimation();
         }
     }
 
@@ -366,5 +372,30 @@ public class GameHandler implements OnClickListener {
         counts.setText(countsAsText);
 
         return counts;
+    }
+
+    private void showWonAnimation() {
+        final ScrollView gameLayout = (ScrollView) activity.findViewById(R.id.activity_nonogram_scroll_vertical);
+        final LinearLayout animationLayout = (LinearLayout) activity.findViewById(R.id.activity_nonogram_animation_won);
+        animationLayout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameLayout.setVisibility(View.VISIBLE);
+                animationLayout.setVisibility(View.GONE);
+                activity.getGameHandler().newGame();
+            }
+        });
+
+        crossfade(animationLayout);
+    }
+
+    private void crossfade(View pGoIn) {
+        int longAnimationDuration = activity.getResources().getInteger(android.R.integer.config_longAnimTime);
+
+        pGoIn.setVisibility(View.VISIBLE);
+        pGoIn.animate()
+                .alpha(1f)
+                .setDuration(longAnimationDuration)
+                .setListener(null);
     }
 }
