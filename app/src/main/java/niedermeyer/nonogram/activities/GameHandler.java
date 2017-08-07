@@ -320,19 +320,16 @@ public class GameHandler implements OnClickListener {
             }
         });
 
-        crossfade(animationLayout, gameLayout);
+        crossfade(animationLayout);
     }
 
-    private void crossfade(View pGoIn, final View pGoOut) {
-        int shortAnimationDuration = activity.getResources().getInteger(android.R.integer.config_shortAnimTime);
-        int mediumAnimationDuration = activity.getResources().getInteger(android.R.integer.config_mediumAnimTime);
+    private void crossfade(View pGoIn) {
+        int longAnimationDuration = activity.getResources().getInteger(android.R.integer.config_longAnimTime);
 
         pGoIn.setVisibility(View.VISIBLE);
         pGoIn.animate()
                 .alpha(1f)
-                .setDuration(mediumAnimationDuration)
+                .setDuration(longAnimationDuration)
                 .setListener(null);
-
-
     }
 }
