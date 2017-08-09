@@ -41,16 +41,6 @@ public class GameSizeHandler {
     }
 
     /**
-     * Loads the game field sizes of shared preferences.
-     * Sets {@link #numberOfRows} and {@link #numberOfColumns}.
-     */
-    public void initializeFieldSizes() {
-        SharedPreferences prefs = activity.getSharedPreferences(activity.getString(R.string.prefs_group_game_size), Context.MODE_PRIVATE);
-        numberOfRows = prefs.getInt(activity.getString(R.string.prefs_rows), SIZE_DEFAULT);
-        numberOfColumns = prefs.getInt(activity.getString(R.string.prefs_columns), SIZE_DEFAULT);
-    }
-
-    /**
      * Saves {@link #numberOfRows} and {@link #numberOfColumns} in shared preferences.
      */
     public void saveGameSize() {
@@ -59,5 +49,15 @@ public class GameSizeHandler {
         prefsEdit.putInt(activity.getString(R.string.prefs_rows), numberOfRows);
         prefsEdit.putInt(activity.getString(R.string.prefs_columns), numberOfColumns);
         prefsEdit.apply();
+    }
+
+    /**
+     * Loads the game field sizes of shared preferences.
+     * Sets {@link #numberOfRows} and {@link #numberOfColumns}.
+     */
+    private void initializeFieldSizes() {
+        SharedPreferences prefs = activity.getSharedPreferences(activity.getString(R.string.prefs_group_game_size), Context.MODE_PRIVATE);
+        numberOfRows = prefs.getInt(activity.getString(R.string.prefs_rows), SIZE_DEFAULT);
+        numberOfColumns = prefs.getInt(activity.getString(R.string.prefs_columns), SIZE_DEFAULT);
     }
 }
