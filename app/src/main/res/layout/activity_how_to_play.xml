@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_how_to_play_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/distance_views_2"
+    android:clickable="true"
+    android:orientation="vertical"
     tools:context="niedermeyer.nonogram.activities.HowToPlayActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/activity_how_to_play_description"
+        style="@style/Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/activity_how_to_play_text_click"
+        style="@style/Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/distance_views_3"
+        android:text="@string/click_here_continue" />
+
+</LinearLayout>

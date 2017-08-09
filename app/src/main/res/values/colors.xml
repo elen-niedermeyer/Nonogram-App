@@ -12,6 +12,8 @@
     <color name="gray">#AAAAAA</color>
     <color name="black">#000000</color>
 
+    <color name="accent_red">#FF0000</color>
+
     <color name="background_color">#EEEEEE</color>
     <color name="background_color_popup">#EEEEEE</color>
 </resources>

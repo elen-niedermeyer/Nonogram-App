@@ -19,7 +19,15 @@
 
     <!-- won animation -->
     <string name="won">You solved the puzzle</string>
-    <string name="click_here">Click to start a new puzzle</string>
+    <string name="click_here_new_game">Click to start a new puzzle</string>
+
+    <!-- how to play activity -->
+    <string name="instruction_1">blablabla</string>
+    <string name="instruction_2">blbla2</string>
+    <string name="instruction_3">blabla3</string>
+    <string name="instruction_4">blabla4</string>
+    <string name="instruction_5">blablabla5</string>
+    <string name="click_here_continue">Click to continue</string>
 
     <!-- preferences -->
     <string name="prefs_group_game_size">game_size</string>
