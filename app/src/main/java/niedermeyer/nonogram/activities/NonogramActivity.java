@@ -2,9 +2,10 @@ package niedermeyer.nonogram.activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -104,6 +105,10 @@ public class NonogramActivity extends AppCompatActivity {
                 });
                 dialogColumns.show();
                 return true;
+
+            case R.id.toolbar_instruction:
+                Intent i = new Intent(this, HowToPlayActivity.class);
+                startActivity(i);
 
             default:
                 // If we got here, the user's action was not recognized.

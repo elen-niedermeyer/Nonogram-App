@@ -27,4 +27,9 @@
         android:id="@+id/toolbar_game_columns"
         android:title="@string/number_of_columns"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/toolbar_instruction"
+        android:title="@string/howto"
+        app:showAsAction="never" />
 </menu>
