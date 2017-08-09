@@ -18,6 +18,11 @@ public class GameSizeHandler {
     public static int numberOfColumns;
 
     /**
+     * Number of rows and columns if the preferences couldn't be loaded
+     */
+    private static final int SIZE_DEFAULT = 5;
+
+    /**
      * activity, which makes an instance of this class
      */
     private Activity activity;
@@ -41,8 +46,8 @@ public class GameSizeHandler {
      */
     public void initializeFieldSizes() {
         SharedPreferences prefs = activity.getSharedPreferences(activity.getString(R.string.prefs_group_game_size), Context.MODE_PRIVATE);
-        numberOfRows = prefs.getInt(activity.getString(R.string.prefs_rows), 5);
-        numberOfColumns = prefs.getInt(activity.getString(R.string.prefs_columns), 5);
+        numberOfRows = prefs.getInt(activity.getString(R.string.prefs_rows), SIZE_DEFAULT);
+        numberOfColumns = prefs.getInt(activity.getString(R.string.prefs_columns), SIZE_DEFAULT);
     }
 
     /**
