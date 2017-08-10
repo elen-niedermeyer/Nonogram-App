@@ -27,6 +27,7 @@
     <string name="instruction_3">blabla3</string>
     <string name="instruction_4">blabla4</string>
     <string name="instruction_5">blablabla5</string>
+    <string name="skip_tutorial">Skip tutorial</string>
     <string name="click_here_continue">Click to continue</string>
 
     <!-- preferences -->

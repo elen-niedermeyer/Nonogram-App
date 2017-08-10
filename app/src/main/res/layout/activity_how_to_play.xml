@@ -9,6 +9,14 @@
     android:orientation="vertical"
     tools:context="niedermeyer.nonogram.activities.HowToPlayActivity">
 
+    <Button
+        android:id="@+id/activity_how_to_play_btn_skip"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/skip_tutorial" />
+
     <TextView
         android:id="@+id/activity_how_to_play_description"
         style="@style/Text"
