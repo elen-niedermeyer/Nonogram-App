@@ -66,9 +66,11 @@ public class HowToPlayActivity extends AppCompatActivity implements OnClickListe
             // if it's not the end of the array, update views
             instruction.setText(instructions[index]);
             root.removeViewAt(INDEX_POSITION_TABLE);
+            // adds the table
             TableLayout nextTable = tables[index];
             nextTable.setLayoutParams(getTableParams());
             root.addView(nextTable, INDEX_POSITION_TABLE);
+
             if (index == instructions.length - 1) {
                 // if it's the last step, change the string below
                 clickText.setText(getString(R.string.click_here_new_game));
@@ -139,6 +141,11 @@ public class HowToPlayActivity extends AppCompatActivity implements OnClickListe
         startActivity(new Intent(this, NonogramActivity.class));
     }
 
+    /**
+     * Gives the layout params for the tables.
+     *
+     * @return layout params for the table views.
+     */
     private TableLayout.LayoutParams getTableParams() {
         TableLayout.LayoutParams params = new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
         //// TODO: 11.08.2017 find a way to center the view 
