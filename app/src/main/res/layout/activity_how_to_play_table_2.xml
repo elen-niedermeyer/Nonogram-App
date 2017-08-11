@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="0dp"
+    android:layout_weight="1">
 
     <TableRow
         android:layout_width="wrap_content"
@@ -10,39 +11,39 @@
         <TextView android:textColor="@color/accent_red" />
 
         <TextView
-            android:textColor="@color/accent_red"
             style="@style/CountViewsTop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2\n1" />
+            android:text="2\n1"
+            android:textColor="@color/accent_red" />
 
         <TextView
-            android:textColor="@color/accent_red"
             style="@style/CountViewsTop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5" />
+            android:text="5"
+            android:textColor="@color/accent_red" />
 
         <TextView
-            android:textColor="@color/accent_red"
             style="@style/CountViewsTop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1\n1" />
+            android:text="1\n1"
+            android:textColor="@color/accent_red" />
 
         <TextView
-            android:textColor="@color/accent_red"
             style="@style/CountViewsTop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4" />
+            android:text="4"
+            android:textColor="@color/accent_red" />
 
         <TextView
-            android:textColor="@color/accent_red"
             style="@style/CountViewsTop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1\n3" />
+            android:text="1\n3"
+            android:textColor="@color/accent_red" />
     </TableRow>
 
     <TableRow
@@ -50,48 +51,11 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:textColor="@color/accent_red"
             style="@style/CountViewsLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2   2" />
-
-        <Button
-            android:layout_width="@dimen/field_button_size"
-            android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_white" />
-
-        <Button
-            android:layout_width="@dimen/field_button_size"
-            android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_white" />
-
-        <Button
-            android:layout_width="@dimen/field_button_size"
-            android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_white" />
-
-        <Button
-            android:layout_width="@dimen/field_button_size"
-            android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_white" />
-
-        <Button
-            android:layout_width="@dimen/field_button_size"
-            android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_white" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:textColor="@color/accent_red"
-            style="@style/CountViewsLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4" />
+            android:text="2   2"
+            android:textColor="@color/accent_red" />
 
         <Button
             android:layout_width="@dimen/field_button_size"
@@ -124,11 +88,11 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:textColor="@color/accent_red"
             style="@style/CountViewsLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1   2" />
+            android:text="4"
+            android:textColor="@color/accent_red" />
 
         <Button
             android:layout_width="@dimen/field_button_size"
@@ -161,11 +125,11 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:textColor="@color/accent_red"
             style="@style/CountViewsLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5" />
+            android:text="1   2"
+            android:textColor="@color/accent_red" />
 
         <Button
             android:layout_width="@dimen/field_button_size"
@@ -198,11 +162,48 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:textColor="@color/accent_red"
             style="@style/CountViewsLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1   1" />
+            android:text="5"
+            android:textColor="@color/accent_red" />
+
+        <Button
+            android:layout_width="@dimen/field_button_size"
+            android:layout_height="@dimen/field_button_size"
+            android:background="@drawable/game_field_btn_white" />
+
+        <Button
+            android:layout_width="@dimen/field_button_size"
+            android:layout_height="@dimen/field_button_size"
+            android:background="@drawable/game_field_btn_white" />
+
+        <Button
+            android:layout_width="@dimen/field_button_size"
+            android:layout_height="@dimen/field_button_size"
+            android:background="@drawable/game_field_btn_white" />
+
+        <Button
+            android:layout_width="@dimen/field_button_size"
+            android:layout_height="@dimen/field_button_size"
+            android:background="@drawable/game_field_btn_white" />
+
+        <Button
+            android:layout_width="@dimen/field_button_size"
+            android:layout_height="@dimen/field_button_size"
+            android:background="@drawable/game_field_btn_white" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/CountViewsLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1   1"
+            android:textColor="@color/accent_red" />
 
         <Button
             android:layout_width="@dimen/field_button_size"
