@@ -3,6 +3,7 @@ package niedermeyer.nonogram.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -122,6 +123,11 @@ public class NonogramActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_nonogram);
+
+        // start the instruction activity at the first game before other initialization
+        if (isFirstGame()) {
+            startActivity(new Intent(this, HowToPlayActivity.class));
+        }
 
         gameSize = new GameSizeHandler(this);
 
@@ -245,5 +251,17 @@ public class NonogramActivity extends AppCompatActivity {
                 Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
             }
         }
+    }
+
+    private boolean isFirstGame() {
+        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
+        boolean isFirstGame = prefs.getBoolean(getString(R.string.prefs_first_game), true);
+        if (isFirstGame) {
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.putBoolean(getString(R.string.prefs_first_game), false);
+            edit.apply();
+        }
+
+        return isFirstGame;
     }
 }
