@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -64,7 +66,9 @@ public class HowToPlayActivity extends AppCompatActivity implements OnClickListe
             // if it's not the end of the array, update views
             instruction.setText(instructions[index]);
             root.removeViewAt(INDEX_POSITION_TABLE);
-            root.addView(tables[index], INDEX_POSITION_TABLE);
+            TableLayout nextTable = tables[index];
+            nextTable.setLayoutParams(getTableParams());
+            root.addView(nextTable, INDEX_POSITION_TABLE);
             if (index == instructions.length - 1) {
                 // if it's the last step, change the string below
                 clickText.setText(getString(R.string.click_here_new_game));
@@ -117,7 +121,9 @@ public class HowToPlayActivity extends AppCompatActivity implements OnClickListe
         // sets the instruction text
         instruction.setText(instructions[index]);
         // adds the table
-        root.addView(tables[index], INDEX_POSITION_TABLE);
+        TableLayout startTable = tables[index];
+        startTable.setLayoutParams(getTableParams());
+        root.addView(startTable, INDEX_POSITION_TABLE);
 
         // adds the on click listener
         root.setOnClickListener(this);
@@ -131,5 +137,13 @@ public class HowToPlayActivity extends AppCompatActivity implements OnClickListe
         // it's the end of the array, start game
         index = 0;
         startActivity(new Intent(this, NonogramActivity.class));
+    }
+
+    private TableLayout.LayoutParams getTableParams() {
+        TableLayout.LayoutParams params = new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        //// TODO: 11.08.2017 find a way to center the view 
+        params.gravity = Gravity.CENTER;
+
+        return params;
     }
 }
