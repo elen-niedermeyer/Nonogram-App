@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,9 +66,7 @@ public class HowToPlayActivity extends AppCompatActivity implements OnClickListe
             instruction.setText(instructions[index]);
             root.removeViewAt(INDEX_POSITION_TABLE);
             // adds the table
-            TableLayout nextTable = tables[index];
-            nextTable.setLayoutParams(getTableParams());
-            root.addView(nextTable, INDEX_POSITION_TABLE);
+            root.addView(tables[index], INDEX_POSITION_TABLE, getTableParams());
 
             if (index == instructions.length - 1) {
                 // if it's the last step, change the string below
@@ -123,9 +120,7 @@ public class HowToPlayActivity extends AppCompatActivity implements OnClickListe
         // sets the instruction text
         instruction.setText(instructions[index]);
         // adds the table
-        TableLayout startTable = tables[index];
-        startTable.setLayoutParams(getTableParams());
-        root.addView(startTable, INDEX_POSITION_TABLE);
+        root.addView(tables[index], INDEX_POSITION_TABLE, getTableParams());
 
         // adds the on click listener
         root.setOnClickListener(this);
@@ -146,10 +141,9 @@ public class HowToPlayActivity extends AppCompatActivity implements OnClickListe
      *
      * @return layout params for the table views.
      */
-    private TableLayout.LayoutParams getTableParams() {
-        TableLayout.LayoutParams params = new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
-        //// TODO: 11.08.2017 find a way to center the view 
-        params.gravity = Gravity.CENTER;
+    private LinearLayout.LayoutParams getTableParams() {
+        // set the weight of the table view
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
 
         return params;
     }
