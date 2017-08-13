@@ -17,6 +17,8 @@
     <string name="number_of_rows">Number of rows</string>
     <string name="number_of_columns">Number of columns</string>
 
+    <string name="about_developer">About the developer</string>
+
     <!-- won animation -->
     <string name="won">You solved the puzzle</string>
     <string name="click_here_new_game">Click to start a new puzzle</string>
