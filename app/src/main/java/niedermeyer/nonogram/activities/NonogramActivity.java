@@ -55,10 +55,10 @@ public class NonogramActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_activity_nonogram, menu);
 
         MenuItem rowsNumber = menu.findItem(R.id.toolbar_game_rows);
-        rowsNumber.setTitle(getString(R.string.number_of_rows) + ": " + Integer.toString(GameSizeHandler.numberOfRows));
+        rowsNumber.setTitle(String.format(getString(R.string.number_of_rows_text), GameSizeHandler.numberOfRows));
 
         MenuItem columnsNumber = menu.findItem(R.id.toolbar_game_columns);
-        columnsNumber.setTitle(getString(R.string.number_of_columns) + ": " + Integer.toString(GameSizeHandler.numberOfColumns));
+        columnsNumber.setTitle(String.format(getString(R.string.number_of_columns_text), GameSizeHandler.numberOfColumns));
 
         return true;
     }
@@ -82,7 +82,7 @@ public class NonogramActivity extends AppCompatActivity {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         if (saveNumberRows != GameSizeHandler.numberOfRows) {
-                            clickedItem.setTitle(getString(R.string.number_of_rows) + ": " + Integer.toString(GameSizeHandler.numberOfRows));
+                            clickedItem.setTitle(String.format(getString(R.string.number_of_rows_text), GameSizeHandler.numberOfRows));
                             updateToolbarTitle();
                             game.newGame();
                         }
@@ -98,7 +98,7 @@ public class NonogramActivity extends AppCompatActivity {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         if (saveNumberColumns != GameSizeHandler.numberOfColumns) {
-                            clickedItem.setTitle(getString(R.string.number_of_columns) + ": " + Integer.toString(GameSizeHandler.numberOfColumns));
+                            clickedItem.setTitle(String.format(getString(R.string.number_of_columns_text), GameSizeHandler.numberOfColumns));
                             updateToolbarTitle();
                             game.newGame();
                         }
