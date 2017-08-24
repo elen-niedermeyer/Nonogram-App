@@ -1,14 +1,11 @@
 package niedermeyer.nonogram.activities;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Scroller;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -88,7 +85,7 @@ public class GameHandler implements OnClickListener {
             generateSavedGameField();
 
         } else {
-            // make new game if the field couldn' be loaded
+            // make new game if the field couldn't be loaded
             newGame();
         }
     }
@@ -143,6 +140,13 @@ public class GameHandler implements OnClickListener {
         }
 
         if (Arrays.deepEquals(actualFieldCopy, nonogram)) {
+            // game is won
+            // make new game
+            generator.makeNewGame(GameSizeHandler.numberOfRows, GameSizeHandler.numberOfColumns);
+            nonogram = generator.getNonogram();
+            // clear actual field variable
+            actualField = new int[GameSizeHandler.numberOfRows][GameSizeHandler.numberOfColumns];
+            // show the animation
             showWonAnimation();
         }
     }

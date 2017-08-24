@@ -9,7 +9,7 @@ public enum NonogramFields {
     /**
      * values of the enum
      */
-    PROVED(1), EMPTY(0), NOTHING(-1);
+    PROVED(1), EMPTY(-1), NOTHING(0);
 
     private final int value;
 
