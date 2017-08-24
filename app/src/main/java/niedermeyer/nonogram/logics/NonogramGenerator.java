@@ -63,26 +63,26 @@ public class NonogramGenerator {
      * @param pNumberOfColumns the number of columns the new game field should have
      */
     public void makeNewGame(int pNumberOfRows, int pNumberOfColumns) {
-        boolean isOnlyZero;
+        boolean isOnlyEmpty;
         do {
             nonogram = generateNonogram(pNumberOfRows, pNumberOfColumns);
             countsRow = countProvedFieldsPerRow();
             countsColumn = countProvedFieldsPerColumn();
 
             // check if there is at least one field proved
-            isOnlyZero = true;
+            isOnlyEmpty = true;
             for (ArrayList<Integer> list : countsRow.values()) {
                 for (Integer count : list) {
-                    if (count != 0) {
-                        isOnlyZero = false;
+                    if (count != NonogramFields.EMPTY.getValue()) {
+                        isOnlyEmpty = false;
                         break;
                     }
                 }
-                if (!isOnlyZero) {
+                if (!isOnlyEmpty) {
                     break;
                 }
             }
-        } while (isOnlyZero);
+        } while (isOnlyEmpty);
     }
 
     /**
@@ -100,7 +100,12 @@ public class NonogramGenerator {
         // fill the array with random 0 or 1
         for (int i = 0; i < nonogram.length; i++) {
             for (int j = 0; j < nonogram[i].length; j++) {
-                nonogram[i][j] = random.nextInt(2);
+                int k = random.nextInt(2);
+                if (k == 1) {
+                    nonogram[i][j] = NonogramFields.PROVED.getValue();
+                } else {
+                    nonogram[i][j] = NonogramFields.EMPTY.getValue();
+                }
             }
         }
 
@@ -122,12 +127,12 @@ public class NonogramGenerator {
             ArrayList<Integer> results = new ArrayList<>();
             // iterate over each value in the row
             for (int j = 0; j < nonogram[i].length; j++) {
-                if (nonogram[i][j] == 1) {
+                if (nonogram[i][j] == NonogramFields.PROVED.getValue()) {
                     // here's a group of proved fields
                     // add 1 for each field to the counter
                     res += 1;
                 }
-                if (nonogram[i][j] == 0 && res != 0) {
+                if (nonogram[i][j] == NonogramFields.EMPTY.getValue() && res != 0) {
                     // here's the end of one group
                     // add the number to the list and resets the counter
                     results.add(res);
@@ -171,12 +176,12 @@ public class NonogramGenerator {
             ArrayList<Integer> results = new ArrayList<>();
             // iterate over each value in the column
             for (int j = 0; j < nonogram.length; j++) {
-                if (nonogram[j][i] == 1) {
+                if (nonogram[j][i] == NonogramFields.PROVED.getValue()) {
                     // here's a group of proved fields
                     // add 1 for each field to the counter
                     res += 1;
                 }
-                if (nonogram[j][i] == 0 && res != 0) {
+                if (nonogram[j][i] == NonogramFields.EMPTY.getValue() && res != 0) {
                     // here's the end of one group
                     // add the number to the list and resets the counter
                     results.add(res);
