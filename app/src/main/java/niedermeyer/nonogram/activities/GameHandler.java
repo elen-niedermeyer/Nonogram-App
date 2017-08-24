@@ -1,14 +1,11 @@
 package niedermeyer.nonogram.activities;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Scroller;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -23,7 +20,7 @@ import niedermeyer.nonogram.logics.NonogramGenerator;
 import niedermeyer.nonogram.persistence.GameSizeHandler;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-08-06
+ * @author Elen Niedermeyer, last updated 2017-08-24
  */
 
 public class GameHandler implements OnClickListener {
@@ -201,9 +198,16 @@ public class GameHandler implements OnClickListener {
                 }
             }
         }
+
         // if the copy of the array is equals the nonogram, the game is solved
         if (Arrays.deepEquals(actualFieldCopy, nonogram)) {
-            //ToDo: code docu
+            // game is won
+            // make new game
+            generator.makeNewGame(GameSizeHandler.numberOfRows, GameSizeHandler.numberOfColumns);
+            nonogram = generator.getNonogram();
+            // clear actual field variable
+            actualField = new int[GameSizeHandler.numberOfRows][GameSizeHandler.numberOfColumns];
+            // show the animation
             showWonAnimation();
         }
     }
