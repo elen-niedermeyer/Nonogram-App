@@ -6,9 +6,8 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * @author Elen Niedermeyer, last modified 2017-07-31
+ * @author Elen Niedermeyer, last modified 2017-08-27
  */
-
 public class NonogramGenerator {
 
     private int[][] nonogram;
@@ -73,7 +72,7 @@ public class NonogramGenerator {
             isOnlyEmpty = true;
             for (ArrayList<Integer> list : countsRow.values()) {
                 for (Integer count : list) {
-                    if (count != NonogramFields.EMPTY.getValue()) {
+                    if (count != NonogramConstants.FIELD_EMPTY) {
                         isOnlyEmpty = false;
                         break;
                     }
@@ -102,9 +101,9 @@ public class NonogramGenerator {
             for (int j = 0; j < nonogram[i].length; j++) {
                 int k = random.nextInt(2);
                 if (k == 1) {
-                    nonogram[i][j] = NonogramFields.PROVED.getValue();
+                    nonogram[i][j] = NonogramConstants.FIELD_PROVED;
                 } else {
-                    nonogram[i][j] = NonogramFields.EMPTY.getValue();
+                    nonogram[i][j] = NonogramConstants.FIELD_EMPTY;
                 }
             }
         }
@@ -127,12 +126,12 @@ public class NonogramGenerator {
             ArrayList<Integer> results = new ArrayList<>();
             // iterate over each value in the row
             for (int j = 0; j < nonogram[i].length; j++) {
-                if (nonogram[i][j] == NonogramFields.PROVED.getValue()) {
+                if (nonogram[i][j] == NonogramConstants.FIELD_PROVED) {
                     // here's a group of proved fields
                     // add 1 for each field to the counter
                     res += 1;
                 }
-                if (nonogram[i][j] == NonogramFields.EMPTY.getValue() && res != 0) {
+                if (nonogram[i][j] == NonogramConstants.FIELD_EMPTY && res != 0) {
                     // here's the end of one group
                     // add the number to the list and resets the counter
                     results.add(res);
@@ -176,12 +175,12 @@ public class NonogramGenerator {
             ArrayList<Integer> results = new ArrayList<>();
             // iterate over each value in the column
             for (int j = 0; j < nonogram.length; j++) {
-                if (nonogram[j][i] == NonogramFields.PROVED.getValue()) {
+                if (nonogram[j][i] == NonogramConstants.FIELD_PROVED) {
                     // here's a group of proved fields
                     // add 1 for each field to the counter
                     res += 1;
                 }
-                if (nonogram[j][i] == NonogramFields.EMPTY.getValue() && res != 0) {
+                if (nonogram[j][i] == NonogramConstants.FIELD_EMPTY && res != 0) {
                     // here's the end of one group
                     // add the number to the list and resets the counter
                     results.add(res);

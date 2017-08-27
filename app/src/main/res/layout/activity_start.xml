@@ -28,8 +28,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/distance_views_3"
+            android:layout_margin="@dimen/distance_views_2"
             android:orientation="vertical">
+
+            <Button
+                android:id="@+id/activity_start_buttons_highscore"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/distance_views_3"
+                android:text="@string/statistics" />
 
             <Button
                 android:id="@+id/activity_start_buttons_howto"

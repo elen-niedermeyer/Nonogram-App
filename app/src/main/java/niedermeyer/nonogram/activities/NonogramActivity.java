@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.persistence.GameSizeHandler;
+import niedermeyer.nonogram.persistence.GameSizePersistence;
 
 /**
  * @author Elen Niedermeyer, last updated 2017-08-04
@@ -27,7 +27,7 @@ public class NonogramActivity extends AppCompatActivity {
 
     private GameHandler game = new GameHandler(this);
     private MenuActions menuActions = new MenuActions(this);
-    private GameSizeHandler gameSize;
+    private GameSizePersistence gameSize;
 
     private String nonogramFileName = "nonogram";
     private File nonogramFile;
@@ -44,7 +44,7 @@ public class NonogramActivity extends AppCompatActivity {
     }
 
     public void updateToolbarTitle() {
-        String title = String.format(getString(R.string.toolbar_title), GameSizeHandler.numberOfColumns, GameSizeHandler.numberOfRows);
+        String title = String.format(getString(R.string.toolbar_title), GameSizePersistence.numberOfColumns, GameSizePersistence.numberOfRows);
         getSupportActionBar().setTitle(title);
     }
 
@@ -55,10 +55,10 @@ public class NonogramActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_activity_nonogram, menu);
 
         MenuItem rowsNumber = menu.findItem(R.id.toolbar_game_rows);
-        rowsNumber.setTitle(String.format(getString(R.string.number_of_rows_text), GameSizeHandler.numberOfRows));
+        rowsNumber.setTitle(String.format(getString(R.string.number_of_rows_text), GameSizePersistence.numberOfRows));
 
         MenuItem columnsNumber = menu.findItem(R.id.toolbar_game_columns);
-        columnsNumber.setTitle(String.format(getString(R.string.number_of_columns_text), GameSizeHandler.numberOfColumns));
+        columnsNumber.setTitle(String.format(getString(R.string.number_of_columns_text), GameSizePersistence.numberOfColumns));
 
         return true;
     }
@@ -77,12 +77,12 @@ public class NonogramActivity extends AppCompatActivity {
 
             case R.id.toolbar_game_rows:
                 AlertDialog dialogRows = menuActions.makeNumberPickerForGameSize(true);
-                final int saveNumberRows = GameSizeHandler.numberOfRows;
+                final int saveNumberRows = GameSizePersistence.numberOfRows;
                 dialogRows.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        if (saveNumberRows != GameSizeHandler.numberOfRows) {
-                            clickedItem.setTitle(String.format(getString(R.string.number_of_rows_text), GameSizeHandler.numberOfRows));
+                        if (saveNumberRows != GameSizePersistence.numberOfRows) {
+                            clickedItem.setTitle(String.format(getString(R.string.number_of_rows_text), GameSizePersistence.numberOfRows));
                             updateToolbarTitle();
                             game.newGame();
                         }
@@ -93,12 +93,12 @@ public class NonogramActivity extends AppCompatActivity {
 
             case R.id.toolbar_game_columns:
                 AlertDialog dialogColumns = menuActions.makeNumberPickerForGameSize(false);
-                final int saveNumberColumns = GameSizeHandler.numberOfColumns;
+                final int saveNumberColumns = GameSizePersistence.numberOfColumns;
                 dialogColumns.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        if (saveNumberColumns != GameSizeHandler.numberOfColumns) {
-                            clickedItem.setTitle(String.format(getString(R.string.number_of_columns_text), GameSizeHandler.numberOfColumns));
+                        if (saveNumberColumns != GameSizePersistence.numberOfColumns) {
+                            clickedItem.setTitle(String.format(getString(R.string.number_of_columns_text), GameSizePersistence.numberOfColumns));
                             updateToolbarTitle();
                             game.newGame();
                         }
@@ -129,7 +129,7 @@ public class NonogramActivity extends AppCompatActivity {
             startActivity(new Intent(this, HowToPlayActivity.class));
         }
 
-        gameSize = new GameSizeHandler(this);
+        gameSize = new GameSizePersistence(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_nonogram_toolbar);
         setSupportActionBar(toolbar);
@@ -188,7 +188,7 @@ public class NonogramActivity extends AppCompatActivity {
             }
         }
 
-        if (nonogram != null && nonogram.length == GameSizeHandler.numberOfRows && nonogram[0].length == GameSizeHandler.numberOfColumns) {
+        if (nonogram != null && nonogram.length == GameSizePersistence.numberOfRows && nonogram[0].length == GameSizePersistence.numberOfColumns) {
             // start game with loaded arrays if the size haven't changed
             game.newGame(nonogram, actualField);
         } else {

@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".activities.NonogramActivity" />
         <activity android:name=".activities.OptionsActivity" />
-        <activity android:name=".activities.HowToPlayActivity"></activity>
+        <activity android:name=".activities.HowToPlayActivity" />
+        <activity android:name=".activities.StatisticsActivity" />
     </application>
 
 </manifest>

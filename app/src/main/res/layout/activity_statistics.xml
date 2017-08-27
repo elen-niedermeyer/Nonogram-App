@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- vertical scroll view -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_statistics_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:id="@+id/activity_statistics_table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*">
+
+        <!-- table head -->
+        <TableRow>
+
+            <TextView
+                style="@style/Heading"
+                android:text="@string/heading_size" />
+
+            <TextView
+                style="@style/Heading"
+                android:gravity="end"
+                android:text="@string/number_of_games" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</ScrollView>

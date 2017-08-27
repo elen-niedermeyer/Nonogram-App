@@ -19,8 +19,8 @@
 
     <ScrollView
         android:id="@+id/activity_nonogram_scroll_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/activity_nonogram_toolbar"
         android:layout_margin="@dimen/distance_views_1"
         android:background="@color/background_color">

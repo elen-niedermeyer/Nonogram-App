@@ -8,6 +8,7 @@
 
     <!-- activities -->
     <string name="play">Play</string>
+    <string name="statistics">Statistics</string>
     <string name="howto">How to play</string>
     <string name="options">Options</string>
 
@@ -32,13 +33,20 @@
     <string name="skip_tutorial">Skip tutorial</string>
     <string name="click_here_continue">Click to continue</string>
 
+    <!-- statistics activity -->
+    <string name="heading_size">Game size</string>
+    <string name="number_of_games">Solved puzzles</string>
+    <string name="game_size_row_column">%1$d x %2$d</string>
+
     <!-- won animation -->
     <string name="won">You solved the puzzle</string>
     <string name="click_here_new_game">Click to start a new puzzle</string>
 
     <!-- preferences -->
     <string name="prefs_group_game_size">game_size</string>
+    <string name="prefs_group_statistics">statistics</string>
     <string name="prefs_rows">number_of_rows</string>
     <string name="prefs_columns">number_of_columns</string>
     <string name="prefs_first_game">first_game</string>
+    <string name="prefs_statistic">statistics_%1$d_%2$d</string>
 </resources>

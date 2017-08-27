@@ -15,12 +15,13 @@ import java.util.Arrays;
 import java.util.Map;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.logics.NonogramFields;
+import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.logics.NonogramGenerator;
-import niedermeyer.nonogram.persistence.GameSizeHandler;
+import niedermeyer.nonogram.persistence.GameSizePersistence;
+import niedermeyer.nonogram.persistence.StatisticsPersistence;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-08-24
+ * @author Elen Niedermeyer, last updated 2017-08-27
  */
 
 public class GameHandler implements OnClickListener {
@@ -39,6 +40,11 @@ public class GameHandler implements OnClickListener {
     private Map<Integer, ArrayList<Integer>> columnCounts;
 
     /**
+     * Statistics
+     */
+    private StatisticsPersistence statistics;
+
+    /**
      * Field that the users creates
      */
     private int[][] actualField;
@@ -51,6 +57,7 @@ public class GameHandler implements OnClickListener {
      */
     public GameHandler(NonogramActivity pActivity) {
         activity = pActivity;
+        statistics = new StatisticsPersistence(activity);
     }
 
     /**
@@ -78,8 +85,8 @@ public class GameHandler implements OnClickListener {
      * Generates the GUI by {@link #generateNewGameField()}.
      */
     public void newGame() {
-        int numberOfRows = GameSizeHandler.numberOfRows;
-        int numberOfColumns = GameSizeHandler.numberOfColumns;
+        int numberOfRows = GameSizePersistence.numberOfRows;
+        int numberOfColumns = GameSizePersistence.numberOfColumns;
 
         // ToDo look if this row is necessary
         activity.updateToolbarTitle();
@@ -141,9 +148,9 @@ public class GameHandler implements OnClickListener {
      * Overrides {@link OnClickListener#onClick(View)}.
      * Parses the clicked field's id.
      * Changes the background:
-     * If the field was {@link NonogramFields#NOTHING} it becomes {@link NonogramFields#PROVED}.
-     * If it was {@link NonogramFields#PROVED} it becomes {@link NonogramFields#EMPTY}.
-     * If it was {@link NonogramFields#EMPTY} it becomes {@link NonogramFields#NOTHING}.
+     * If the field was {@link NonogramConstants#FIELD_NOTHING} it becomes {@link NonogramConstants#FIELD_PROVED}.
+     * If it was {@link NonogramConstants#FIELD_PROVED} it becomes {@link NonogramConstants#FIELD_EMPTY}.
+     * If it was {@link NonogramConstants#FIELD_EMPTY} it becomes {@link NonogramConstants#FIELD_NOTHING}.
      * <p>
      * Looks if the nonogram is solved by comparing the updated {@link #actualField} with {@link #nonogram}.
      *
@@ -175,15 +182,15 @@ public class GameHandler implements OnClickListener {
 
         // changes the clicked field
         int fieldValue = actualField[r][c];
-        if (fieldValue == NonogramFields.NOTHING.getValue()) {
+        if (fieldValue == NonogramConstants.FIELD_NOTHING) {
             v.setBackgroundResource(R.drawable.game_field_btn_black);
-            actualField[r][c] = NonogramFields.PROVED.getValue();
-        } else if (fieldValue == NonogramFields.PROVED.getValue()) {
+            actualField[r][c] = NonogramConstants.FIELD_PROVED;
+        } else if (fieldValue == NonogramConstants.FIELD_PROVED) {
             v.setBackgroundResource(R.drawable.game_field_btn_cross);
-            actualField[r][c] = NonogramFields.EMPTY.getValue();
-        } else if (fieldValue == NonogramFields.EMPTY.getValue()) {
+            actualField[r][c] = NonogramConstants.FIELD_EMPTY;
+        } else if (fieldValue == NonogramConstants.FIELD_EMPTY) {
             v.setBackgroundResource(R.drawable.game_field_btn_white);
-            actualField[r][c] = NonogramFields.NOTHING.getValue();
+            actualField[r][c] = NonogramConstants.FIELD_NOTHING;
         }
 
         // prove if the nonogram is solved now
@@ -191,8 +198,8 @@ public class GameHandler implements OnClickListener {
         int[][] actualFieldCopy = new int[actualField.length][actualField[0].length];
         for (int i = 0; i < actualField.length; i++) {
             for (int j = 0; j < actualField[i].length; j++) {
-                if (actualField[i][j] == NonogramFields.NOTHING.getValue()) {
-                    actualFieldCopy[i][j] = NonogramFields.EMPTY.getValue();
+                if (actualField[i][j] == NonogramConstants.FIELD_NOTHING) {
+                    actualFieldCopy[i][j] = NonogramConstants.FIELD_EMPTY;
                 } else {
                     actualFieldCopy[i][j] = actualField[i][j];
                 }
@@ -202,11 +209,13 @@ public class GameHandler implements OnClickListener {
         // if the copy of the array is equals the nonogram, the game is solved
         if (Arrays.deepEquals(actualFieldCopy, nonogram)) {
             // game is won
+            // save it in statistics
+            statistics.saveNewScore();
             // make new game
-            generator.makeNewGame(GameSizeHandler.numberOfRows, GameSizeHandler.numberOfColumns);
+            generator.makeNewGame(GameSizePersistence.numberOfRows, GameSizePersistence.numberOfColumns);
             nonogram = generator.getNonogram();
             // clear actual field variable
-            actualField = new int[GameSizeHandler.numberOfRows][GameSizeHandler.numberOfColumns];
+            actualField = new int[GameSizePersistence.numberOfRows][GameSizePersistence.numberOfColumns];
             // show the animation
             showWonAnimation();
         }
@@ -255,7 +264,7 @@ public class GameHandler implements OnClickListener {
                 // add button to row
                 row.addView(b);
                 // initialize field in array
-                actualField[i][j] = NonogramFields.NOTHING.getValue();
+                actualField[i][j] = NonogramConstants.FIELD_NOTHING;
             }
             // add row to table
             table.addView(row);
@@ -304,11 +313,11 @@ public class GameHandler implements OnClickListener {
                 row.addView(b);
 
                 // set background resource for the given field in actualField
-                if (actualField[i][j] == NonogramFields.NOTHING.getValue()) {
+                if (actualField[i][j] == NonogramConstants.FIELD_NOTHING) {
                     b.setBackgroundResource(R.drawable.game_field_btn_white);
-                } else if (actualField[i][j] == NonogramFields.PROVED.getValue()) {
+                } else if (actualField[i][j] == NonogramConstants.FIELD_PROVED) {
                     b.setBackgroundResource(R.drawable.game_field_btn_black);
-                } else if (actualField[i][j] == NonogramFields.EMPTY.getValue()) {
+                } else if (actualField[i][j] == NonogramConstants.FIELD_EMPTY) {
                     b.setBackgroundResource(R.drawable.game_field_btn_cross);
                 }
             }
