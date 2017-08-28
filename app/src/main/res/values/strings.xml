@@ -26,10 +26,10 @@
 
     <!-- how to play activity -->
     <string name="instruction_1">Nonograms are Japanese logic puzzles.\nYou\'ve got a puzzle like this.\n All fields are empty.</string>
-    <string name="instruction_2">The numbers defines groups of boxes in each row and column. This groups must be filled.</string>
+    <string name="instruction_2">The numbers define groups of boxes in each row and column. These groups must be filled.</string>
     <string name="instruction_3">Mark filled fields black (clicking once) and empty fields with a cross (clicking twice) or leave it out.</string>
     <string name="instruction_4">Two numbers means two groups in a row or column. There must be at least one empty field between two groups. The groups are in the order of the numbers.</string>
-    <string name="instruction_5">Identify all the filled boxes by logical thought and combining.</string>
+    <string name="instruction_5">Identify all the filled boxes.\n\nThe nonograms are computer generated. It\'s possible that there\'s an ambiguous solution.</string>
     <string name="skip_tutorial">Skip tutorial</string>
     <string name="click_here_continue">Click to continue</string>
 
