@@ -27,19 +27,29 @@ public class StatisticsPersistence {
         activity = pActivity;
     }
 
-    public int getScore(int pNumberOfRows, int pNumberOfColumns) {
-        String prefName = String.format(activity.getString(R.string.prefs_statistic), pNumberOfRows, pNumberOfColumns);
+    public int getScore(int pNumberOne, int pNumberTwo) {
+        String prefName = getPreferenceName(pNumberOne, pNumberTwo);
         return getScore(prefName);
     }
 
     public void saveNewScore() {
-        String prefName = String.format(activity.getString(R.string.prefs_statistic), GameSizePersistence.numberOfRows, GameSizePersistence.numberOfColumns);
+        String prefName = getPreferenceName(GameSizePersistence.numberOfRows, GameSizePersistence.numberOfColumns);
         int score = getScore(prefName);
         score = score + 1;
         SharedPreferences prefs = activity.getSharedPreferences(activity.getString(R.string.prefs_group_statistics), Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEdit = prefs.edit();
         prefsEdit.putInt(prefName, score);
         prefsEdit.apply();
+    }
+
+    private String getPreferenceName(int pNumberOne, int pNumberTwo) {
+        String prefName;
+        if (pNumberOne > pNumberTwo) {
+            prefName = String.format(activity.getString(R.string.prefs_statistic), pNumberTwo, pNumberOne);
+        } else {
+            prefName = String.format(activity.getString(R.string.prefs_statistic), pNumberOne, pNumberTwo);
+        }
+        return prefName;
     }
 
     private int getScore(String pPrefName) {

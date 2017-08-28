@@ -19,12 +19,14 @@
 
             <TextView
                 style="@style/Heading"
-                android:text="@string/heading_size" />
+                android:text="@string/heading_size"
+                android:layout_margin="@dimen/distance_views_2" />
 
             <TextView
                 style="@style/Heading"
                 android:gravity="end"
-                android:text="@string/number_of_games" />
+                android:text="@string/number_of_games"
+                android:layout_margin="@dimen/distance_views_2" />
 
         </TableRow>
 
