@@ -16,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.NonogramActivity" />
+        <activity
+            android:name=".activities.NonogramActivity"
+            android:parentActivityName=".activities.StartActivity" />
         <activity android:name=".activities.OptionsActivity" />
         <activity android:name=".activities.HowToPlayActivity" />
         <activity android:name=".activities.StatisticsActivity" />

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -43,9 +44,9 @@ public class NonogramActivity extends AppCompatActivity {
         return this.game;
     }
 
-    public void updateToolbarTitle() {
-        String title = String.format(getString(R.string.toolbar_title), GameSizePersistence.numberOfColumns, GameSizePersistence.numberOfRows);
-        getSupportActionBar().setTitle(title);
+    @Override
+    public void onBackPressed() {
+        NavUtils.navigateUpFromSameTask(this);
     }
 
     @Override
@@ -116,6 +117,11 @@ public class NonogramActivity extends AppCompatActivity {
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void updateToolbarTitle() {
+        String title = String.format(getString(R.string.toolbar_title), GameSizePersistence.numberOfColumns, GameSizePersistence.numberOfRows);
+        getSupportActionBar().setTitle(title);
     }
 
     @Override

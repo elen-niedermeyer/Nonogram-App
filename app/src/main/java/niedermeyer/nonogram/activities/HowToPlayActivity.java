@@ -16,7 +16,7 @@ import android.widget.TextView;
 import niedermeyer.nonogram.R;
 
 /**
- * @author Elen Niedermeyer, last modified 2017-08-10
+ * @author Elen Niedermeyer, last modified 2017-08-29
  */
 public class HowToPlayActivity extends AppCompatActivity implements OnClickListener {
 
@@ -132,7 +132,6 @@ public class HowToPlayActivity extends AppCompatActivity implements OnClickListe
      */
     private void changeToNonogramActivity() {
         // it's the end of the array, start game
-        index = 0;
         startActivity(new Intent(this, NonogramActivity.class));
     }
 
