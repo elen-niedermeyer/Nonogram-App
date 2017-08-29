@@ -31,7 +31,7 @@
     <string name="instruction_4">Two numbers means two groups in a row or column. There must be at least one empty field between two groups. The groups are in the order of the numbers.</string>
     <string name="instruction_5">Identify all the filled boxes.\n\nThe nonograms are computer generated. It\'s possible that there\'s an ambiguous solution.</string>
     <string name="skip_tutorial">Skip tutorial</string>
-    <string name="click_here_continue">Click to continue</string>
+    <string name="click_here_continue">Tab to continue</string>
 
     <!-- statistics activity -->
     <string name="heading_size">Game size</string>
@@ -40,7 +40,7 @@
 
     <!-- won animation -->
     <string name="won">You solved the puzzle</string>
-    <string name="click_here_new_game">Click to start a new puzzle</string>
+    <string name="click_here_new_game">Tab to start a new puzzle</string>
 
     <!-- preferences -->
     <string name="prefs_group_game_size">game_size</string>
