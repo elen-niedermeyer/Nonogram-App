@@ -231,13 +231,10 @@ public class GameHandler implements OnClickListener {
         // clear the field, remove all rows from table
         table.removeAllViews();
 
-        TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-        rowParams.gravity = Gravity.CENTER_HORIZONTAL;
-
         // add row with counts of the columns
-        TableRow columnCounts = makeColumnCountRow();
-        columnCounts.setLayoutParams(rowParams);
-        table.addView(columnCounts);
+        table = addColumnCountRows(table);
+
+        TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
         // add rows of nonogram
         for (int i = 0; i < nonogram.length; i++) {
@@ -245,6 +242,7 @@ public class GameHandler implements OnClickListener {
             TableRow row = new TableRow(activity);
             row.setId(i);
             row.setLayoutParams(rowParams);
+            row.setGravity(Gravity.CENTER);
 
             // add count for this row
             row.addView(makeRowCountView(i));
@@ -281,13 +279,10 @@ public class GameHandler implements OnClickListener {
         // clear the field, remove all rows from table
         table.removeAllViews();
 
-        TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-        rowParams.gravity = Gravity.CENTER_HORIZONTAL;
-
         // add row with counts of the columns
-        TableRow columnCounts = makeColumnCountRow();
-        columnCounts.setLayoutParams(rowParams);
-        table.addView(columnCounts);
+        table = addColumnCountRows(table);
+
+        TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
         // add rows of nonogram
         for (int i = 0; i < nonogram.length; i++) {
@@ -295,9 +290,11 @@ public class GameHandler implements OnClickListener {
             TableRow row = new TableRow(activity);
             row.setId(i);
             row.setLayoutParams(rowParams);
+            row.setGravity(Gravity.CENTER);
 
             // add count for this row
             row.addView(makeRowCountView(i));
+
             // add a button for each field in this row
             for (int j = 0; j < nonogram[i].length; j++) {
                 Button b = new Button(activity);
@@ -326,65 +323,54 @@ public class GameHandler implements OnClickListener {
         }
     }
 
-    /**
-     * Makes a table column that shows the column counts in text views.
-     * Numbers in one text view are separated by line separator.
-     *
-     * @return a table row with column counts
-     */
-    private TableRow makeColumnCountRow() {
-        TableRow row = new TableRow(activity);
-
-        // add an empty text view
-        row.addView(new TextView(activity));
-
-        // add filled views for all columns
+    private TableLayout addColumnCountRows(TableLayout pTable) {
+        // get maximum of numbers
+        int neededRows = 0;
         for (int i = 0; i < columnCounts.size(); i++) {
             ArrayList<Integer> values = columnCounts.get(i);
-            String countsAsText = "";
-            // paste all values for one column to one string
-            for (int value : values) {
-                if (!countsAsText.equals("")) {
-                    countsAsText += "\n" + value;
+            int x = values.size();
+            if (x > neededRows) {
+                neededRows = x;
+            }
+        }
+
+        TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
+        rowParams.gravity = Gravity.CENTER_HORIZONTAL;
+
+        // add filled views for all columns
+        for (int x = 0; x < neededRows; x++) {
+            TableRow row = new TableRow(activity);
+            // add an empty text view
+            row.addView(new TextView(activity));
+            for (int i = 0; i < columnCounts.size(); i++) {
+                ArrayList<Integer> values = columnCounts.get(i);
+                if (values.size() >= x + 1) {
+                    TextView count = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_top, null);
+                    count.setText(Integer.toString(values.get(x)));
+                    row.addView(count);
                 } else {
-                    countsAsText += value;
+                    row.addView(new TextView(activity));
                 }
             }
-
-            // makes the new text view with the pasted text
-            TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_top, null);
-            counts.setText(countsAsText);
-
-            // add the text view to the row
-            row.addView(counts);
+            row.setLayoutParams(rowParams);
+            pTable.addView(row);
         }
 
-        return row;
+        return pTable;
     }
 
-    /**
-     * Makes a text view with the row count of row i. Numbers in the text view are separated by tabs.
-     *
-     * @param i the number of the row, which count should be in the text view
-     * @return a text view with the row counts of row i
-     */
-    private TextView makeRowCountView(int i) {
+    private LinearLayout makeRowCountView(int i) {
+        LinearLayout layout = new LinearLayout(activity);
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+
         ArrayList<Integer> values = rowCounts.get(i);
-        String countsAsText = "";
-        // paste all numbers for this row to one string
         for (int value : values) {
-            if (!countsAsText.equals("")) {
-                countsAsText += "   " + value;
-            } else {
-                countsAsText += value;
-            }
+            TextView count = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_left, null);
+            count.setText(Integer.toString(value));
+            layout.addView(count);
         }
 
-        // makes the new text view with the pasted string
-        TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_left, null);
-        counts.setText(countsAsText);
-
-        return counts;
+        return layout;
     }
 
     private void showWonAnimation() {

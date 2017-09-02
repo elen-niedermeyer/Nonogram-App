@@ -9,7 +9,7 @@
 
     <!-- game field -->
     <dimen name="field_button_size">35dp</dimen>
-    <dimen name="count_numbers">14dp</dimen>
+    <dimen name="count_numbers">18sp</dimen>
 
     <!-- buttons -->
     <dimen name="button_corners">6dp</dimen>
