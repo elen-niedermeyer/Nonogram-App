@@ -110,7 +110,8 @@ public class HowToPlayActivity extends AppCompatActivity implements OnClickListe
                 getString(R.string.instruction_2),
                 getString(R.string.instruction_3),
                 getString(R.string.instruction_4),
-                getString(R.string.instruction_5)};
+                getString(R.string.instruction_5),
+                getString(R.string.instruction_6)};
         // load table layouts
         tables = initializeTablesArray();
 
@@ -129,7 +130,8 @@ public class HowToPlayActivity extends AppCompatActivity implements OnClickListe
                 (TableLayout) LayoutInflater.from(this).inflate(R.layout.activity_how_to_play_table_2, null),
                 (TableLayout) LayoutInflater.from(this).inflate(R.layout.activity_how_to_play_table_3, null),
                 (TableLayout) LayoutInflater.from(this).inflate(R.layout.activity_how_to_play_table_4, null),
-                (TableLayout) LayoutInflater.from(this).inflate(R.layout.activity_how_to_play_table_5, null)};
+                (TableLayout) LayoutInflater.from(this).inflate(R.layout.activity_how_to_play_table_5, null),
+                new TableLayout(this)};
         for (TableLayout table : tables) {
             table.setLayoutParams(params);
             table.setClickable(true);

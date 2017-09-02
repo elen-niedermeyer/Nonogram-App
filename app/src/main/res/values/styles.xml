@@ -32,7 +32,10 @@
     </style>
 
     <style name="Text">
-        <item name="android:layout_margin">@dimen/distance_views_1</item>
+        <item name="android:layout_marginLeft">@dimen/distance_views_1</item>
+        <item name="android:layout_marginRight">@dimen/distance_views_1</item>
+        <item name="android:layout_marginTop">@dimen/distance_views_1</item>
+        <item name="android:layout_marginBottom">@dimen/distance_views_1</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
