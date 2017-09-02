@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import niedermeyer.nonogram.R;
@@ -66,7 +67,7 @@ public class HowToPlayActivity extends AppCompatActivity implements OnClickListe
             instruction.setText(instructions[index]);
             root.removeViewAt(INDEX_POSITION_TABLE);
             // adds the table
-            root.addView(tables[index], INDEX_POSITION_TABLE, getTableParams());
+            root.addView(tables[index], INDEX_POSITION_TABLE);
 
             if (index == instructions.length - 1) {
                 // if it's the last step, change the string below
@@ -111,39 +112,56 @@ public class HowToPlayActivity extends AppCompatActivity implements OnClickListe
                 getString(R.string.instruction_4),
                 getString(R.string.instruction_5)};
         // load table layouts
-        tables = new TableLayout[]{(TableLayout) LayoutInflater.from(this).inflate(R.layout.activity_how_to_play_table_1, null),
-                (TableLayout) LayoutInflater.from(this).inflate(R.layout.activity_how_to_play_table_2, null),
-                (TableLayout) LayoutInflater.from(this).inflate(R.layout.activity_how_to_play_table_3, null),
-                (TableLayout) LayoutInflater.from(this).inflate(R.layout.activity_how_to_play_table_4, null),
-                (TableLayout) LayoutInflater.from(this).inflate(R.layout.activity_how_to_play_table_5, null)};
+        tables = initializeTablesArray();
 
         // sets the instruction text
         instruction.setText(instructions[index]);
         // adds the table
-        root.addView(tables[index], INDEX_POSITION_TABLE, getTableParams());
+        root.addView(tables[index], INDEX_POSITION_TABLE);
 
         // adds the on click listener
         root.setOnClickListener(this);
+    }
+
+    private TableLayout[] initializeTablesArray() {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        TableLayout[] tables = new TableLayout[]{(TableLayout) LayoutInflater.from(this).inflate(R.layout.activity_how_to_play_table_1, null),
+                (TableLayout) LayoutInflater.from(this).inflate(R.layout.activity_how_to_play_table_2, null),
+                (TableLayout) LayoutInflater.from(this).inflate(R.layout.activity_how_to_play_table_3, null),
+                (TableLayout) LayoutInflater.from(this).inflate(R.layout.activity_how_to_play_table_4, null),
+                (TableLayout) LayoutInflater.from(this).inflate(R.layout.activity_how_to_play_table_5, null)};
+        for (TableLayout table : tables) {
+            table.setLayoutParams(params);
+            table.setClickable(true);
+            table.setOnClickListener(this);
+            for (int i = 0; i < table.getChildCount(); i++) {
+                View child = table.getChildAt(i);
+                if (child instanceof TableRow) {
+                    TableRow row = (TableRow) child;
+                    for (int r = 0; r < row.getChildCount(); r++) {
+                        View childRow = row.getChildAt(r);
+                        if (childRow instanceof Button) {
+                            Button b = (Button) childRow;
+                            b.setOnClickListener(this);
+                        } else {
+                            childRow.setClickable(true);
+                            childRow.setOnClickListener(this);
+                        }
+
+                    }
+                }
+            }
+        }
+        return tables;
     }
 
     /**
      * Sets the index to zero.
      * Start the nonogram activity.
      */
+
     private void changeToNonogramActivity() {
         // it's the end of the array, start game
         startActivity(new Intent(this, NonogramActivity.class));
-    }
-
-    /**
-     * Gives the layout params for the tables.
-     *
-     * @return layout params for the table views.
-     */
-    private LinearLayout.LayoutParams getTableParams() {
-        // set the weight of the table view
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
-
-        return params;
     }
 }
