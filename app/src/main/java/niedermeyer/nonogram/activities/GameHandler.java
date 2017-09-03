@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Map;
 
 import niedermeyer.nonogram.R;
@@ -24,7 +25,7 @@ import niedermeyer.nonogram.persistence.StatisticsPersistence;
  * @author Elen Niedermeyer, last updated 2017-08-27
  */
 
-public class GameHandler implements OnClickListener {
+public class GameHandler {
 
     /**
      * Context activity
@@ -48,6 +49,91 @@ public class GameHandler implements OnClickListener {
      * Field that the users creates
      */
     private int[][] actualField;
+
+    /**
+     * Listener for the buttons on the game field.
+     * Overrides {@link OnClickListener#onClick(View)}.
+     * Parses the clicked field's id.
+     * Changes the background:
+     * If the field was {@link NonogramConstants#FIELD_NOTHING} it becomes {@link NonogramConstants#FIELD_PROVED}.
+     * If it was {@link NonogramConstants#FIELD_PROVED} it becomes {@link NonogramConstants#FIELD_EMPTY}.
+     * If it was {@link NonogramConstants#FIELD_EMPTY} it becomes {@link NonogramConstants#FIELD_NOTHING}.
+     * <p>
+     * Looks if the nonogram is solved by comparing the updated {@link #actualField} with {@link #nonogram}.
+     */
+    private OnClickListener fieldOnClick = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // get position of the clicked view
+            // get the views parent to get the row number
+            TableRow row = (TableRow) v.getParent();
+            int r = row.getId();
+            // get the view id, it's [row number][column number]
+            int id = v.getId();
+            String idString = Integer.toString(id);
+            // get the column number
+            int c;
+            if (r == 0) {
+                // if the row is 0, the column number is just the view id
+                c = id;
+            } else if (r > 0 && r < 10) {
+                // if the row number has one digit, the column number is the view id without the first digit
+                String jString = idString.substring(1);
+                c = Integer.parseInt(jString);
+            } else {
+                // if the row number has two digits, the column number is the view id without the two first digits
+                String jString = idString.substring(2);
+                c = Integer.parseInt(jString);
+            }
+
+            // changes the clicked field
+            int fieldValue = actualField[r][c];
+            if (fieldValue == NonogramConstants.FIELD_NOTHING) {
+                v.setBackgroundResource(R.drawable.game_field_btn_black);
+                actualField[r][c] = NonogramConstants.FIELD_PROVED;
+            } else if (fieldValue == NonogramConstants.FIELD_PROVED) {
+                v.setBackgroundResource(R.drawable.game_field_btn_cross);
+                actualField[r][c] = NonogramConstants.FIELD_EMPTY;
+            } else if (fieldValue == NonogramConstants.FIELD_EMPTY) {
+                v.setBackgroundResource(R.drawable.game_field_btn_white);
+                actualField[r][c] = NonogramConstants.FIELD_NOTHING;
+            }
+
+            // prove if the nonogram is solved now
+            // make a copy, replace all -1 with 0 (these are empty fields but in the GUI they have different meanings)
+            int[][] actualFieldCopy = new int[actualField.length][actualField[0].length];
+            for (int i = 0; i < actualField.length; i++) {
+                for (int j = 0; j < actualField[i].length; j++) {
+                    if (actualField[i][j] == NonogramConstants.FIELD_NOTHING) {
+                        actualFieldCopy[i][j] = NonogramConstants.FIELD_EMPTY;
+                    } else {
+                        actualFieldCopy[i][j] = actualField[i][j];
+                    }
+                }
+            }
+
+            // if the copy of the array is equals the nonogram, the game is solved
+            if (Arrays.deepEquals(actualFieldCopy, nonogram)) {
+                // game is won
+                // save it in statistics
+                statistics.saveNewScore();
+                // make new game
+                generator.makeNewGame(GameSizePersistence.numberOfRows, GameSizePersistence.numberOfColumns);
+                nonogram = generator.getNonogram();
+                // clear actual field variable
+                actualField = new int[GameSizePersistence.numberOfRows][GameSizePersistence.numberOfColumns];
+                // show the animation
+                showWonAnimation();
+            }
+        }
+    };
+
+    private OnClickListener countOnClick = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            v.setBackgroundResource(R.drawable.game_count_striked_off);
+        }
+    };
 
     /**
      * Constructor.
@@ -145,83 +231,6 @@ public class GameHandler implements OnClickListener {
     }
 
     /**
-     * Overrides {@link OnClickListener#onClick(View)}.
-     * Parses the clicked field's id.
-     * Changes the background:
-     * If the field was {@link NonogramConstants#FIELD_NOTHING} it becomes {@link NonogramConstants#FIELD_PROVED}.
-     * If it was {@link NonogramConstants#FIELD_PROVED} it becomes {@link NonogramConstants#FIELD_EMPTY}.
-     * If it was {@link NonogramConstants#FIELD_EMPTY} it becomes {@link NonogramConstants#FIELD_NOTHING}.
-     * <p>
-     * Looks if the nonogram is solved by comparing the updated {@link #actualField} with {@link #nonogram}.
-     *
-     * @param v the clicked view, given by the system
-     */
-    @Override
-    public void onClick(View v) {
-        // get position of the clicked view
-        // get the views parent to get the row number
-        TableRow row = (TableRow) v.getParent();
-        int r = row.getId();
-        // get the view id, it's [row number][column number]
-        int id = v.getId();
-        String idString = Integer.toString(id);
-        // get the column number
-        int c;
-        if (r == 0) {
-            // if the row is 0, the column number is just the view id
-            c = id;
-        } else if (r > 0 && r < 10) {
-            // if the row number has one digit, the column number is the view id without the first digit
-            String jString = idString.substring(1);
-            c = Integer.parseInt(jString);
-        } else {
-            // if the row number has two digits, the column number is the view id without the two first digits
-            String jString = idString.substring(2);
-            c = Integer.parseInt(jString);
-        }
-
-        // changes the clicked field
-        int fieldValue = actualField[r][c];
-        if (fieldValue == NonogramConstants.FIELD_NOTHING) {
-            v.setBackgroundResource(R.drawable.game_field_btn_black);
-            actualField[r][c] = NonogramConstants.FIELD_PROVED;
-        } else if (fieldValue == NonogramConstants.FIELD_PROVED) {
-            v.setBackgroundResource(R.drawable.game_field_btn_cross);
-            actualField[r][c] = NonogramConstants.FIELD_EMPTY;
-        } else if (fieldValue == NonogramConstants.FIELD_EMPTY) {
-            v.setBackgroundResource(R.drawable.game_field_btn_white);
-            actualField[r][c] = NonogramConstants.FIELD_NOTHING;
-        }
-
-        // prove if the nonogram is solved now
-        // make a copy, replace all -1 with 0 (these are empty fields but in the GUI they have different meanings)
-        int[][] actualFieldCopy = new int[actualField.length][actualField[0].length];
-        for (int i = 0; i < actualField.length; i++) {
-            for (int j = 0; j < actualField[i].length; j++) {
-                if (actualField[i][j] == NonogramConstants.FIELD_NOTHING) {
-                    actualFieldCopy[i][j] = NonogramConstants.FIELD_EMPTY;
-                } else {
-                    actualFieldCopy[i][j] = actualField[i][j];
-                }
-            }
-        }
-
-        // if the copy of the array is equals the nonogram, the game is solved
-        if (Arrays.deepEquals(actualFieldCopy, nonogram)) {
-            // game is won
-            // save it in statistics
-            statistics.saveNewScore();
-            // make new game
-            generator.makeNewGame(GameSizePersistence.numberOfRows, GameSizePersistence.numberOfColumns);
-            nonogram = generator.getNonogram();
-            // clear actual field variable
-            actualField = new int[GameSizePersistence.numberOfRows][GameSizePersistence.numberOfColumns];
-            // show the animation
-            showWonAnimation();
-        }
-    }
-
-    /**
      * Makes the game field.
      * Makes a table row for each row. IDs are the place in the nonogram array.
      * Adds the counts left for the rows and on the top for the columns.
@@ -258,7 +267,7 @@ public class GameHandler implements OnClickListener {
                 int buttonSize = (int) activity.getResources().getDimension(R.dimen.field_button_size);
                 b.setLayoutParams(new TableRow.LayoutParams(buttonSize, buttonSize));
                 // set the onClickListener implemented in this class
-                b.setOnClickListener(this);
+                b.setOnClickListener(fieldOnClick);
                 // add button to row
                 row.addView(b);
                 // initialize field in array
@@ -305,7 +314,7 @@ public class GameHandler implements OnClickListener {
                 int buttonSize = (int) activity.getResources().getDimension(R.dimen.field_button_size);
                 b.setLayoutParams(new TableRow.LayoutParams(buttonSize, buttonSize));
                 // set the onClickListener implemented in this class
-                b.setOnClickListener(this);
+                b.setOnClickListener(fieldOnClick);
                 // add button to row
                 row.addView(b);
 
@@ -347,6 +356,8 @@ public class GameHandler implements OnClickListener {
                 if (values.size() >= x + 1) {
                     TextView count = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_top, null);
                     count.setText(Integer.toString(values.get(x)));
+                    count.setClickable(true);
+                    count.setOnClickListener(countOnClick);
                     row.addView(count);
                 } else {
                     row.addView(new TextView(activity));
@@ -366,7 +377,9 @@ public class GameHandler implements OnClickListener {
         ArrayList<Integer> values = rowCounts.get(i);
         for (int value : values) {
             TextView count = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_left, null);
-            count.setText(Integer.toString(value));
+            count.setText(String.format(Locale.getDefault(), "%d", value));
+            count.setClickable(true);
+            count.setOnClickListener(countOnClick);
             layout.addView(count);
         }
 
