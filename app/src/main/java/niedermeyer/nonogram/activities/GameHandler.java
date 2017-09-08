@@ -13,9 +13,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
-import java.util.Map;
 
 import niedermeyer.nonogram.R;
+import niedermeyer.nonogram.logics.CountsStructure;
 import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.logics.NonogramGenerator;
 import niedermeyer.nonogram.persistence.GameSizePersistence;
@@ -37,8 +37,8 @@ public class GameHandler {
      */
     private NonogramGenerator generator = new NonogramGenerator();
     private int[][] nonogram;
-    private Map<Integer, ArrayList<Integer>> rowCounts;
-    private Map<Integer, ArrayList<Integer>> columnCounts;
+    private CountsStructure rowCounts;
+    private CountsStructure columnCounts;
 
     /**
      * Statistics
@@ -335,9 +335,8 @@ public class GameHandler {
     private TableLayout addColumnCountRows(TableLayout pTable) {
         // get maximum of numbers
         int neededRows = 0;
-        for (int i = 0; i < columnCounts.size(); i++) {
-            ArrayList<Integer> values = columnCounts.get(i);
-            int x = values.size();
+        for (int i = 0; i < columnCounts.getSizeOuter(); i++) {
+            int x = columnCounts.getSizeInner(i);
             if (x > neededRows) {
                 neededRows = x;
             }
@@ -351,11 +350,11 @@ public class GameHandler {
             TableRow row = new TableRow(activity);
             // add an empty text view
             row.addView(new TextView(activity));
-            for (int i = 0; i < columnCounts.size(); i++) {
-                ArrayList<Integer> values = columnCounts.get(i);
-                if (values.size() >= x + 1) {
+            for (int i = 0; i < columnCounts.getSizeOuter(); i++) {
+                int valuesSize = columnCounts.getSizeInner(i);
+                if (valuesSize >= x + 1) {
                     TextView count = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_top, null);
-                    count.setText(Integer.toString(values.get(x)));
+                    count.setText(String.format(Locale.getDefault(), "%d", columnCounts.get(i, x)));
                     count.setClickable(true);
                     count.setOnClickListener(countOnClick);
                     row.addView(count);

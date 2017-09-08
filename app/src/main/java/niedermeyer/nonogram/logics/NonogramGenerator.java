@@ -1,8 +1,5 @@
 package niedermeyer.nonogram.logics;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -11,8 +8,8 @@ import java.util.Random;
 public class NonogramGenerator {
 
     private int[][] nonogram;
-    private Map<Integer, ArrayList<Integer>> countsRow;
-    private Map<Integer, ArrayList<Integer>> countsColumn;
+    private CountsStructure countsRow;
+    private CountsStructure countsColumn;
 
     private Random random = new Random();
 
@@ -34,25 +31,31 @@ public class NonogramGenerator {
         nonogram = pNonogram;
     }
 
+    //// TODO: 08.09.2017 correct comment
+
     /**
      * Returns the map which contains the counts for the rows.
      *
      * @return {@link #countsRow}
      */
-    public Map<Integer, ArrayList<Integer>> getCountsRow() {
+    public CountsStructure getCountsRow() {
         countsRow = countProvedFieldsPerRow();
         return countsRow;
     }
+
+    // TODO: 08.09.2017 correct comment
 
     /**
      * Returns the map which contains the counts for the columns.
      *
      * @return {@link #countsColumn}
      */
-    public Map<Integer, ArrayList<Integer>> getCountsColumn() {
+    public CountsStructure getCountsColumn() {
         countsColumn = countProvedFieldsPerColumn();
         return countsColumn;
     }
+
+    //// TODO: 08.09.2017 correct comment
 
     /**
      * Makes a new game field. Generates a nonogram and counts the field in rows and columns.
@@ -62,26 +65,11 @@ public class NonogramGenerator {
      * @param pNumberOfColumns the number of columns the new game field should have
      */
     public void makeNewGame(int pNumberOfRows, int pNumberOfColumns) {
-        boolean isOnlyEmpty;
         do {
             nonogram = generateNonogram(pNumberOfRows, pNumberOfColumns);
             countsRow = countProvedFieldsPerRow();
             countsColumn = countProvedFieldsPerColumn();
-
-            // check if there is at least one field proved
-            isOnlyEmpty = true;
-            for (ArrayList<Integer> list : countsRow.values()) {
-                for (Integer count : list) {
-                    if (count != NonogramConstants.FIELD_EMPTY) {
-                        isOnlyEmpty = false;
-                        break;
-                    }
-                }
-                if (!isOnlyEmpty) {
-                    break;
-                }
-            }
-        } while (isOnlyEmpty);
+        } while (countsRow.isEmpty());
     }
 
     /**
@@ -111,19 +99,20 @@ public class NonogramGenerator {
         return nonogram;
     }
 
+    //// TODO: 08.09.2017 Correct comment
+
     /**
      * Counts the groups in the rows of the {@link #nonogram}.
      * Saves the counts in a map. Key of the map is the number of the row, value is an array list with the counts in the correct order.
      *
      * @return a map with the row counts of {@link #nonogram}
      */
-    private Map<Integer, ArrayList<Integer>> countProvedFieldsPerRow() {
-        HashMap<Integer, ArrayList<Integer>> provedFields = new HashMap<>();
+    private CountsStructure countProvedFieldsPerRow() {
+        CountsStructure provedFields = new CountsStructure();
 
         // iterate over the rows of the nonogram
         for (int i = 0; i < nonogram.length; i++) {
             int res = 0;
-            ArrayList<Integer> results = new ArrayList<>();
             // iterate over each value in the row
             for (int j = 0; j < nonogram[i].length; j++) {
                 if (nonogram[i][j] == NonogramConstants.FIELD_PROVED) {
@@ -134,7 +123,7 @@ public class NonogramGenerator {
                 if (nonogram[i][j] == NonogramConstants.FIELD_EMPTY && res != 0) {
                     // here's the end of one group
                     // add the number to the list and resets the counter
-                    results.add(res);
+                    provedFields.addCount(i, res);
                     res = 0;
                 }
             }
@@ -143,18 +132,14 @@ public class NonogramGenerator {
 
             if (res != 0) {
                 // add the last counter to the list if there is one
-                results.add(res);
+                provedFields.addCount(i, res);
             }
 
-            if (results.isEmpty()) {
+            if (provedFields.isRowOrColumnEmpty(i)) {
                 // if the list is empty, there are no proved fields
                 // add 0 to the list
-                results.add(0);
+                provedFields.addCount(i, NonogramConstants.FIELD_EMPTY);
             }
-
-            // add the counts for this row to the map
-            // key is the number of row
-            provedFields.put(i, results);
         }
 
         return provedFields;
@@ -166,13 +151,12 @@ public class NonogramGenerator {
      *
      * @return a map with the column counts of {@link #nonogram}
      */
-    private Map<Integer, ArrayList<Integer>> countProvedFieldsPerColumn() {
-        HashMap<Integer, ArrayList<Integer>> provedFields = new HashMap<>();
+    private CountsStructure countProvedFieldsPerColumn() {
+        CountsStructure provedFields = new CountsStructure();
 
         // iterate over the columns of the nonogram
         for (int i = 0; i < nonogram[0].length; i++) {
             int res = 0;
-            ArrayList<Integer> results = new ArrayList<>();
             // iterate over each value in the column
             for (int j = 0; j < nonogram.length; j++) {
                 if (nonogram[j][i] == NonogramConstants.FIELD_PROVED) {
@@ -183,7 +167,7 @@ public class NonogramGenerator {
                 if (nonogram[j][i] == NonogramConstants.FIELD_EMPTY && res != 0) {
                     // here's the end of one group
                     // add the number to the list and resets the counter
-                    results.add(res);
+                    provedFields.addCount(i, res);
                     res = 0;
                 }
             }
@@ -192,18 +176,14 @@ public class NonogramGenerator {
 
             if (res != 0) {
                 // add the last counter to the list if there is one
-                results.add(res);
+                provedFields.addCount(i, res);
             }
 
-            if (results.isEmpty()) {
+            if (provedFields.isRowOrColumnEmpty(i)) {
                 // if the list is empty, there are no proved fields
                 // add 0 to the list
-                results.add(0);
+                provedFields.addCount(i, 0);
             }
-
-            // add the counts for this column to the map
-            // key is the number of column
-            provedFields.put(i, results);
         }
 
         return provedFields;
