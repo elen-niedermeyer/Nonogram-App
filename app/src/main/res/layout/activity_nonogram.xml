@@ -23,7 +23,8 @@
         android:layout_height="match_parent"
         android:layout_below="@id/activity_nonogram_toolbar"
         android:layout_margin="@dimen/distance_views_1"
-        android:background="@color/background_color">
+        android:background="@color/background_color"
+        android:fillViewport="true">
 
         <HorizontalScrollView
             android:id="@+id/activity_nonogram_scroll_horizontal"
