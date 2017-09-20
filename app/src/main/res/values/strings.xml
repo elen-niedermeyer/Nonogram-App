@@ -33,6 +33,10 @@
     <string name="skip_tutorial">Skip tutorial</string>
     <string name="click_here_continue">Tab to continue</string>
 
+    <!-- game activitiy count views -->
+    <string name="tag_row_count">row_%1$d_%2$d</string>
+    <string name="tag_colum_count">column_%1$d_%2$d</string>
+
     <!-- statistics activity -->
     <string name="heading_size">Game size</string>
     <string name="number_of_games">Solved puzzles</string>

@@ -131,7 +131,26 @@ public class GameHandler {
     private OnClickListener countOnClick = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            v.setBackgroundResource(R.drawable.game_count_striked_off);
+            String tag = (String) v.getTag();
+            String[] tagParsed = tag.split("_");
+            int outerIndex = Integer.parseInt(tagParsed[1]);
+            int innerIndex = Integer.parseInt(tagParsed[2]);
+            if (tagParsed[0].equals("row")) {
+                if (rowCounts.isStriked(outerIndex, innerIndex)) {
+                    v.setBackgroundResource(0);
+                } else {
+                    v.setBackgroundResource(R.drawable.game_count_striked_off);
+                }
+                rowCounts.toggleStriked(outerIndex, innerIndex);
+
+            } else if (tagParsed[0].equals("column")) {
+                if (columnCounts.isStriked(outerIndex, innerIndex)) {
+                    v.setBackgroundResource(0);
+                } else {
+                    v.setBackgroundResource(R.drawable.game_count_striked_off);
+                }
+                columnCounts.toggleStriked(outerIndex, innerIndex);
+            }
         }
     };
 
@@ -355,6 +374,7 @@ public class GameHandler {
                 if (valuesSize >= x + 1) {
                     TextView count = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_top, null);
                     count.setText(String.format(Locale.getDefault(), "%d", columnCounts.get(i, x)));
+                    count.setTag(String.format(activity.getString(R.string.tag_colum_count), i, x));
                     count.setClickable(true);
                     count.setOnClickListener(countOnClick);
                     row.addView(count);
@@ -375,8 +395,10 @@ public class GameHandler {
 
         ArrayList<Integer> values = rowCounts.get(i);
         for (int value : values) {
+            int innerIndex = values.indexOf(value);
             TextView count = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_left, null);
             count.setText(String.format(Locale.getDefault(), "%d", value));
+            count.setTag(String.format(activity.getString(R.string.tag_row_count), i, innerIndex));
             count.setClickable(true);
             count.setOnClickListener(countOnClick);
             layout.addView(count);

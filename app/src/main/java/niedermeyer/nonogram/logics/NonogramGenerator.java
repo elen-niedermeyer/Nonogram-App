@@ -138,7 +138,7 @@ public class NonogramGenerator {
             if (provedFields.isRowOrColumnEmpty(i)) {
                 // if the list is empty, there are no proved fields
                 // add 0 to the list
-                provedFields.addCount(i, NonogramConstants.FIELD_EMPTY);
+                provedFields.addCount(i, 0);
             }
         }
 

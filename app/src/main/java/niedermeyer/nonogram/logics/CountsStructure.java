@@ -76,5 +76,20 @@ public class CountsStructure {
         }
     }
 
+    public boolean isStriked(int outerIndex, int innerIndex) {
+        ArrayList<Boolean> x = isStriked.get(outerIndex);
+        return x.get(innerIndex);
+    }
+
+    public void toggleStriked(int outerIndex, int innerIndex) {
+        ArrayList<Boolean> x = isStriked.get(outerIndex);
+        boolean isStriked = x.get(innerIndex);
+        if (isStriked) {
+            x.set(innerIndex, false);
+        } else {
+            x.set(innerIndex, true);
+        }
+    }
+
 
 }
