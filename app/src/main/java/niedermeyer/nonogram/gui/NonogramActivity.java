@@ -1,4 +1,4 @@
-package niedermeyer.nonogram.activities;
+package niedermeyer.nonogram.gui;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,7 +27,7 @@ import niedermeyer.nonogram.persistence.GameSizePersistence;
 public class NonogramActivity extends AppCompatActivity {
 
     private GameHandler game = new GameHandler(this);
-    private MenuActions menuActions = new MenuActions(this);
+    private NumberPickerDialog menuActions = new NumberPickerDialog(this);
     private GameSizePersistence gameSize;
 
     private String nonogramFileName = "nonogram";
@@ -77,7 +77,7 @@ public class NonogramActivity extends AppCompatActivity {
                 return true;
 
             case R.id.toolbar_game_rows:
-                AlertDialog dialogRows = menuActions.makeNumberPickerForGameSize(true);
+                AlertDialog dialogRows = menuActions.makeDialog(true);
                 final int saveNumberRows = GameSizePersistence.numberOfRows;
                 dialogRows.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
@@ -93,7 +93,7 @@ public class NonogramActivity extends AppCompatActivity {
                 return true;
 
             case R.id.toolbar_game_columns:
-                AlertDialog dialogColumns = menuActions.makeNumberPickerForGameSize(false);
+                AlertDialog dialogColumns = menuActions.makeDialog(false);
                 final int saveNumberColumns = GameSizePersistence.numberOfColumns;
                 dialogColumns.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override

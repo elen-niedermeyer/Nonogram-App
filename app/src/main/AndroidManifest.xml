@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.StartActivity">
+        <activity android:name=".gui.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,11 +17,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.NonogramActivity"
-            android:parentActivityName=".activities.StartActivity" />
-        <activity android:name=".activities.OptionsActivity" />
-        <activity android:name=".activities.HowToPlayActivity" />
-        <activity android:name=".activities.StatisticsActivity" />
+            android:name=".gui.NonogramActivity"
+            android:parentActivityName=".gui.StartActivity" />
+        <activity android:name=".gui.OptionsActivity" />
+        <activity android:name=".gui.HowToPlayActivity" />
+        <activity android:name=".gui.StatisticsActivity" />
     </application>
 
 </manifest>

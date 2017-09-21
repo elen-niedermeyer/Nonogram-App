@@ -1,4 +1,4 @@
-package niedermeyer.nonogram.activities;
+package niedermeyer.nonogram.gui;
 
 import android.view.Gravity;
 import android.view.View;

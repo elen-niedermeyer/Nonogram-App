@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_color"
     android:orientation="vertical"
-    tools:context="niedermeyer.nonogram.activities.OptionsActivity">
+    tools:context="niedermeyer.nonogram.gui.OptionsActivity">
 
     <!-- Game field size -->
     <TextView

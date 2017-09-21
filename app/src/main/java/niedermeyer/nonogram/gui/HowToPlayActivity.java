@@ -1,4 +1,4 @@
-package niedermeyer.nonogram.activities;
+package niedermeyer.nonogram.gui;
 
 import android.content.Intent;
 import android.os.Bundle;

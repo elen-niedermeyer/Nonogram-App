@@ -8,7 +8,7 @@
     android:clickable="true"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="niedermeyer.nonogram.activities.HowToPlayActivity">
+    tools:context="niedermeyer.nonogram.gui.HowToPlayActivity">
 
     <Button
         android:id="@+id/activity_how_to_play_btn_skip"

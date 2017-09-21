@@ -41,7 +41,7 @@
     <!-- statistics activity -->
     <string name="heading_size">Game size</string>
     <string name="number_of_games">Solved puzzles</string>
-    <string name="game_size_row_column">%1$d x %2$d</string>
+    <string name="puzzle_size_row_column">%1$d x %2$d</string>
 
     <!-- won animation -->
     <string name="won">You solved the puzzle</string>

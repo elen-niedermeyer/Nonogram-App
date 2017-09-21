@@ -27,14 +27,14 @@ public class StatisticsPersistence {
         activity = pActivity;
     }
 
-    public int getScore(int pNumberOne, int pNumberTwo) {
+    public int getNumberOfSavedPuzzles(int pNumberOne, int pNumberTwo) {
         String prefName = getPreferenceName(pNumberOne, pNumberTwo);
-        return getScore(prefName);
+        return getNumberOfSavedPuzzles(prefName);
     }
 
     public void saveNewScore() {
         String prefName = getPreferenceName(GameSizePersistence.numberOfRows, GameSizePersistence.numberOfColumns);
-        int score = getScore(prefName);
+        int score = getNumberOfSavedPuzzles(prefName);
         score = score + 1;
         SharedPreferences prefs = activity.getSharedPreferences(activity.getString(R.string.prefs_group_statistics), Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEdit = prefs.edit();
@@ -52,7 +52,7 @@ public class StatisticsPersistence {
         return prefName;
     }
 
-    private int getScore(String pPrefName) {
+    private int getNumberOfSavedPuzzles(String pPrefName) {
         SharedPreferences prefs = activity.getSharedPreferences(activity.getString(R.string.prefs_group_statistics), Context.MODE_PRIVATE);
         int score = prefs.getInt(pPrefName, SCORE_DEFAULT);
         return score;
