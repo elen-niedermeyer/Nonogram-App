@@ -12,9 +12,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
+import java.util.Locale;
 
 import niedermeyer.nonogram.R;
+import niedermeyer.nonogram.logics.CountsStructure;
 import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.logics.NonogramGenerator;
 import niedermeyer.nonogram.persistence.GameSizePersistence;
@@ -24,7 +25,7 @@ import niedermeyer.nonogram.persistence.StatisticsPersistence;
  * @author Elen Niedermeyer, last updated 2017-08-27
  */
 
-public class GameHandler implements OnClickListener {
+public class GameHandler {
 
     /**
      * Context activity
@@ -36,8 +37,8 @@ public class GameHandler implements OnClickListener {
      */
     private NonogramGenerator generator = new NonogramGenerator();
     private int[][] nonogram;
-    private Map<Integer, ArrayList<Integer>> rowCounts;
-    private Map<Integer, ArrayList<Integer>> columnCounts;
+    private CountsStructure rowCounts;
+    private CountsStructure columnCounts;
 
     /**
      * Statistics
@@ -48,6 +49,110 @@ public class GameHandler implements OnClickListener {
      * Field that the users creates
      */
     private int[][] actualField;
+
+    /**
+     * Listener for the buttons on the game field.
+     * Overrides {@link OnClickListener#onClick(View)}.
+     * Parses the clicked field's id.
+     * Changes the background:
+     * If the field was {@link NonogramConstants#FIELD_NOTHING} it becomes {@link NonogramConstants#FIELD_PROVED}.
+     * If it was {@link NonogramConstants#FIELD_PROVED} it becomes {@link NonogramConstants#FIELD_EMPTY}.
+     * If it was {@link NonogramConstants#FIELD_EMPTY} it becomes {@link NonogramConstants#FIELD_NOTHING}.
+     * <p>
+     * Looks if the nonogram is solved by comparing the updated {@link #actualField} with {@link #nonogram}.
+     */
+    private OnClickListener fieldOnClick = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // get position of the clicked view
+            // get the views parent to get the row number
+            TableRow row = (TableRow) v.getParent();
+            int r = row.getId();
+            // get the view id, it's [row number][column number]
+            int id = v.getId();
+            String idString = Integer.toString(id);
+            // get the column number
+            int c;
+            if (r == 0) {
+                // if the row is 0, the column number is just the view id
+                c = id;
+            } else if (r > 0 && r < 10) {
+                // if the row number has one digit, the column number is the view id without the first digit
+                String jString = idString.substring(1);
+                c = Integer.parseInt(jString);
+            } else {
+                // if the row number has two digits, the column number is the view id without the two first digits
+                String jString = idString.substring(2);
+                c = Integer.parseInt(jString);
+            }
+
+            // changes the clicked field
+            int fieldValue = actualField[r][c];
+            if (fieldValue == NonogramConstants.FIELD_NOTHING) {
+                v.setBackgroundResource(R.drawable.game_field_btn_black);
+                actualField[r][c] = NonogramConstants.FIELD_PROVED;
+            } else if (fieldValue == NonogramConstants.FIELD_PROVED) {
+                v.setBackgroundResource(R.drawable.game_field_btn_cross);
+                actualField[r][c] = NonogramConstants.FIELD_EMPTY;
+            } else if (fieldValue == NonogramConstants.FIELD_EMPTY) {
+                v.setBackgroundResource(R.drawable.game_field_btn_white);
+                actualField[r][c] = NonogramConstants.FIELD_NOTHING;
+            }
+
+            // prove if the nonogram is solved now
+            // make a copy, replace all -1 with 0 (these are empty fields but in the GUI they have different meanings)
+            int[][] actualFieldCopy = new int[actualField.length][actualField[0].length];
+            for (int i = 0; i < actualField.length; i++) {
+                for (int j = 0; j < actualField[i].length; j++) {
+                    if (actualField[i][j] == NonogramConstants.FIELD_NOTHING) {
+                        actualFieldCopy[i][j] = NonogramConstants.FIELD_EMPTY;
+                    } else {
+                        actualFieldCopy[i][j] = actualField[i][j];
+                    }
+                }
+            }
+
+            // if the copy of the array is equals the nonogram, the game is solved
+            if (Arrays.deepEquals(actualFieldCopy, nonogram)) {
+                // game is won
+                // save it in statistics
+                statistics.saveNewScore();
+                // make new game
+                generator.makeNewGame(GameSizePersistence.numberOfRows, GameSizePersistence.numberOfColumns);
+                nonogram = generator.getNonogram();
+                // clear actual field variable
+                actualField = new int[GameSizePersistence.numberOfRows][GameSizePersistence.numberOfColumns];
+                // show the animation
+                showWonAnimation();
+            }
+        }
+    };
+
+    private OnClickListener countOnClick = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String tag = (String) v.getTag();
+            String[] tagParsed = tag.split("_");
+            int outerIndex = Integer.parseInt(tagParsed[1]);
+            int innerIndex = Integer.parseInt(tagParsed[2]);
+            if (tagParsed[0].equals("row")) {
+                if (rowCounts.isStriked(outerIndex, innerIndex)) {
+                    v.setBackgroundResource(0);
+                } else {
+                    v.setBackgroundResource(R.drawable.game_count_striked_off);
+                }
+                rowCounts.toggleStriked(outerIndex, innerIndex);
+
+            } else if (tagParsed[0].equals("column")) {
+                if (columnCounts.isStriked(outerIndex, innerIndex)) {
+                    v.setBackgroundResource(0);
+                } else {
+                    v.setBackgroundResource(R.drawable.game_count_striked_off);
+                }
+                columnCounts.toggleStriked(outerIndex, innerIndex);
+            }
+        }
+    };
 
     /**
      * Constructor.
@@ -145,83 +250,6 @@ public class GameHandler implements OnClickListener {
     }
 
     /**
-     * Overrides {@link OnClickListener#onClick(View)}.
-     * Parses the clicked field's id.
-     * Changes the background:
-     * If the field was {@link NonogramConstants#FIELD_NOTHING} it becomes {@link NonogramConstants#FIELD_PROVED}.
-     * If it was {@link NonogramConstants#FIELD_PROVED} it becomes {@link NonogramConstants#FIELD_EMPTY}.
-     * If it was {@link NonogramConstants#FIELD_EMPTY} it becomes {@link NonogramConstants#FIELD_NOTHING}.
-     * <p>
-     * Looks if the nonogram is solved by comparing the updated {@link #actualField} with {@link #nonogram}.
-     *
-     * @param v the clicked view, given by the system
-     */
-    @Override
-    public void onClick(View v) {
-        // get position of the clicked view
-        // get the views parent to get the row number
-        TableRow row = (TableRow) v.getParent();
-        int r = row.getId();
-        // get the view id, it's [row number][column number]
-        int id = v.getId();
-        String idString = Integer.toString(id);
-        // get the column number
-        int c;
-        if (r == 0) {
-            // if the row is 0, the column number is just the view id
-            c = id;
-        } else if (r > 0 && r < 10) {
-            // if the row number has one digit, the column number is the view id without the first digit
-            String jString = idString.substring(1);
-            c = Integer.parseInt(jString);
-        } else {
-            // if the row number has two digits, the column number is the view id without the two first digits
-            String jString = idString.substring(2);
-            c = Integer.parseInt(jString);
-        }
-
-        // changes the clicked field
-        int fieldValue = actualField[r][c];
-        if (fieldValue == NonogramConstants.FIELD_NOTHING) {
-            v.setBackgroundResource(R.drawable.game_field_btn_black);
-            actualField[r][c] = NonogramConstants.FIELD_PROVED;
-        } else if (fieldValue == NonogramConstants.FIELD_PROVED) {
-            v.setBackgroundResource(R.drawable.game_field_btn_cross);
-            actualField[r][c] = NonogramConstants.FIELD_EMPTY;
-        } else if (fieldValue == NonogramConstants.FIELD_EMPTY) {
-            v.setBackgroundResource(R.drawable.game_field_btn_white);
-            actualField[r][c] = NonogramConstants.FIELD_NOTHING;
-        }
-
-        // prove if the nonogram is solved now
-        // make a copy, replace all -1 with 0 (these are empty fields but in the GUI they have different meanings)
-        int[][] actualFieldCopy = new int[actualField.length][actualField[0].length];
-        for (int i = 0; i < actualField.length; i++) {
-            for (int j = 0; j < actualField[i].length; j++) {
-                if (actualField[i][j] == NonogramConstants.FIELD_NOTHING) {
-                    actualFieldCopy[i][j] = NonogramConstants.FIELD_EMPTY;
-                } else {
-                    actualFieldCopy[i][j] = actualField[i][j];
-                }
-            }
-        }
-
-        // if the copy of the array is equals the nonogram, the game is solved
-        if (Arrays.deepEquals(actualFieldCopy, nonogram)) {
-            // game is won
-            // save it in statistics
-            statistics.saveNewScore();
-            // make new game
-            generator.makeNewGame(GameSizePersistence.numberOfRows, GameSizePersistence.numberOfColumns);
-            nonogram = generator.getNonogram();
-            // clear actual field variable
-            actualField = new int[GameSizePersistence.numberOfRows][GameSizePersistence.numberOfColumns];
-            // show the animation
-            showWonAnimation();
-        }
-    }
-
-    /**
      * Makes the game field.
      * Makes a table row for each row. IDs are the place in the nonogram array.
      * Adds the counts left for the rows and on the top for the columns.
@@ -231,13 +259,10 @@ public class GameHandler implements OnClickListener {
         // clear the field, remove all rows from table
         table.removeAllViews();
 
-        TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-        rowParams.gravity = Gravity.CENTER_HORIZONTAL;
-
         // add row with counts of the columns
-        TableRow columnCounts = makeColumnCountRow();
-        columnCounts.setLayoutParams(rowParams);
-        table.addView(columnCounts);
+        table = addColumnCountRows(table);
+
+        TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
         // add rows of nonogram
         for (int i = 0; i < nonogram.length; i++) {
@@ -245,6 +270,7 @@ public class GameHandler implements OnClickListener {
             TableRow row = new TableRow(activity);
             row.setId(i);
             row.setLayoutParams(rowParams);
+            row.setGravity(Gravity.CENTER);
 
             // add count for this row
             row.addView(makeRowCountView(i));
@@ -260,7 +286,7 @@ public class GameHandler implements OnClickListener {
                 int buttonSize = (int) activity.getResources().getDimension(R.dimen.field_button_size);
                 b.setLayoutParams(new TableRow.LayoutParams(buttonSize, buttonSize));
                 // set the onClickListener implemented in this class
-                b.setOnClickListener(this);
+                b.setOnClickListener(fieldOnClick);
                 // add button to row
                 row.addView(b);
                 // initialize field in array
@@ -281,13 +307,10 @@ public class GameHandler implements OnClickListener {
         // clear the field, remove all rows from table
         table.removeAllViews();
 
-        TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-        rowParams.gravity = Gravity.CENTER_HORIZONTAL;
-
         // add row with counts of the columns
-        TableRow columnCounts = makeColumnCountRow();
-        columnCounts.setLayoutParams(rowParams);
-        table.addView(columnCounts);
+        table = addColumnCountRows(table);
+
+        TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
 
         // add rows of nonogram
         for (int i = 0; i < nonogram.length; i++) {
@@ -295,9 +318,11 @@ public class GameHandler implements OnClickListener {
             TableRow row = new TableRow(activity);
             row.setId(i);
             row.setLayoutParams(rowParams);
+            row.setGravity(Gravity.CENTER);
 
             // add count for this row
             row.addView(makeRowCountView(i));
+
             // add a button for each field in this row
             for (int j = 0; j < nonogram[i].length; j++) {
                 Button b = new Button(activity);
@@ -308,7 +333,7 @@ public class GameHandler implements OnClickListener {
                 int buttonSize = (int) activity.getResources().getDimension(R.dimen.field_button_size);
                 b.setLayoutParams(new TableRow.LayoutParams(buttonSize, buttonSize));
                 // set the onClickListener implemented in this class
-                b.setOnClickListener(this);
+                b.setOnClickListener(fieldOnClick);
                 // add button to row
                 row.addView(b);
 
@@ -326,65 +351,60 @@ public class GameHandler implements OnClickListener {
         }
     }
 
-    /**
-     * Makes a table column that shows the column counts in text views.
-     * Numbers in one text view are separated by line separator.
-     *
-     * @return a table row with column counts
-     */
-    private TableRow makeColumnCountRow() {
-        TableRow row = new TableRow(activity);
+    private TableLayout addColumnCountRows(TableLayout pTable) {
+        // get maximum of numbers
+        int neededRows = 0;
+        for (int i = 0; i < columnCounts.getSizeOuter(); i++) {
+            int x = columnCounts.getSizeInner(i);
+            if (x > neededRows) {
+                neededRows = x;
+            }
+        }
 
-        // add an empty text view
-        row.addView(new TextView(activity));
+        TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
+        rowParams.gravity = Gravity.CENTER_HORIZONTAL;
 
         // add filled views for all columns
-        for (int i = 0; i < columnCounts.size(); i++) {
-            ArrayList<Integer> values = columnCounts.get(i);
-            String countsAsText = "";
-            // paste all values for one column to one string
-            for (int value : values) {
-                if (!countsAsText.equals("")) {
-                    countsAsText += "\n" + value;
+        for (int x = 0; x < neededRows; x++) {
+            TableRow row = new TableRow(activity);
+            // add an empty text view
+            row.addView(new TextView(activity));
+            for (int i = 0; i < columnCounts.getSizeOuter(); i++) {
+                int valuesSize = columnCounts.getSizeInner(i);
+                if (valuesSize >= x + 1) {
+                    TextView count = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_top, null);
+                    count.setText(String.format(Locale.getDefault(), "%d", columnCounts.get(i, x)));
+                    count.setTag(String.format(activity.getString(R.string.tag_colum_count), i, x));
+                    count.setClickable(true);
+                    count.setOnClickListener(countOnClick);
+                    row.addView(count);
                 } else {
-                    countsAsText += value;
+                    row.addView(new TextView(activity));
                 }
             }
-
-            // makes the new text view with the pasted text
-            TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_top, null);
-            counts.setText(countsAsText);
-
-            // add the text view to the row
-            row.addView(counts);
+            row.setLayoutParams(rowParams);
+            pTable.addView(row);
         }
 
-        return row;
+        return pTable;
     }
 
-    /**
-     * Makes a text view with the row count of row i. Numbers in the text view are separated by tabs.
-     *
-     * @param i the number of the row, which count should be in the text view
-     * @return a text view with the row counts of row i
-     */
-    private TextView makeRowCountView(int i) {
+    private LinearLayout makeRowCountView(int i) {
+        LinearLayout layout = new LinearLayout(activity);
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+
         ArrayList<Integer> values = rowCounts.get(i);
-        String countsAsText = "";
-        // paste all numbers for this row to one string
         for (int value : values) {
-            if (!countsAsText.equals("")) {
-                countsAsText += "   " + value;
-            } else {
-                countsAsText += value;
-            }
+            int innerIndex = values.indexOf(value);
+            TextView count = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_left, null);
+            count.setText(String.format(Locale.getDefault(), "%d", value));
+            count.setTag(String.format(activity.getString(R.string.tag_row_count), i, innerIndex));
+            count.setClickable(true);
+            count.setOnClickListener(countOnClick);
+            layout.addView(count);
         }
 
-        // makes the new text view with the pasted string
-        TextView counts = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_left, null);
-        counts.setText(countsAsText);
-
-        return counts;
+        return layout;
     }
 
     private void showWonAnimation() {
