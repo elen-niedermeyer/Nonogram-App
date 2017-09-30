@@ -109,7 +109,7 @@ public class NonogramActivity extends AppCompatActivity {
                 return true;
 
             case R.id.toolbar_instruction:
-                Intent i = new Intent(this, HowToPlayActivity.class);
+                Intent i = new Intent(this, InstructionActivity.class);
                 startActivity(i);
 
             default:
@@ -132,7 +132,7 @@ public class NonogramActivity extends AppCompatActivity {
 
         // start the instruction activity at the first game before other initialization
         if (isFirstGame()) {
-            startActivity(new Intent(this, HowToPlayActivity.class));
+            startActivity(new Intent(this, InstructionActivity.class));
         }
 
         gameSize = new GameSizePersistence(this);

@@ -30,7 +30,7 @@ public class StartActivity extends AppCompatActivity {
     private OnClickListener buttonClick = new OnClickListener() {
         /**
          * Overrides the method {@link OnClickListener#onClick(View)}.
-         * Makes an intent. It starts the {@link NonogramActivity}, {@link StatisticsActivity}, {@link HowToPlayActivity} or {@link OptionsActivity} according to which button was clicked.
+         * Makes an intent. It starts the {@link NonogramActivity}, {@link StatisticsActivity}, {@link InstructionActivity} or {@link OptionsActivity} according to which button was clicked.
          *
          * @param v the clicked button view, can be {@link StartActivity#playButton}, {@link StartActivity#highscoreButton}, {@link StartActivity#howToPlayButton} or {@link StartActivity#optionsButton}
          */
@@ -43,7 +43,7 @@ public class StartActivity extends AppCompatActivity {
             } else if (v == highscoreButton) {
                 i = new Intent(context, StatisticsActivity.class);
             } else if (v == howToPlayButton) {
-                i = new Intent(context, HowToPlayActivity.class);
+                i = new Intent(context, InstructionActivity.class);
             } else if (v == optionsButton) {
                 i = new Intent(context, OptionsActivity.class);
             }

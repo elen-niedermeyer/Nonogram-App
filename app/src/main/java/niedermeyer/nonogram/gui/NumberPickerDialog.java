@@ -4,21 +4,14 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.PopupWindow;
-import android.widget.TextView;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.persistence.GameSizePersistence;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-07-16
+ * @author Elen Niedermeyer, last updated 2017-09-21
  */
 public class NumberPickerDialog {
 

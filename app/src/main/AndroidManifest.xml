@@ -20,7 +20,7 @@
             android:name=".gui.NonogramActivity"
             android:parentActivityName=".gui.StartActivity" />
         <activity android:name=".gui.OptionsActivity" />
-        <activity android:name=".gui.HowToPlayActivity" />
+        <activity android:name=".gui.InstructionActivity" />
         <activity android:name=".gui.StatisticsActivity" />
     </application>
 
