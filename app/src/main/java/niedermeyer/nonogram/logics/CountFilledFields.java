@@ -7,12 +7,12 @@ import java.util.Map;
 /**
  * @author Elen Niedermeyer, last modified 2017-09-08
  */
-public class CountsStructure {
+public class CountFilledFields {
 
     private Map<Integer, ArrayList<Integer>> counts;
     private Map<Integer, ArrayList<Boolean>> isStriked;
 
-    public CountsStructure() {
+    public CountFilledFields() {
         counts = new HashMap<Integer, ArrayList<Integer>>();
         isStriked = new HashMap<Integer, ArrayList<Boolean>>();
     }

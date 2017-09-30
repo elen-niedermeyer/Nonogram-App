@@ -8,8 +8,8 @@ import java.util.Random;
 public class NonogramGenerator {
 
     private int[][] nonogram;
-    private CountsStructure countsRow;
-    private CountsStructure countsColumn;
+    private CountFilledFields countsRow;
+    private CountFilledFields countsColumn;
 
     private Random random = new Random();
 
@@ -38,7 +38,7 @@ public class NonogramGenerator {
      *
      * @return {@link #countsRow}
      */
-    public CountsStructure getCountsRow() {
+    public CountFilledFields getRowCounts() {
         countsRow = countProvedFieldsPerRow();
         return countsRow;
     }
@@ -50,7 +50,7 @@ public class NonogramGenerator {
      *
      * @return {@link #countsColumn}
      */
-    public CountsStructure getCountsColumn() {
+    public CountFilledFields getColumnCounts() {
         countsColumn = countProvedFieldsPerColumn();
         return countsColumn;
     }
@@ -107,8 +107,8 @@ public class NonogramGenerator {
      *
      * @return a map with the row counts of {@link #nonogram}
      */
-    private CountsStructure countProvedFieldsPerRow() {
-        CountsStructure provedFields = new CountsStructure();
+    private CountFilledFields countProvedFieldsPerRow() {
+        CountFilledFields provedFields = new CountFilledFields();
 
         // iterate over the rows of the nonogram
         for (int i = 0; i < nonogram.length; i++) {
@@ -151,8 +151,8 @@ public class NonogramGenerator {
      *
      * @return a map with the column counts of {@link #nonogram}
      */
-    private CountsStructure countProvedFieldsPerColumn() {
-        CountsStructure provedFields = new CountsStructure();
+    private CountFilledFields countProvedFieldsPerColumn() {
+        CountFilledFields provedFields = new CountFilledFields();
 
         // iterate over the columns of the nonogram
         for (int i = 0; i < nonogram[0].length; i++) {

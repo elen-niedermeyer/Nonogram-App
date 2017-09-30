@@ -26,7 +26,7 @@ import niedermeyer.nonogram.persistence.GameSizePersistence;
  */
 public class NonogramActivity extends AppCompatActivity {
 
-    private GameHandler game = new GameHandler(this);
+    private PuzzleDisplayer game = new PuzzleDisplayer(this);
     private NumberPickerDialog menuActions = new NumberPickerDialog(this);
     private GameSizePersistence gameSize;
 
@@ -36,11 +36,11 @@ public class NonogramActivity extends AppCompatActivity {
     private File actualFieldFile;
 
     /**
-     * Getter for the {@link GameHandler}.
+     * Getter for the {@link PuzzleDisplayer}.
      *
      * @return {@link #game}
      */
-    public GameHandler getGameHandler() {
+    public PuzzleDisplayer getGameHandler() {
         return this.game;
     }
 
@@ -233,7 +233,7 @@ public class NonogramActivity extends AppCompatActivity {
         }
 
         // save the field
-        int[][] actualField = game.getActualField();
+        int[][] actualField = game.getUsersCurrentField();
 
         // look if the file exists
         if (!actualFieldFile.exists()) {
