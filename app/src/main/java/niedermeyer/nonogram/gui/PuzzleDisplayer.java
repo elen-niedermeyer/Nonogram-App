@@ -10,7 +10,6 @@ import android.widget.TableRow;
 import java.util.Arrays;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.logics.CountFilledFields;
 import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.logics.NonogramGenerator;
 import niedermeyer.nonogram.persistence.GameSizePersistence;
@@ -33,8 +32,6 @@ public class PuzzleDisplayer {
      */
     private NonogramGenerator generator = new NonogramGenerator();
     private int[][] nonogram;
-    private CountFilledFields rowCounts;
-    private CountFilledFields columnCounts;
 
     /**
      * Statistics
@@ -119,7 +116,7 @@ public class PuzzleDisplayer {
 
     /**
      * Creates a new nonogram puzzle.
-     * Generates a new nonogram by {@link #generator}. Sets {@link #nonogram}, {@link #rowCounts} and {@link #columnCounts}.
+     * Generates a new nonogram by {@link #generator}. Sets {@link #nonogram}.
      * Resets {@link #usersCurrentField}.
      * Generates the GUI by {@link #generateNewGameField()}.
      */
@@ -142,7 +139,6 @@ public class PuzzleDisplayer {
     /**
      * Creates a nonogram field by a given puzzle.
      * Sets {@link #nonogram} and {@link #usersCurrentField} by the given parameters.
-     * Sets {@link #rowCounts} and {@link #columnCounts} with {@link #generator}.
      * Generates the GUI by {@link #generateSavedGameField()}.
      * <p>
      * Generates a new game field by {@link #newGame()}, if the parameters are null.
