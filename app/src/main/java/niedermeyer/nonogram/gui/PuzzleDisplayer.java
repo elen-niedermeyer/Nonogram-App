@@ -185,7 +185,7 @@ public class PuzzleDisplayer {
      */
     private int parseRowNumberFromFieldView(View pView) {
         String tag = (String) pView.getTag();
-        String[] tagSplit = tag.split("_");
+        String[] tagSplit = tag.split(activity.getString(R.string.string_devider));
         return Integer.parseInt(tagSplit[0]);
     }
 
@@ -199,7 +199,7 @@ public class PuzzleDisplayer {
      */
     private int parseColumnNumberFromFieldView(View pView) {
         String tag = (String) pView.getTag();
-        String[] tagSplit = tag.split("_");
+        String[] tagSplit = tag.split(activity.getString(R.string.string_devider));
         return Integer.parseInt(tagSplit[1]);
     }
 
@@ -274,7 +274,7 @@ public class PuzzleDisplayer {
             for (int columnCounter = 0; columnCounter < nonogram[rowCounter].length; columnCounter++) {
                 Button newButton = makeFieldButton();
                 // set tag
-                newButton.setTag(rowCounter + "_" + columnCounter);
+                newButton.setTag(rowCounter + activity.getString(R.string.string_devider) + columnCounter);
 
                 // set background
                 newButton.setBackgroundResource(R.drawable.game_field_btn_white);
@@ -312,7 +312,7 @@ public class PuzzleDisplayer {
             for (int columnCounter = 0; columnCounter < nonogram[rowCounter].length; columnCounter++) {
                 Button newButton = makeFieldButton();
                 // set tag
-                newButton.setTag(rowCounter + "_" + columnCounter);
+                newButton.setTag(rowCounter + activity.getString(R.string.string_devider) + columnCounter);
 
                 // set background resource for the given field in usersCurrentField
                 if (usersCurrentField[rowCounter][columnCounter] == NonogramConstants.FIELD_NO_DECISION) {

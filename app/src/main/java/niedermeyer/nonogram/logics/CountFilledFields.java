@@ -42,11 +42,11 @@ public class CountFilledFields {
         return innerList.get(pIndex);
     }
 
-    public int getSizeOuter() {
+    public int getOuterSize() {
         return counts.size();
     }
 
-    public int getSizeInner(int pKeyRowOrColumn) {
+    public int getInnerSize(int pKeyRowOrColumn) {
         ArrayList<Integer> innerList = counts.get(pKeyRowOrColumn);
         return innerList.size();
     }

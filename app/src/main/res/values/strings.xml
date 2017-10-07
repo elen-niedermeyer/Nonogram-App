@@ -54,4 +54,7 @@
     <string name="prefs_columns">number_of_columns</string>
     <string name="prefs_first_game">first_game</string>
     <string name="prefs_statistic">statistics_%1$d_%2$d</string>
+    <string name="string_devider">_</string>
+    <string name="row">row</string>
+    <string name="column">column</string>
 </resources>
