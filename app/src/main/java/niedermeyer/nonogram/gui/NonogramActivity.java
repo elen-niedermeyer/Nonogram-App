@@ -1,9 +1,7 @@
 package niedermeyer.nonogram.gui;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
@@ -12,262 +10,205 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.io.File;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.persistence.GameSizePersistence;
+import niedermeyer.nonogram.persistence.PuzzlePersistence;
+import niedermeyer.nonogram.persistence.PuzzleSizePersistence;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-08-04
+ * @author Elen Niedermeyer, last updated 2017-10-08
  */
 public class NonogramActivity extends AppCompatActivity {
 
-    private PuzzleDisplayer game = new PuzzleDisplayer(this);
-    private NumberPickerDialog menuActions = new NumberPickerDialog(this);
-    private GameSizePersistence gameSize;
+    private PuzzleDisplayer puzzleDisplayer = new PuzzleDisplayer(this);
 
-    private String nonogramFileName = "nonogram";
-    private File nonogramFile;
-    private String actualFieldFileName = "actual_field";
-    private File actualFieldFile;
+    private NumberPickerDialog numberPickerDialog = new NumberPickerDialog(this);
+
+    /**
+     * Persistences
+     */
+    private PuzzlePersistence persistence;
+    private PuzzleSizePersistence puzzleSize;
 
     /**
      * Getter for the {@link PuzzleDisplayer}.
      *
-     * @return {@link #game}
+     * @return {@link #puzzleDisplayer}
      */
     public PuzzleDisplayer getGameHandler() {
-        return this.game;
+        return this.puzzleDisplayer;
     }
 
+    /**
+     * Overrides {@link AppCompatActivity#onBackPressed()}.
+     * Goes always back to {@link StartActivity}, if the devices back button is pressed.
+     */
     @Override
     public void onBackPressed() {
         NavUtils.navigateUpFromSameTask(this);
     }
 
+    /**
+     * Overrides {@link AppCompatActivity#onCreateOptionsMenu(Menu)}.
+     * Inflates the menu. Sets the text of some items.
+     *
+     * @param menu the menu to initialize
+     * @return true, if the menu was created
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        // Inflate the menuActions; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_activity_nonogram, menu);
 
-        MenuItem rowsNumber = menu.findItem(R.id.toolbar_game_rows);
-        rowsNumber.setTitle(String.format(getString(R.string.number_of_rows_text), GameSizePersistence.numberOfRows));
+        // sets the text of the item that shows how much rows the puzzle has
+        MenuItem rowsNumber = menu.findItem(R.id.menu_activity_nonogram_puzzle_rows);
+        rowsNumber.setTitle(String.format(getString(R.string.number_of_rows_text), PuzzleSizePersistence.numberOfRows));
 
-        MenuItem columnsNumber = menu.findItem(R.id.toolbar_game_columns);
-        columnsNumber.setTitle(String.format(getString(R.string.number_of_columns_text), GameSizePersistence.numberOfColumns));
+        // sets the text of the item that shows how much columns the puzzle has
+        MenuItem columnsNumber = menu.findItem(R.id.menu_activity_nonogram_puzzle_columns);
+        columnsNumber.setTitle(String.format(getString(R.string.number_of_columns_text), PuzzleSizePersistence.numberOfColumns));
 
         return true;
     }
 
+    /**
+     * Overrides {@link AppCompatActivity#onOptionsItemSelected(MenuItem)}.
+     * Makes an actions according to which menu item was clicked.
+     * Starts a new game, resets the current game, updates the number of rows or columns or shows the instruction.
+     *
+     * @param item the clicked menu item
+     * @return true, if the action was successful
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final MenuItem clickedItem = item;
+
+        // switch on the item id
         switch (item.getItemId()) {
-            case R.id.toolbar_game_new:
-                game.newGame();
+            case R.id.menu_activity_nonogram_new_puzzle:
+                // start a new puzzle
+                puzzleDisplayer.newGame();
                 return true;
 
-            case R.id.toolbar_game_reset:
-                game.resetGame();
+            case R.id.menu_activity_nonogram_reset_puzzle:
+                // reset the current puzzle
+                puzzleDisplayer.resetGame();
                 return true;
 
-            case R.id.toolbar_game_rows:
-                AlertDialog dialogRows = menuActions.makeDialog(true);
-                final int saveNumberRows = GameSizePersistence.numberOfRows;
+            case R.id.menu_activity_nonogram_puzzle_rows:
+                // make the number picker dialog
+                AlertDialog dialogRows = numberPickerDialog.makeDialog(true);
+                final int saveNumberRows = PuzzleSizePersistence.numberOfRows;
                 dialogRows.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        if (saveNumberRows != GameSizePersistence.numberOfRows) {
-                            clickedItem.setTitle(String.format(getString(R.string.number_of_rows_text), GameSizePersistence.numberOfRows));
+                        if (saveNumberRows != PuzzleSizePersistence.numberOfRows) {
+                            // if the number of rows was changed
+                            // update title of item and of the title bar
+                            clickedItem.setTitle(String.format(getString(R.string.number_of_rows_text), PuzzleSizePersistence.numberOfRows));
                             updateToolbarTitle();
-                            game.newGame();
+                            // start a new game with the new size
+                            puzzleDisplayer.newGame();
                         }
                     }
                 });
+                // show the dialog
                 dialogRows.show();
                 return true;
 
-            case R.id.toolbar_game_columns:
-                AlertDialog dialogColumns = menuActions.makeDialog(false);
-                final int saveNumberColumns = GameSizePersistence.numberOfColumns;
+            case R.id.menu_activity_nonogram_puzzle_columns:
+                // make the number picker dialog
+                AlertDialog dialogColumns = numberPickerDialog.makeDialog(false);
+                final int saveNumberColumns = PuzzleSizePersistence.numberOfColumns;
                 dialogColumns.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        if (saveNumberColumns != GameSizePersistence.numberOfColumns) {
-                            clickedItem.setTitle(String.format(getString(R.string.number_of_columns_text), GameSizePersistence.numberOfColumns));
+                        if (saveNumberColumns != PuzzleSizePersistence.numberOfColumns) {
+                            // if the number of column was changed
+                            // update title of item and of the tool bar
+                            clickedItem.setTitle(String.format(getString(R.string.number_of_columns_text), PuzzleSizePersistence.numberOfColumns));
                             updateToolbarTitle();
-                            game.newGame();
+                            // start a new game with the new size
+                            puzzleDisplayer.newGame();
                         }
                     }
                 });
+                // show the dialog
                 dialogColumns.show();
                 return true;
 
-            case R.id.toolbar_instruction:
+            case R.id.menu_activity_nonogram_instruction:
+                // open the instruction activity
                 Intent i = new Intent(this, InstructionActivity.class);
                 startActivity(i);
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
+                // if we got here, the user's action was not recognized
+                // invoke the superclass to handle it
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void updateToolbarTitle() {
-        String title = String.format(getString(R.string.toolbar_title), GameSizePersistence.numberOfColumns, GameSizePersistence.numberOfRows);
-        getSupportActionBar().setTitle(title);
-    }
-
+    /**
+     * Overrides {@link AppCompatActivity#onCreate(Bundle)}.
+     * Sets the layout.
+     * Initializes {@link #persistence} and {@link #puzzleSize}.
+     * Starts {@link InstructionActivity} if it's the first puzzle.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_nonogram);
 
-        // start the instruction activity at the first game before other initialization
-        if (isFirstGame()) {
+        persistence = new PuzzlePersistence(this);
+        puzzleSize = new PuzzleSizePersistence(this);
+
+        // start the instruction activity if it's the first puzzle
+        if (persistence.isFirstPuzzle()) {
             startActivity(new Intent(this, InstructionActivity.class));
         }
 
-        gameSize = new GameSizePersistence(this);
-
+        // sets the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_nonogram_toolbar);
         setSupportActionBar(toolbar);
         updateToolbarTitle();
 
-        loadLastNonogramAndField();
+        // load the last game
+        // start a new game
+        int[][] nonogram = persistence.loadLastNonogram();
+        int[][] currentField = persistence.loadLastUserField();
+        if (nonogram != null && nonogram.length == PuzzleSizePersistence.numberOfRows && nonogram[0].length == PuzzleSizePersistence.numberOfColumns) {
+            // start puzzle with loaded arrays if the size haven't changed
+            puzzleDisplayer.newGame(nonogram, currentField);
+        } else {
+            // start new game if the size was changed
+            puzzleDisplayer.newGame();
+        }
     }
 
+    /**
+     * Overrides {@link AppCompatActivity#onPause()}.
+     * Saves the puzzle size and the arrays.
+     */
     @Override
     protected void onPause() {
         super.onPause();
 
-        gameSize.saveGameSize();
-        saveNonogramAndField();
+        puzzleSize.saveGameSize();
+        persistence.saveNonogram(puzzleDisplayer.getNonogram());
+        persistence.saveCurrentField(puzzleDisplayer.getUsersCurrentField());
     }
 
-    private void loadLastNonogramAndField() {
-        ObjectInputStream in = null;
-
-        // read the last nonogram
-        nonogramFile = new File(this.getFilesDir(), nonogramFileName);
-        int[][] nonogram = null;
-        if (nonogramFile.exists()) {
-            try {
-                // read the object
-                in = new ObjectInputStream(openFileInput(nonogramFileName));
-                nonogram = (int[][]) in.readObject();
-            } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
-            } finally {
-                try {
-                    in.close();
-                } catch (Exception e) {
-                    Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
-                }
-            }
-        }
-
-
-        // read the last actual solution of the field
-        actualFieldFile = new File(this.getFilesDir(), actualFieldFileName);
-        int[][] actualField = null;
-        if (actualFieldFile.exists()) {
-            try {
-                // read the object
-                in = new ObjectInputStream(openFileInput(actualFieldFileName));
-                actualField = (int[][]) in.readObject();
-            } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
-            } finally {
-                try {
-                    in.close();
-                } catch (Exception e) {
-                    Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
-                }
-            }
-        }
-
-        if (nonogram != null && nonogram.length == GameSizePersistence.numberOfRows && nonogram[0].length == GameSizePersistence.numberOfColumns) {
-            // start game with loaded arrays if the size haven't changed
-            game.newGame(nonogram, actualField);
-        } else {
-            // start new game if the size was changed
-            game.newGame();
-        }
+    /**
+     * Updates the title of the toolbar.
+     * It's necessary if the puzzle size was updated.
+     */
+    private void updateToolbarTitle() {
+        String title = String.format(getString(R.string.toolbar_title), PuzzleSizePersistence.numberOfColumns, PuzzleSizePersistence.numberOfRows);
+        getSupportActionBar().setTitle(title);
     }
 
-    private void saveNonogramAndField() {
-        ObjectOutputStream out = null;
-
-        // save the nonogram
-        int[][] nonogram = game.getNonogram();
-
-        // look if the file exists
-        if (!nonogramFile.exists()) {
-            try {
-                nonogramFile.createNewFile();
-            } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
-            }
-        }
-
-        try {
-            // write the game field
-            out = new ObjectOutputStream(openFileOutput(nonogramFileName, Context.MODE_PRIVATE));
-            out.writeObject(nonogram);
-        } catch (Exception e) {
-            Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
-        } finally {
-            try {
-                out.close();
-            } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
-            }
-        }
-
-        // save the field
-        int[][] actualField = game.getUsersCurrentField();
-
-        // look if the file exists
-        if (!actualFieldFile.exists()) {
-            try {
-                actualFieldFile.createNewFile();
-            } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
-            }
-        }
-
-        try {
-            // write the game field
-            out = new ObjectOutputStream(openFileOutput(actualFieldFileName, Context.MODE_PRIVATE));
-            out.writeObject(actualField);
-        } catch (Exception e) {
-            Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
-        } finally {
-            try {
-                out.close();
-            } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
-            }
-        }
-    }
-
-    private boolean isFirstGame() {
-        SharedPreferences prefs = getPreferences(Context.MODE_PRIVATE);
-        boolean isFirstGame = prefs.getBoolean(getString(R.string.prefs_first_game), true);
-        if (isFirstGame) {
-            SharedPreferences.Editor edit = prefs.edit();
-            edit.putBoolean(getString(R.string.prefs_first_game), false);
-            edit.apply();
-        }
-
-        return isFirstGame;
-    }
 }

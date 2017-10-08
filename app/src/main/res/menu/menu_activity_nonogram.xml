@@ -10,26 +10,26 @@
         app:showAsAction="always|collapseActionView" />
 
     <item
-        android:id="@+id/toolbar_game_new"
+        android:id="@+id/menu_activity_nonogram_new_puzzle"
         android:title="@string/new_game"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/toolbar_game_reset"
+        android:id="@+id/menu_activity_nonogram_reset_puzzle"
         android:title="@string/reset_game"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/toolbar_game_rows"
+        android:id="@+id/menu_activity_nonogram_puzzle_rows"
         android:title="@string/number_of_rows"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/toolbar_game_columns"
+        android:id="@+id/menu_activity_nonogram_puzzle_columns"
         android:title="@string/number_of_columns"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/toolbar_instruction"
+        android:id="@+id/menu_activity_nonogram_instruction"
         android:title="@string/howto"
         app:showAsAction="never" />
 </menu>

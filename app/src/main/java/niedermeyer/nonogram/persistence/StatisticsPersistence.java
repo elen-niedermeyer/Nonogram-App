@@ -33,7 +33,7 @@ public class StatisticsPersistence {
     }
 
     public void saveNewScore() {
-        String prefName = getPreferenceName(GameSizePersistence.numberOfRows, GameSizePersistence.numberOfColumns);
+        String prefName = getPreferenceName(PuzzleSizePersistence.numberOfRows, PuzzleSizePersistence.numberOfColumns);
         int score = getNumberOfSavedPuzzles(prefName);
         score = score + 1;
         SharedPreferences prefs = activity.getSharedPreferences(activity.getString(R.string.prefs_group_statistics), Context.MODE_PRIVATE);

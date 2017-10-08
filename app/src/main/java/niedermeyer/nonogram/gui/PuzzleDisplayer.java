@@ -12,7 +12,7 @@ import java.util.Arrays;
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.logics.NonogramGenerator;
-import niedermeyer.nonogram.persistence.GameSizePersistence;
+import niedermeyer.nonogram.persistence.PuzzleSizePersistence;
 import niedermeyer.nonogram.persistence.StatisticsPersistence;
 
 /**
@@ -121,11 +121,8 @@ public class PuzzleDisplayer {
      * Generates the GUI by {@link #generateNewGameField()}.
      */
     public void newGame() {
-        int numberOfRows = GameSizePersistence.numberOfRows;
-        int numberOfColumns = GameSizePersistence.numberOfColumns;
-
-        // ToDo look if this row is necessary
-        activity.updateToolbarTitle();
+        int numberOfRows = PuzzleSizePersistence.numberOfRows;
+        int numberOfColumns = PuzzleSizePersistence.numberOfColumns;
 
         // make new puzzle and initialize the private fields
         generator.makeNewGame(numberOfRows, numberOfColumns);

@@ -8,7 +8,7 @@ import android.widget.NumberPicker;
 
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.logics.NonogramConstants;
-import niedermeyer.nonogram.persistence.GameSizePersistence;
+import niedermeyer.nonogram.persistence.PuzzleSizePersistence;
 
 /**
  * @author Elen Niedermeyer, last updated 2017-09-21
@@ -27,9 +27,9 @@ public class NumberPickerDialog {
         picker.setMinValue(NonogramConstants.NONOGRAM_SIZE_MINIMUM);
         picker.setMaxValue(NonogramConstants.NONOGRAM_SIZE_MAXIMUM);
         if (isRow) {
-            picker.setValue(GameSizePersistence.numberOfRows);
+            picker.setValue(PuzzleSizePersistence.numberOfRows);
         } else {
-            picker.setValue(GameSizePersistence.numberOfColumns);
+            picker.setValue(PuzzleSizePersistence.numberOfColumns);
         }
 
         AlertDialog dialog = new AlertDialog.Builder(activity)
@@ -39,9 +39,9 @@ public class NumberPickerDialog {
                     public void onClick(DialogInterface dialog, int which) {
                         int newValue = picker.getValue();
                         if (isRow) {
-                            GameSizePersistence.numberOfRows = newValue;
+                            PuzzleSizePersistence.numberOfRows = newValue;
                         } else {
-                            GameSizePersistence.numberOfColumns = newValue;
+                            PuzzleSizePersistence.numberOfColumns = newValue;
                         }
                         dialog.dismiss();
                     }

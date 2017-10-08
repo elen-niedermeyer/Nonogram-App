@@ -9,7 +9,7 @@ import niedermeyer.nonogram.R;
 /**
  * @author Elen Niedermeyer, last modified 2017-07-31
  */
-public class GameSizePersistence {
+public class PuzzleSizePersistence {
 
     /**
      * Static variables representing the size of the game field
@@ -32,7 +32,7 @@ public class GameSizePersistence {
      *
      * @param pActivity the invoking activity
      */
-    public GameSizePersistence(Activity pActivity) {
+    public PuzzleSizePersistence(Activity pActivity) {
         activity = pActivity;
         if (numberOfRows == 0 && numberOfColumns == 0) {
             // fields are not initialized

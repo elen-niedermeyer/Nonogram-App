@@ -11,7 +11,7 @@ import android.widget.Button;
 import java.util.Locale;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.persistence.GameSizePersistence;
+import niedermeyer.nonogram.persistence.PuzzleSizePersistence;
 
 /**
  * @author Elen Niedermeyer, last modified 2017-09-21
@@ -43,15 +43,15 @@ public class OptionsActivity extends AppCompatActivity {
 
     /**
      * Initializes the button for changing the number of rows in the puzzles.
-     * Sets an on-click-listener on it. Opens a dialog and sets the new size globally in the {@link GameSizePersistence}.
+     * Sets an on-click-listener on it. Opens a dialog and sets the new size globally in the {@link PuzzleSizePersistence}.
      */
     private void setRowNumberButton() {
-        final GameSizePersistence gameSizeHandler = new GameSizePersistence(this);
+        final PuzzleSizePersistence gameSizeHandler = new PuzzleSizePersistence(this);
         final NumberPickerDialog numberPickerDialog = new NumberPickerDialog(this);
 
         // initialize the button for the number of rows
         final Button setRowsButton = (Button) findViewById(R.id.activity_options_btn_rows);
-        setRowsButton.setText(String.format(Locale.getDefault(), "%d", GameSizePersistence.numberOfRows));
+        setRowsButton.setText(String.format(Locale.getDefault(), "%d", PuzzleSizePersistence.numberOfRows));
         // set the on-click-listener
         setRowsButton.setOnClickListener(new View.OnClickListener() {
             /**
@@ -61,19 +61,19 @@ public class OptionsActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                final int number = GameSizePersistence.numberOfRows;
+                final int number = PuzzleSizePersistence.numberOfRows;
                 // get number picker dialog
                 AlertDialog dialog = numberPickerDialog.makeDialog(true);
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     /**
-                     * Saves the number of rows globally in {@link GameSizePersistence}
+                     * Saves the number of rows globally in {@link PuzzleSizePersistence}
                      * @param dialog the closed number picker dialog
                      */
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        if (number != GameSizePersistence.numberOfRows) {
+                        if (number != PuzzleSizePersistence.numberOfRows) {
                             // when clicked the positive button and the number was changed
-                            setRowsButton.setText(String.format(Locale.getDefault(), "%d", GameSizePersistence.numberOfRows));
+                            setRowsButton.setText(String.format(Locale.getDefault(), "%d", PuzzleSizePersistence.numberOfRows));
                             gameSizeHandler.saveGameSize();
                         }
                     }
@@ -86,15 +86,15 @@ public class OptionsActivity extends AppCompatActivity {
 
     /**
      * Initializes the button for changing the number of columns in the puzzles.
-     * Sets an on-click-listener on it. Opens a dialog and sets the new size globally in the {@link GameSizePersistence}.
+     * Sets an on-click-listener on it. Opens a dialog and sets the new size globally in the {@link PuzzleSizePersistence}.
      */
     private void setColumnNumberButton() {
-        final GameSizePersistence gameSizeHandler = new GameSizePersistence(this);
+        final PuzzleSizePersistence gameSizeHandler = new PuzzleSizePersistence(this);
         final NumberPickerDialog menuActions = new NumberPickerDialog(this);
 
         // initialize the button for the number of columns
         final Button setColumnsButton = (Button) findViewById(R.id.activity_options_btn_columns);
-        setColumnsButton.setText(String.format(Locale.getDefault(), "%d", GameSizePersistence.numberOfColumns));
+        setColumnsButton.setText(String.format(Locale.getDefault(), "%d", PuzzleSizePersistence.numberOfColumns));
         // set the on-click-listener
         setColumnsButton.setOnClickListener(new View.OnClickListener() {
             /**
@@ -103,19 +103,19 @@ public class OptionsActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                final int number = GameSizePersistence.numberOfColumns;
+                final int number = PuzzleSizePersistence.numberOfColumns;
                 // get the number picker dialog
                 AlertDialog dialog = menuActions.makeDialog(false);
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     /**
-                     * Saves the number of rows globally in {@link GameSizePersistence}
+                     * Saves the number of rows globally in {@link PuzzleSizePersistence}
                      * @param dialog the closed number picker dialog
                      */
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        if (number != GameSizePersistence.numberOfColumns) {
+                        if (number != PuzzleSizePersistence.numberOfColumns) {
                             // when clicked the positive button and the number was changed
-                            setColumnsButton.setText(String.format(Locale.getDefault(), "%d", GameSizePersistence.numberOfColumns));
+                            setColumnsButton.setText(String.format(Locale.getDefault(), "%d", PuzzleSizePersistence.numberOfColumns));
                             gameSizeHandler.saveGameSize();
                         }
                     }
