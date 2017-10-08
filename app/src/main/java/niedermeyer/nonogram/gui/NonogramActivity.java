@@ -155,7 +155,7 @@ public class NonogramActivity extends AppCompatActivity {
      * Initializes {@link #persistence} and {@link #puzzleSize}.
      * Starts {@link InstructionActivity} if it's the first puzzle.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState saved information about the activity given by the system
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
