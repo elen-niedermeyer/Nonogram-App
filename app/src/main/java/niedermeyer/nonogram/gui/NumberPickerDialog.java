@@ -11,44 +11,66 @@ import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.persistence.PuzzleSizePersistence;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-09-21
+ * @author Elen Niedermeyer, last updated 2017-10-08
  */
 public class NumberPickerDialog {
 
+    /**
+     * Context activity
+     */
     private Activity activity;
 
+    /**
+     * Constructor
+     * Initializes {@link #activity}.
+     *
+     * @param pActivity the context activity
+     */
     public NumberPickerDialog(Activity pActivity) {
         activity = pActivity;
     }
 
+    /**
+     * Makes a number picker dialog for choosing the puzzle size.
+     *
+     * @param isRow true, if you wan't to change the number of rows, false if it should be the number of columns
+     * @return the number picker dialog
+     */
     public AlertDialog makeDialog(final boolean isRow) {
+        // inflate the layout
         View layout = activity.getLayoutInflater().inflate(R.layout.dialog_number_picker, null);
-        final NumberPicker picker = (NumberPicker) layout.findViewById(R.id.menu_number_picker);
-        picker.setMinValue(NonogramConstants.NONOGRAM_SIZE_MINIMUM);
-        picker.setMaxValue(NonogramConstants.NONOGRAM_SIZE_MAXIMUM);
+
+        // make the number picker
+        final NumberPicker numberPicker = (NumberPicker) layout.findViewById(R.id.menu_number_picker);
+        // set minimum and maximum
+        numberPicker.setMinValue(NonogramConstants.NONOGRAM_SIZE_MINIMUM);
+        numberPicker.setMaxValue(NonogramConstants.NONOGRAM_SIZE_MAXIMUM);
+        // set current value
         if (isRow) {
-            picker.setValue(PuzzleSizePersistence.numberOfRows);
+            numberPicker.setValue(PuzzleSizePersistence.numberOfRows);
         } else {
-            picker.setValue(PuzzleSizePersistence.numberOfColumns);
+            numberPicker.setValue(PuzzleSizePersistence.numberOfColumns);
         }
 
-        AlertDialog dialog = new AlertDialog.Builder(activity)
+        // make the dialog
+        AlertDialog pickerDialog = new AlertDialog.Builder(activity)
                 .setView(layout)
+                // save the new value if the positive button was clicked
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        int newValue = picker.getValue();
+                    public void onClick(DialogInterface pDialog, int which) {
+                        int newValue = numberPicker.getValue();
                         if (isRow) {
                             PuzzleSizePersistence.numberOfRows = newValue;
                         } else {
                             PuzzleSizePersistence.numberOfColumns = newValue;
                         }
-                        dialog.dismiss();
+                        pDialog.dismiss();
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .create();
 
-        return dialog;
+        return pickerDialog;
     }
 }
