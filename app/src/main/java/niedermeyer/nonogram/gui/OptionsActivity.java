@@ -74,7 +74,7 @@ public class OptionsActivity extends AppCompatActivity {
                         if (number != PuzzleSizePersistence.numberOfRows) {
                             // when clicked the positive button and the number was changed
                             setRowsButton.setText(String.format(Locale.getDefault(), "%d", PuzzleSizePersistence.numberOfRows));
-                            gameSizeHandler.saveGameSize();
+                            gameSizeHandler.savePuzzleSize();
                         }
                     }
                 });
@@ -116,7 +116,7 @@ public class OptionsActivity extends AppCompatActivity {
                         if (number != PuzzleSizePersistence.numberOfColumns) {
                             // when clicked the positive button and the number was changed
                             setColumnsButton.setText(String.format(Locale.getDefault(), "%d", PuzzleSizePersistence.numberOfColumns));
-                            gameSizeHandler.saveGameSize();
+                            gameSizeHandler.savePuzzleSize();
                         }
                     }
                 });

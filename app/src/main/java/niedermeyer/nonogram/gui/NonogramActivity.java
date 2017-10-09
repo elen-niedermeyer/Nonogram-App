@@ -197,7 +197,7 @@ public class NonogramActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        puzzleSize.saveGameSize();
+        puzzleSize.savePuzzleSize();
         persistence.saveNonogram(puzzleDisplayer.getNonogram());
         persistence.saveCurrentField(puzzleDisplayer.getUsersCurrentField());
     }

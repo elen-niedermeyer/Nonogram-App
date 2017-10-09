@@ -7,41 +7,63 @@ import android.content.SharedPreferences;
 import niedermeyer.nonogram.R;
 
 /**
- * @author Elen Niedermeyer, last modified 2017-08-27
+ * @author Elen Niedermeyer, last modified 2017-10-08
  */
 public class StatisticsPersistence {
 
+    /**
+     * default value for score is 0
+     */
     private static final int SCORE_DEFAULT = 0;
 
     /**
-     * activity, which makes an instance of this class
+     * context activity
      */
     private Activity activity;
 
     /**
      * Constructor, sets {@link #activity}.
      *
-     * @param pActivity the invoking activity
+     * @param pActivity the context activity
      */
     public StatisticsPersistence(Activity pActivity) {
         activity = pActivity;
     }
 
-    public int getNumberOfSavedPuzzles(int pNumberOne, int pNumberTwo) {
+    /**
+     * Gets the count of solved puzzles for the given size.
+     *
+     * @param pNumberOne the number of rows or columns
+     * @param pNumberTwo the other number of rows or columns
+     * @return the number of solved puzzles for the given size
+     */
+    public int getCountOfSSolvedPuzzles(int pNumberOne, int pNumberTwo) {
         String prefName = getPreferenceName(pNumberOne, pNumberTwo);
-        return getNumberOfSavedPuzzles(prefName);
+        return getCountOfSSolvedPuzzles(prefName);
     }
 
+    /**
+     * Gets the count of solved puzzles for the current puzzle size. Add one to the count. Saves the new count.
+     */
     public void saveNewScore() {
         String prefName = getPreferenceName(PuzzleSizePersistence.numberOfRows, PuzzleSizePersistence.numberOfColumns);
-        int score = getNumberOfSavedPuzzles(prefName);
-        score = score + 1;
+        // update the count of solved puzzles
+        int count = getCountOfSSolvedPuzzles(prefName);
+        count = count + 1;
+        // save the new score for the current puzzle size
         SharedPreferences prefs = activity.getSharedPreferences(activity.getString(R.string.prefs_group_statistics), Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEdit = prefs.edit();
-        prefsEdit.putInt(prefName, score);
+        prefsEdit.putInt(prefName, count);
         prefsEdit.apply();
     }
 
+    /**
+     * Gets the name of the preference where the count for the given size is solved.
+     *
+     * @param pNumberOne number of rows or columns
+     * @param pNumberTwo the other one from the number of rows or columns
+     * @return the name of the preference for the given size
+     */
     private String getPreferenceName(int pNumberOne, int pNumberTwo) {
         String prefName;
         if (pNumberOne > pNumberTwo) {
@@ -49,12 +71,19 @@ public class StatisticsPersistence {
         } else {
             prefName = String.format(activity.getString(R.string.prefs_statistic), pNumberOne, pNumberTwo);
         }
+
         return prefName;
     }
 
-    private int getNumberOfSavedPuzzles(String pPrefName) {
+    /**
+     * Gets the count that is saved in the given preference.
+     *
+     * @param pPrefName the name of the preference where the count should be given
+     * @return the number which is saved in the preference
+     */
+    private int getCountOfSSolvedPuzzles(String pPrefName) {
         SharedPreferences prefs = activity.getSharedPreferences(activity.getString(R.string.prefs_group_statistics), Context.MODE_PRIVATE);
-        int score = prefs.getInt(pPrefName, SCORE_DEFAULT);
-        return score;
+        int count = prefs.getInt(pPrefName, SCORE_DEFAULT);
+        return count;
     }
 }

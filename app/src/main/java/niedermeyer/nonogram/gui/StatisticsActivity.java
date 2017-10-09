@@ -51,7 +51,7 @@ public class StatisticsActivity extends AppCompatActivity {
             // iterate over the columns, only column numbers that are equals or greater then the row's number
             for (int columnCount = rowCount; columnCount <= NonogramConstants.NONOGRAM_SIZE_MAXIMUM; columnCount++) {
 
-                int numberOfSavedPuzzles = persistence.getNumberOfSavedPuzzles(rowCount, columnCount);
+                int numberOfSavedPuzzles = persistence.getCountOfSSolvedPuzzles(rowCount, columnCount);
                 // add a column if the user solved a puzzle of the given size
                 if (numberOfSavedPuzzles > 0) {
 

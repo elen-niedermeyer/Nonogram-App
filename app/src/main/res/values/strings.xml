@@ -48,7 +48,7 @@
     <string name="click_here_new_game">Tab to start a new puzzle</string>
 
     <!-- preferences -->
-    <string name="prefs_group_game_size">game_size</string>
+    <string name="prefs_group_puzzle_size">game_size</string>
     <string name="prefs_group_statistics">statistics</string>
     <string name="prefs_rows">number_of_rows</string>
     <string name="prefs_columns">number_of_columns</string>

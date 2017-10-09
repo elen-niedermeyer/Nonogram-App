@@ -18,6 +18,9 @@ import niedermeyer.nonogram.gui.NonogramActivity;
  */
 public class PuzzlePersistence {
 
+    /**
+     * File names
+     */
     private static final String NONOGRAM_FILE_NAME = "nonogram";
     private static final String CURRENT_FIELD_FILE_NAME = "current_field";
 
@@ -26,10 +29,20 @@ public class PuzzlePersistence {
      */
     private Activity activity;
 
+    /**
+     * Constructor. Initilizes {@link #activity}
+     *
+     * @param pActivity the context activity
+     */
     public PuzzlePersistence(Activity pActivity) {
         activity = pActivity;
     }
 
+    /**
+     * Saves the given array as nonogram in the file named {@link #NONOGRAM_FILE_NAME}.
+     *
+     * @param pNonogram the array representing the current nonogram
+     */
     public void saveNonogram(int[][] pNonogram) {
         // look if the file exists
         File nonogramFile = new File(activity.getFilesDir(), NONOGRAM_FILE_NAME);
@@ -45,6 +58,11 @@ public class PuzzlePersistence {
         writeArrayObject(pNonogram, NONOGRAM_FILE_NAME);
     }
 
+    /**
+     * Saves the given array as current user field in the file named {@link #CURRENT_FIELD_FILE_NAME}.
+     *
+     * @param pCurrentField the array representing the user's current field
+     */
     public void saveCurrentField(int[][] pCurrentField) {
         // look if the file exists
         File currentFieldFile = new File(activity.getFilesDir(), CURRENT_FIELD_FILE_NAME);
@@ -60,6 +78,11 @@ public class PuzzlePersistence {
         writeArrayObject(pCurrentField, CURRENT_FIELD_FILE_NAME);
     }
 
+    /**
+     * Load the nonogram from file if it exists.
+     *
+     * @return an array representing a nonogram or null if reading the array failed.
+     */
     public int[][] loadLastNonogram() {
         File nonogramFile = new File(activity.getFilesDir(), NONOGRAM_FILE_NAME);
         if (nonogramFile.exists()) {
@@ -70,6 +93,11 @@ public class PuzzlePersistence {
         }
     }
 
+    /**
+     * Load the user's field from file if it exists.
+     *
+     * @return an array representing the user's field or null if reading the array failed
+     */
     public int[][] loadLastUserField() {
         File currentFieldFile = new File(activity.getFilesDir(), CURRENT_FIELD_FILE_NAME);
         if (currentFieldFile.exists()) {
@@ -80,10 +108,17 @@ public class PuzzlePersistence {
         }
     }
 
+    /**
+     * Checks if there was played before. Updates the preference.
+     *
+     * @return true, if it's the first puzzle, false otherwise
+     */
     public boolean isFirstPuzzle() {
         SharedPreferences prefs = activity.getPreferences(Context.MODE_PRIVATE);
+        // read the preference, true is the default value
         boolean isFirstGame = prefs.getBoolean(activity.getString(R.string.prefs_first_game), true);
         if (isFirstGame) {
+            // set the preference to false
             SharedPreferences.Editor edit = prefs.edit();
             edit.putBoolean(activity.getString(R.string.prefs_first_game), false);
             edit.apply();
@@ -92,6 +127,12 @@ public class PuzzlePersistence {
         return isFirstGame;
     }
 
+    /**
+     * Writes the given object to the given file.
+     *
+     * @param pObject   the array that should be saved
+     * @param pFileName the name of the file in which the array should be wrote
+     */
     private void writeArrayObject(int[][] pObject, String pFileName) {
         ObjectOutputStream out = null;
         try {
@@ -110,6 +151,12 @@ public class PuzzlePersistence {
         }
     }
 
+    /**
+     * Reads an array from the given file.
+     *
+     * @param pFileName the name of the file which contains the array
+     * @return the read array
+     */
     private int[][] readArrayObject(String pFileName) {
         int[][] readArray = null;
         ObjectInputStream in = null;
@@ -120,6 +167,7 @@ public class PuzzlePersistence {
         } catch (Exception e) {
             Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
         } finally {
+            // close the stream
             try {
                 in.close();
             } catch (Exception e) {
