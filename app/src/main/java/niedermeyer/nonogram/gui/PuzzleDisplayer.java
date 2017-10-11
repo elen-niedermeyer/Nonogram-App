@@ -120,7 +120,7 @@ public class PuzzleDisplayer {
      * Resets {@link #usersCurrentField}.
      * Generates the GUI by {@link #generateNewGameField()}.
      */
-    public void newGame() {
+    public void displayNewGame() {
         int numberOfRows = PuzzleSizePersistence.numberOfRows;
         int numberOfColumns = PuzzleSizePersistence.numberOfColumns;
 
@@ -138,12 +138,12 @@ public class PuzzleDisplayer {
      * Sets {@link #nonogram} and {@link #usersCurrentField} by the given parameters.
      * Generates the GUI by {@link #generateSavedGameField()}.
      * <p>
-     * Generates a new game field by {@link #newGame()}, if the parameters are null.
+     * Generates a new game field by {@link #displayNewGame()}, if the parameters are null.
      *
      * @param pNonogram          an array that should represent {@link #nonogram}
      * @param pUsersCurrentField an array that should represent {@link #usersCurrentField}
      */
-    public void newGame(int[][] pNonogram, int[][] pUsersCurrentField) {
+    public void displayNewGame(int[][] pNonogram, int[][] pUsersCurrentField) {
         if (pNonogram != null) {
             // initialize nonogram array
             nonogram = pNonogram;
@@ -160,7 +160,7 @@ public class PuzzleDisplayer {
 
         } else {
             // make new game if the field couldn't be set
-            newGame();
+            displayNewGame();
         }
     }
 

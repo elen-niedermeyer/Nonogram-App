@@ -26,7 +26,7 @@ public class Animations {
             public void onClick(View v) {
                 gameView.setVisibility(View.VISIBLE);
                 animatedView.setVisibility(View.GONE);
-                pActivity.getGameHandler().newGame();
+                pActivity.getGameHandler().displayNewGame();
             }
         });
 

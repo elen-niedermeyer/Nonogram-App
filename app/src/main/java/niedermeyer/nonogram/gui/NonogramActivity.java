@@ -87,7 +87,7 @@ public class NonogramActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_activity_nonogram_new_puzzle:
                 // start a new puzzle
-                puzzleDisplayer.newGame();
+                puzzleDisplayer.displayNewGame();
                 return true;
 
             case R.id.menu_activity_nonogram_reset_puzzle:
@@ -108,7 +108,7 @@ public class NonogramActivity extends AppCompatActivity {
                             clickedItem.setTitle(String.format(getString(R.string.number_of_rows_text), PuzzleSizePersistence.numberOfRows));
                             updateToolbarTitle();
                             // start a new game with the new size
-                            puzzleDisplayer.newGame();
+                            puzzleDisplayer.displayNewGame();
                         }
                     }
                 });
@@ -129,7 +129,7 @@ public class NonogramActivity extends AppCompatActivity {
                             clickedItem.setTitle(String.format(getString(R.string.number_of_columns_text), PuzzleSizePersistence.numberOfColumns));
                             updateToolbarTitle();
                             // start a new game with the new size
-                            puzzleDisplayer.newGame();
+                            puzzleDisplayer.displayNewGame();
                         }
                     }
                 });
@@ -182,10 +182,10 @@ public class NonogramActivity extends AppCompatActivity {
         int[][] currentField = persistence.loadLastUserField();
         if (nonogram != null && nonogram.length == PuzzleSizePersistence.numberOfRows && nonogram[0].length == PuzzleSizePersistence.numberOfColumns) {
             // start puzzle with loaded arrays if the size haven't changed
-            puzzleDisplayer.newGame(nonogram, currentField);
+            puzzleDisplayer.displayNewGame(nonogram, currentField);
         } else {
             // start new game if the size was changed
-            puzzleDisplayer.newGame();
+            puzzleDisplayer.displayNewGame();
         }
     }
 
