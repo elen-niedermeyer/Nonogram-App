@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import niedermeyer.nonogram.R;
+import niedermeyer.nonogram.persistence.CountFilledFieldsPersistence;
 import niedermeyer.nonogram.persistence.PuzzlePersistence;
 import niedermeyer.nonogram.persistence.PuzzleSizePersistence;
 
@@ -28,6 +29,7 @@ public class NonogramActivity extends AppCompatActivity {
      */
     private PuzzlePersistence persistence;
     private PuzzleSizePersistence puzzleSize;
+    private CountFilledFieldsPersistence countsPersistence;
 
     /**
      * Getter for the {@link PuzzleDisplayer}.
@@ -152,7 +154,7 @@ public class NonogramActivity extends AppCompatActivity {
     /**
      * Overrides {@link AppCompatActivity#onCreate(Bundle)}.
      * Sets the layout.
-     * Initializes {@link #persistence} and {@link #puzzleSize}.
+     * Initializes {@link #persistence}, {@link #puzzleSize} and {@link #countsPersistence}.
      * Starts {@link InstructionActivity} if it's the first puzzle.
      *
      * @param savedInstanceState saved information about the activity given by the system
@@ -165,6 +167,7 @@ public class NonogramActivity extends AppCompatActivity {
 
         persistence = new PuzzlePersistence(this);
         puzzleSize = new PuzzleSizePersistence(this);
+        countsPersistence = new CountFilledFieldsPersistence(this);
 
         // start the instruction activity if it's the first puzzle
         if (persistence.isFirstPuzzle()) {
@@ -182,7 +185,7 @@ public class NonogramActivity extends AppCompatActivity {
         int[][] currentField = persistence.loadLastUserField();
         if (nonogram != null && nonogram.length == PuzzleSizePersistence.numberOfRows && nonogram[0].length == PuzzleSizePersistence.numberOfColumns) {
             // start puzzle with loaded arrays if the size haven't changed
-            puzzleDisplayer.displayNewGame(nonogram, currentField);
+            puzzleDisplayer.displayNewGame(nonogram, currentField, countsPersistence.loadCountsColumns(), countsPersistence.loadCountsRows());
         } else {
             // start new game if the size was changed
             puzzleDisplayer.displayNewGame();
@@ -192,6 +195,7 @@ public class NonogramActivity extends AppCompatActivity {
     /**
      * Overrides {@link AppCompatActivity#onPause()}.
      * Saves the puzzle size and the arrays.
+     * Saves the counts.
      */
     @Override
     protected void onPause() {
@@ -200,6 +204,8 @@ public class NonogramActivity extends AppCompatActivity {
         puzzleSize.savePuzzleSize();
         persistence.saveNonogram(puzzleDisplayer.getNonogram());
         persistence.saveCurrentField(puzzleDisplayer.getUsersCurrentField());
+        countsPersistence.saveCountFilledFields(puzzleDisplayer.getColumnCounts(), true);
+        countsPersistence.saveCountFilledFields(puzzleDisplayer.getRowCounts(), false);
     }
 
     /**

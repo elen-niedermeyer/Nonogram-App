@@ -10,6 +10,7 @@ import android.widget.TableRow;
 import java.util.Arrays;
 
 import niedermeyer.nonogram.R;
+import niedermeyer.nonogram.logics.CountFilledFields;
 import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.logics.NonogramGenerator;
 import niedermeyer.nonogram.persistence.PuzzleSizePersistence;
@@ -115,6 +116,24 @@ public class PuzzleDisplayer {
     }
 
     /**
+     * Getter for {@link CountFilledFieldsDisplayer#columnCounts}.
+     *
+     * @return {@link CountFilledFieldsDisplayer#columnCounts}
+     */
+    public CountFilledFields getColumnCounts() {
+        return countsDisplayer.getColumnCounts();
+    }
+
+    /**
+     * Getter for {@link CountFilledFieldsDisplayer#rowCounts}.
+     *
+     * @return {@link CountFilledFieldsDisplayer#rowCounts}
+     */
+    public CountFilledFields getRowCounts() {
+        return countsDisplayer.getRowCounts();
+    }
+
+    /**
      * Creates a new nonogram puzzle.
      * Generates a new nonogram by {@link #generator}. Sets {@link #nonogram}.
      * Resets {@link #usersCurrentField}.
@@ -143,11 +162,13 @@ public class PuzzleDisplayer {
      * @param pNonogram          an array that should represent {@link #nonogram}
      * @param pUsersCurrentField an array that should represent {@link #usersCurrentField}
      */
-    public void displayNewGame(int[][] pNonogram, int[][] pUsersCurrentField) {
+    public void displayNewGame(int[][] pNonogram, int[][] pUsersCurrentField, CountFilledFields pCountsColumns, CountFilledFields pCountsRows) {
         if (pNonogram != null) {
-            // initialize nonogram array
+            // initialize nonogram object
             nonogram = pNonogram;
             generator.setNonogram(pNonogram);
+            generator.setCountsColumns(pCountsColumns);
+            generator.setCountsRows(pCountsRows);
 
             // initialize user-generated field array
             if (pUsersCurrentField != null) {

@@ -12,15 +12,15 @@ import niedermeyer.nonogram.R;
 public class PuzzleSizePersistence {
 
     /**
+     * Number of rows and columns if the preferences couldn't be loaded
+     */
+    private static final int SIZE_DEFAULT = 5;
+
+    /**
      * Static variables representing the size of the game field
      */
     public static int numberOfRows;
     public static int numberOfColumns;
-
-    /**
-     * Number of rows and columns if the preferences couldn't be loaded
-     */
-    private static final int SIZE_DEFAULT = 5;
 
     /**
      * context activity

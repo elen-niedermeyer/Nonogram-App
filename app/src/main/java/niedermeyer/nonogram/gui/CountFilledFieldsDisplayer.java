@@ -13,7 +13,10 @@ import java.util.Locale;
 
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.logics.CountFilledFields;
+import niedermeyer.nonogram.logics.FieldCount;
 import niedermeyer.nonogram.logics.NonogramGenerator;
+
+//TODO: refactor this class again
 
 /**
  * @author Elen Niedermeyer, last updated 2017-10-07
@@ -72,6 +75,24 @@ public class CountFilledFieldsDisplayer {
     }
 
     /**
+     * Getter for {@link #columnCounts}.
+     *
+     * @return {@link #columnCounts}
+     */
+    public CountFilledFields getColumnCounts() {
+        return columnCounts;
+    }
+
+    /**
+     * Getter for {@link #rowCounts}.
+     *
+     * @return {@link #rowCounts}
+     */
+    public CountFilledFields getRowCounts() {
+        return rowCounts;
+    }
+
+    /**
      * Adds the counts to the given table by {@link #addRowCounts(TableLayout)} and {@link #addColumnCounts(TableLayout)}.
      * The row counts must be added first.
      *
@@ -94,14 +115,14 @@ public class CountFilledFieldsDisplayer {
     private void toggleRowCount(View pView, int pOuterIndexOfView, int pInnerIndexOfView) {
         // if the clicked view was a row count
         // toggle the background, stroke or not
-        if (rowCounts.isStriked(pOuterIndexOfView, pInnerIndexOfView)) {
+        if (rowCounts.isValueCrossedOut(pOuterIndexOfView, pInnerIndexOfView)) {
             // set the background to nothing if it is stroke
             pView.setBackgroundResource(0);
         } else {
             // set the strike resource
-            pView.setBackgroundResource(R.drawable.game_count_striked_off);
+            pView.setBackgroundResource(R.drawable.puzzle_count_striked_off);
         }
-        rowCounts.toggleStriked(pOuterIndexOfView, pInnerIndexOfView);
+        rowCounts.toggleCrossedOut(pOuterIndexOfView, pInnerIndexOfView);
     }
 
     /**
@@ -114,14 +135,14 @@ public class CountFilledFieldsDisplayer {
     private void toggleColumnCount(View pView, int pOuterIndexOfView, int pInnerIndexOfView) {
         // if the clicked view was a column count
         // toggle the background, stroke or not
-        if (columnCounts.isStriked(pOuterIndexOfView, pInnerIndexOfView)) {
+        if (columnCounts.isValueCrossedOut(pOuterIndexOfView, pInnerIndexOfView)) {
             // set the background to nothing if it is stroke
             pView.setBackgroundResource(0);
         } else {
             // set the strike resource
-            pView.setBackgroundResource(R.drawable.game_count_striked_off);
+            pView.setBackgroundResource(R.drawable.puzzle_count_striked_off);
         }
-        columnCounts.toggleStriked(pOuterIndexOfView, pInnerIndexOfView);
+        columnCounts.toggleCrossedOut(pOuterIndexOfView, pInnerIndexOfView);
     }
 
     /**
@@ -133,7 +154,7 @@ public class CountFilledFieldsDisplayer {
      */
     private TableLayout addRowCounts(TableLayout pTable) {
         // get row counts
-        rowCounts = nonogram.getRowCounts();
+        rowCounts = nonogram.getCountsRows();
 
         int numberOfRows = pTable.getChildCount();
         // add the counts at the start of each row of the table
@@ -142,11 +163,10 @@ public class CountFilledFieldsDisplayer {
             LinearLayout layout = new LinearLayout(activity);
             layout.setOrientation(LinearLayout.HORIZONTAL);
 
-            ArrayList<Integer> counts = rowCounts.get(counterRow);
+            ArrayList<FieldCount> counts = rowCounts.get(counterRow);
             // add an text view for each count of the row
-            for (int value : counts) {
-                // get the inner index of the current value
-                int innerIndex = counts.indexOf(value);
+            for (int innerIndex = 0; innerIndex < counts.size(); innerIndex++) {
+                int value = counts.get(innerIndex).getValue();
 
                 // make a new text view
                 TextView countView = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_left, null);
@@ -154,6 +174,9 @@ public class CountFilledFieldsDisplayer {
                 countView.setTag(String.format(activity.getString(R.string.tag_row_count), counterRow, innerIndex));
                 countView.setClickable(true);
                 countView.setOnClickListener(countOnClick);
+                if (counts.get(innerIndex).getIsCrossedOut()) {
+                    countView.setBackgroundResource(R.drawable.puzzle_count_striked_off);
+                }
 
                 // add the view to the new layout
                 layout.addView(countView);
@@ -178,12 +201,12 @@ public class CountFilledFieldsDisplayer {
      */
     private TableLayout addColumnCounts(TableLayout pTable) {
         // get column counts
-        columnCounts = nonogram.getColumnCounts();
+        columnCounts = nonogram.getCountsColumns();
 
         // get maximum of counts for a column
         int maxNumberOfCounts = 0;
-        for (int i = 0; i < columnCounts.getOuterSize(); i++) {
-            int x = columnCounts.getInnerSize(i);
+        for (int i = 0; i < columnCounts.getCountsList().size(); i++) {
+            int x = columnCounts.get(i).size();
             if (x > maxNumberOfCounts) {
                 maxNumberOfCounts = x;
             }
@@ -191,7 +214,7 @@ public class CountFilledFieldsDisplayer {
 
         TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
         rowParams.gravity = Gravity.CENTER_HORIZONTAL;
-        // add a rows for the counts
+        // add a row for the counts
         for (int counterRow = 0; counterRow < maxNumberOfCounts; counterRow++) {
             // make a new row
             TableRow row = new TableRow(activity);
@@ -199,15 +222,18 @@ public class CountFilledFieldsDisplayer {
             row.addView(new TextView(activity));
 
             // add the value in this row for each column
-            for (int columnIndex = 0; columnIndex < columnCounts.getOuterSize(); columnIndex++) {
-                int valuesSize = columnCounts.getInnerSize(columnIndex);
+            for (int columnIndex = 0; columnIndex < columnCounts.getCountsList().size(); columnIndex++) {
+                int valuesSize = columnCounts.get(columnIndex).size();
                 if (valuesSize >= counterRow + 1) {
                     // make a text view with the value if there is one left
                     TextView count = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_count_top, null);
-                    count.setText(String.format(Locale.getDefault(), "%d", columnCounts.get(columnIndex, counterRow)));
+                    count.setText(String.format(Locale.getDefault(), "%d", columnCounts.getValue(columnIndex, counterRow)));
                     count.setTag(String.format(activity.getString(R.string.tag_colum_count), columnIndex, counterRow));
                     count.setClickable(true);
                     count.setOnClickListener(countOnClick);
+                    if (columnCounts.get(columnIndex).get(counterRow).getIsCrossedOut()) {
+                        count.setBackgroundResource(R.drawable.puzzle_count_striked_off);
+                    }
                     // add the view to the new row
                     row.addView(count);
                 } else {

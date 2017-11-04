@@ -30,7 +30,7 @@ public class PuzzlePersistence {
     private Activity activity;
 
     /**
-     * Constructor. Initilizes {@link #activity}
+     * Constructor. Initializes {@link #activity}.
      *
      * @param pActivity the context activity
      */
@@ -44,8 +44,9 @@ public class PuzzlePersistence {
      * @param pNonogram the array representing the current nonogram
      */
     public void saveNonogram(int[][] pNonogram) {
-        // look if the file exists
+        // make file object
         File nonogramFile = new File(activity.getFilesDir(), NONOGRAM_FILE_NAME);
+        // look if the file exists
         if (!nonogramFile.exists()) {
             // create a new file if it doesn't exist
             try {

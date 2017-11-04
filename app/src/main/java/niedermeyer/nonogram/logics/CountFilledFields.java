@@ -1,95 +1,118 @@
 package niedermeyer.nonogram.logics;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
+//TODO: refactoring
 
 /**
- * @author Elen Niedermeyer, last modified 2017-09-08
+ * @author Elen Niedermeyer, last modified 2017-11-04
  */
 public class CountFilledFields {
 
-    private Map<Integer, ArrayList<Integer>> counts;
-    private Map<Integer, ArrayList<Boolean>> isStriked;
+    /**
+     * The allCountsList list.
+     */
+    private ArrayList<ArrayList<FieldCount>> allCountsList;
 
+    /**
+     * Constructor.
+     * Initializes {@link #allCountsList} with a new empty list.
+     */
     public CountFilledFields() {
-        counts = new HashMap<Integer, ArrayList<Integer>>();
-        isStriked = new HashMap<Integer, ArrayList<Boolean>>();
+        allCountsList = new ArrayList<ArrayList<FieldCount>>();
     }
 
-    public void addCount(int pKeyRowOrColumn, int pValue) {
-        if (counts.containsKey(pKeyRowOrColumn)) {
-            ArrayList<Integer> countArray = counts.get(pKeyRowOrColumn);
-            countArray.add(pValue);
-            ArrayList<Boolean> isStrikedArray = isStriked.get(pKeyRowOrColumn);
-            isStrikedArray.add(false);
-        } else {
-            ArrayList<Integer> countArray = new ArrayList<Integer>();
-            countArray.add(pValue);
-            counts.put(pKeyRowOrColumn, countArray);
-            ArrayList<Boolean> isStrikedArray = new ArrayList<Boolean>();
-            isStrikedArray.add(false);
-            isStriked.put(pKeyRowOrColumn, isStrikedArray);
+    /**
+     * Getter for {@link #allCountsList}.
+     *
+     * @return {@link #allCountsList}
+     */
+    public ArrayList<ArrayList<FieldCount>> getCountsList() {
+        return allCountsList;
+    }
+
+    /**
+     * Getter for the list of counts with the given index in {@link #allCountsList}.
+     *
+     * @param pOuterIndex the index of the list in {@link #allCountsList}
+     * @return the list of counts of the given index.
+     */
+    public ArrayList<FieldCount> get(int pOuterIndex) {
+        return allCountsList.get(pOuterIndex);
+    }
+
+    /**
+     * Getter for the count value with the given indices.
+     * Gives {@link FieldCount#value}.
+     *
+     * @param pOuterIndex the index of the value in {@link #allCountsList}
+     * @param pInnerIndex the index of the value in a child of {@link #allCountsList}
+     * @return the count value
+     */
+    public int getValue(int pOuterIndex, int pInnerIndex) {
+        return allCountsList.get(pOuterIndex).get(pInnerIndex).getValue();
+    }
+
+    /**
+     * Getter for the {@link FieldCount#isCrossedOut}.
+     *
+     * @param pOuterIndex the index of the count in {@link #allCountsList}
+     * @param pInnerIndex the index of the count in a child of {@link #allCountsList}
+     * @return a boolean saying whether the count is crossed out or not
+     */
+    public boolean isValueCrossedOut(int pOuterIndex, int pInnerIndex) {
+        return allCountsList.get(pOuterIndex).get(pInnerIndex).getIsCrossedOut();
+    }
+
+    public void addCount(int pOuterIndex, int pValue) {
+        try {
+            ArrayList<FieldCount> currentCounts = allCountsList.get(pOuterIndex);
+            currentCounts.add(new FieldCount(pValue, false));
+        } catch (IndexOutOfBoundsException e) {
+            ArrayList<FieldCount> newCounts = new ArrayList<>();
+            newCounts.add(new FieldCount(pValue, false));
+            allCountsList.add(newCounts);
         }
-    }
-
-    public ArrayList<Integer> get(int pKeyRowOrColumn) {
-        return counts.get(pKeyRowOrColumn);
-    }
-
-    public int get(int pKeyRowOrColumn, int pIndex) {
-        ArrayList<Integer> innerList = counts.get(pKeyRowOrColumn);
-        return innerList.get(pIndex);
-    }
-
-    public int getOuterSize() {
-        return counts.size();
-    }
-
-    public int getInnerSize(int pKeyRowOrColumn) {
-        ArrayList<Integer> innerList = counts.get(pKeyRowOrColumn);
-        return innerList.size();
     }
 
     public boolean isEmpty() {
         // check if there is at least one field proved
-        boolean isOnlyEmpty = true;
-        for (ArrayList<Integer> list : counts.values()) {
-            for (Integer count : list) {
-                if (count != 0) {
-                    isOnlyEmpty = false;
-                    break;
+        for (int outerIndex = 0; outerIndex < allCountsList.size(); outerIndex++) {
+            ArrayList<FieldCount> fieldCounts = allCountsList.get(outerIndex);
+            for (int innerIndex = 0; innerIndex < fieldCounts.size(); innerIndex++) {
+                if (getValue(outerIndex, innerIndex) != 0) {
+                    // return false
+                    return false;
                 }
             }
-            if (!isOnlyEmpty) {
-                break;
-            }
         }
-        return isOnlyEmpty;
+
+        // returns true here
+        return true;
     }
 
-    public boolean isRowOrColumnEmpty(int pKeyRowOrColumn) {
-        if (counts.containsKey(pKeyRowOrColumn)) {
+    public boolean isEmpty(int pOuterIndex) {
+        try {
+            allCountsList.get(pOuterIndex);
             return false;
-        } else {
+        } catch (IndexOutOfBoundsException e) {
             return true;
         }
     }
 
-    public boolean isStriked(int outerIndex, int innerIndex) {
-        ArrayList<Boolean> x = isStriked.get(outerIndex);
-        return x.get(innerIndex);
-    }
-
-    public void toggleStriked(int outerIndex, int innerIndex) {
-        ArrayList<Boolean> x = isStriked.get(outerIndex);
-        boolean isStriked = x.get(innerIndex);
-        if (isStriked) {
-            x.set(innerIndex, false);
+    public void toggleCrossedOut(int pOuterIndex, int pInnerIndex) {
+        FieldCount fieldCount = allCountsList.get(pOuterIndex).get(pInnerIndex);
+        if (fieldCount.getIsCrossedOut()) {
+            // count is crossed out
+            // now it shouldn't be crossed out
+            fieldCount.setIsCrossedOut(false);
         } else {
-            x.set(innerIndex, true);
+            // count is not crossed out
+            // now it should be crossed out
+            fieldCount.setIsCrossedOut(true);
         }
+
+        // replace count in lists
+        allCountsList.get(pOuterIndex).set(pInnerIndex, fieldCount);
     }
-
-
 }
