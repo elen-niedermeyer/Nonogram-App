@@ -128,7 +128,7 @@ public class NonogramGenerator {
 
     /**
      * Counts the groups in the rows of the {@link #nonogram}.
-     * Saves the counts in a {@link CountFilledFields}.
+     * Saves the counts in a {@link CountFilledFields} object.
      *
      * @return a {@link CountFilledFields} with the row counts of {@link #nonogram}
      */
@@ -139,13 +139,13 @@ public class NonogramGenerator {
         for (int rowCount = 0; rowCount < nonogram.length; rowCount++) {
             int groupElements = 0;
             // iterate over each value in the row
-            for (int valueCountInRow = 0; valueCountInRow < nonogram[rowCount].length; valueCountInRow++) {
-                if (nonogram[rowCount][valueCountInRow] == NonogramConstants.FIELD_PROVED) {
+            for (int valueInRowCount = 0; valueInRowCount < nonogram[rowCount].length; valueInRowCount++) {
+                if (nonogram[rowCount][valueInRowCount] == NonogramConstants.FIELD_PROVED) {
                     // here's a group of proved fields
                     // add 1 for each field to the counter
                     groupElements += 1;
                 }
-                if (nonogram[rowCount][valueCountInRow] == NonogramConstants.FIELD_EMPTY && groupElements != 0) {
+                if (nonogram[rowCount][valueInRowCount] == NonogramConstants.FIELD_EMPTY && groupElements != 0) {
                     // here's the end of one group
                     // add the number and resets the counter
                     provedFields.addCount(rowCount, groupElements);
@@ -169,46 +169,43 @@ public class NonogramGenerator {
         return provedFields;
     }
 
-    //TODO: refactoring
-
     /**
      * Counts the groups in the columns of the {@link #nonogram}.
-     * Saves the counts in a map. Key of the map is the number of the column, value is an array list with the counts in the correct order.
+     * Saves the counts in a {@link CountFilledFields} object.
      *
-     * @return a map with the column counts of {@link #nonogram}
+     * @return a {@link CountFilledFields} with the column counts of {@link #nonogram}
      */
     private CountFilledFields countProvedFieldsPerColumn() {
         CountFilledFields provedFields = new CountFilledFields();
 
         // iterate over the columns of the nonogram
-        for (int i = 0; i < nonogram[0].length; i++) {
+        for (int columnCount = 0; columnCount < nonogram[0].length; columnCount++) {
             int res = 0;
             // iterate over each value in the column
-            for (int j = 0; j < nonogram.length; j++) {
-                if (nonogram[j][i] == NonogramConstants.FIELD_PROVED) {
+            for (int valueInColumnCount = 0; valueInColumnCount < nonogram.length; valueInColumnCount++) {
+                if (nonogram[valueInColumnCount][columnCount] == NonogramConstants.FIELD_PROVED) {
                     // here's a group of proved fields
                     // add 1 for each field to the counter
                     res += 1;
                 }
-                if (nonogram[j][i] == NonogramConstants.FIELD_EMPTY && res != 0) {
+                if (nonogram[valueInColumnCount][columnCount] == NonogramConstants.FIELD_EMPTY && res != 0) {
                     // here's the end of one group
                     // add the number to the list and resets the counter
-                    provedFields.addCount(i, res);
+                    provedFields.addCount(columnCount, res);
                     res = 0;
                 }
             }
-
             // end of the for loop for this column
 
             if (res != 0) {
                 // add the last counter to the list if there is one
-                provedFields.addCount(i, res);
+                provedFields.addCount(columnCount, res);
             }
 
-            if (provedFields.isEmpty(i)) {
+            if (provedFields.isEmpty(columnCount)) {
                 // if the list is empty, there are no proved fields
                 // add 0 to the list
-                provedFields.addCount(i, 0);
+                provedFields.addCount(columnCount, 0);
             }
         }
 

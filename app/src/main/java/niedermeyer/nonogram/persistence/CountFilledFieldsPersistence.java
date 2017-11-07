@@ -14,8 +14,6 @@ import java.util.logging.Logger;
 import niedermeyer.nonogram.gui.NonogramActivity;
 import niedermeyer.nonogram.logics.CountFilledFields;
 
-//TODO: refactoring
-
 /**
  * @author Elen Niedermeyer
  *         Last update 2017-11-04
@@ -33,10 +31,23 @@ public class CountFilledFieldsPersistence {
      */
     private Activity activity;
 
+    /**
+     * Constructor.
+     * Initializes {@link #activity}.
+     *
+     * @param pActivity the context activity
+     */
     public CountFilledFieldsPersistence(Activity pActivity) {
         activity = pActivity;
     }
 
+    /**
+     * Saves the given {@link CountFilledFields} object.
+     * Makes a new file if there does not exist one yet.
+     *
+     * @param pCounts        {@link CountFilledFields} object
+     * @param isColumnCounts a boolean, true if the given object contains the counts for the columns, false if it contains the counts for the rows
+     */
     public void saveCountFilledFields(CountFilledFields pCounts, boolean isColumnCounts) {
         // make file object
         File countFile = null;
@@ -56,9 +67,15 @@ public class CountFilledFieldsPersistence {
             }
         }
 
+        // write the counts object to the file
         writeCountObject(pCounts, countFile.getName());
     }
 
+    /**
+     * Loads the {@link CountFilledFields} object that contains the counts for the columns.
+     *
+     * @return the {@link CountFilledFields} object or null if it couldn't be loaded
+     */
     public CountFilledFields loadCountsColumns() {
         // make file object
         File countFile = new File(activity.getFilesDir(), COUNTS_COLUMN_FILE_NAME);
@@ -71,6 +88,11 @@ public class CountFilledFieldsPersistence {
         }
     }
 
+    /**
+     * Loads the {@link CountFilledFields} object that contains the counts for the rows.
+     *
+     * @return the {@link CountFilledFields} object or null if it couldn't be loaded
+     */
     public CountFilledFields loadCountsRows() {
         // make file object
         File countFile = new File(activity.getFilesDir(), COUNTS_ROW_FILE_NAME);
@@ -83,6 +105,13 @@ public class CountFilledFieldsPersistence {
         }
     }
 
+    /**
+     * Reads a {@link CountFilledFields} object from the given file.
+     * It reads in the object as a byte stream and then makes a string of it. Parses the string from JSON with GSON library.
+     *
+     * @param pFileName the name of the file where the object can ba found
+     * @return an {@link CountFilledFields} object or null if there was a failure reading the file
+     */
     private CountFilledFields readCountObject(String pFileName) {
         CountFilledFields counts = null;
 
@@ -112,6 +141,13 @@ public class CountFilledFieldsPersistence {
         return counts;
     }
 
+    /**
+     * Writes a {@link CountFilledFields} object to a file.
+     * Therefore it serializes the {@link CountFilledFields} to a JSON string with GSON.
+     *
+     * @param pCounts   the {@link CountFilledFields} object to save in a file
+     * @param pFileName name of the file where the object should be saved
+     */
     private void writeCountObject(CountFilledFields pCounts, String pFileName) {
         // serialize counts
         Gson gson = new Gson();

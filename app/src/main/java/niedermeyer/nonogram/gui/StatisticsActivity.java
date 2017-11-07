@@ -60,17 +60,15 @@ public class StatisticsActivity extends AppCompatActivity {
 
                     // make the view with the puzzle's size
                     TextView puzzleSizeView = new TextView(this, null, R.style.Text);
+                    puzzleSizeView.setTextAppearance(this, R.style.Text);
                     puzzleSizeView.setText(String.format(getString(R.string.puzzle_size_row_column), rowCount, columnCount));
                     puzzleSizeView.setGravity(Gravity.CENTER);
-                    // TODO: 27.08.2017 Why is the text size not in the style above
-                    puzzleSizeView.setTextSize(18);
 
                     // make the view with the number of solved puzzles
                     TextView numberOfSolvedPuzzlesView = new TextView(this, null, R.style.Text);
+                    numberOfSolvedPuzzlesView.setTextAppearance(this, R.style.Text);
                     numberOfSolvedPuzzlesView.setText(String.format(Locale.getDefault(), "%1$d", numberOfSavedPuzzles));
                     numberOfSolvedPuzzlesView.setGravity(Gravity.CENTER);
-                    // TODO: 27.08.2017 Why is the text size not in the style above
-                    numberOfSolvedPuzzlesView.setTextSize(18);
 
                     // add the views to the row
                     row.addView(puzzleSizeView);

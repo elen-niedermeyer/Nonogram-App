@@ -2,8 +2,6 @@ package niedermeyer.nonogram.logics;
 
 import java.util.ArrayList;
 
-//TODO: refactoring
-
 /**
  * @author Elen Niedermeyer, last modified 2017-11-04
  */
@@ -64,23 +62,38 @@ public class CountFilledFields {
         return allCountsList.get(pOuterIndex).get(pInnerIndex).getIsCrossedOut();
     }
 
+    /**
+     * Adds a count.
+     *
+     * @param pOuterIndex index of the count
+     * @param pValue      the count's value
+     */
     public void addCount(int pOuterIndex, int pValue) {
         try {
+            // add the given count to the list
             ArrayList<FieldCount> currentCounts = allCountsList.get(pOuterIndex);
             currentCounts.add(new FieldCount(pValue, false));
         } catch (IndexOutOfBoundsException e) {
+            // make a new list for this index
+            // add the given count to the new list
             ArrayList<FieldCount> newCounts = new ArrayList<>();
             newCounts.add(new FieldCount(pValue, false));
             allCountsList.add(newCounts);
         }
     }
 
+    /**
+     * Looks if the count is empty. In this case it means, there are only zeros.
+     *
+     * @return true, if the count is empty, false otherwise
+     */
     public boolean isEmpty() {
         // check if there is at least one field proved
         for (int outerIndex = 0; outerIndex < allCountsList.size(); outerIndex++) {
             ArrayList<FieldCount> fieldCounts = allCountsList.get(outerIndex);
             for (int innerIndex = 0; innerIndex < fieldCounts.size(); innerIndex++) {
                 if (getValue(outerIndex, innerIndex) != 0) {
+                    // there's an value != 0
                     // return false
                     return false;
                 }
@@ -88,9 +101,16 @@ public class CountFilledFields {
         }
 
         // returns true here
+        // there are only zeros int the count
         return true;
     }
 
+    /**
+     * Looks if the list with the given index exists.
+     *
+     * @param pOuterIndex the index of the list
+     * @return true if the list is empty, false otherwise
+     */
     public boolean isEmpty(int pOuterIndex) {
         try {
             allCountsList.get(pOuterIndex);
@@ -100,6 +120,12 @@ public class CountFilledFields {
         }
     }
 
+    /**
+     * Toggles the {@link FieldCount#isCrossedOut} attribute for the value with the given index.
+     *
+     * @param pOuterIndex the outer index of the value
+     * @param pInnerIndex the inner index of the value
+     */
     public void toggleCrossedOut(int pOuterIndex, int pInnerIndex) {
         FieldCount fieldCount = allCountsList.get(pOuterIndex).get(pInnerIndex);
         if (fieldCount.getIsCrossedOut()) {
