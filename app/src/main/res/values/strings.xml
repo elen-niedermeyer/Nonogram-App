@@ -32,7 +32,7 @@
     <string name="instruction_5">Identify all the filled boxes.\n\nThe nonograms are computer generated. It\'s possible that there\'s an ambiguous solution.</string>
     <string name="instruction_6">Choose the size of your puzzle in the menu.</string>
     <string name="skip_tutorial">Skip tutorial</string>
-    <string name="click_here_continue">Tab to continue</string>
+    <string name="click_here_continue">Tap to continue</string>
 
     <!-- game activitiy count views -->
     <string name="tag_row_count">row_%1$d_%2$d</string>

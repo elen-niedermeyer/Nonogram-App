@@ -10,13 +10,13 @@
     <!-- general -->
     <!-- general - buttons -->
     <style name="ButtonStyle">
-        <item name="android:background">@drawable/style_buttons</item>
+        <item name="android:background">@drawable/buttons</item>
         <item name="android:layout_margin">@dimen/distance_views_1</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="ButtonStyleHeading">
-        <item name="android:background">@drawable/style_buttons</item>
+        <item name="android:background">@drawable/buttons</item>
         <item name="android:layout_margin">@dimen/distance_views_1</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">20sp</item>
@@ -61,7 +61,7 @@
 
     <!-- menu -->
     <style name="MenuItems">
-        <item name="android:background">@drawable/menu_item_style</item>
+        <item name="android:background">@drawable/menu_item</item>
         <item name="android:padding">@dimen/distance_views_1</item>
         <item name="android:layout_marginRight">@dimen/distance_views_1</item>
     </style>
