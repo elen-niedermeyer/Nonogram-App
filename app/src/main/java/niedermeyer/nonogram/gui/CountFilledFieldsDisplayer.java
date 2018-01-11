@@ -177,7 +177,7 @@ public class CountFilledFieldsDisplayer {
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.setGravity(Gravity.TOP);
 
-            ArrayList<FieldCount> counts = rowCounts.get(columnCounter);
+            ArrayList<FieldCount> counts = columnCounts.get(columnCounter);
 
             // add the value in this row for each column
             for (int innerCounter = 0; innerCounter < counts.size(); innerCounter++) {
