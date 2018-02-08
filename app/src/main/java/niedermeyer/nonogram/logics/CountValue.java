@@ -3,10 +3,21 @@ package niedermeyer.nonogram.logics;
 /**
  * @author Elen Niedermeyer, last modified 2017-11-04
  */
-public class FieldCount {
+public class CountValue {
 
     private int value;
     private boolean isCrossedOut;
+
+    /**
+     * Constructor.
+     * Sets {@link #isCrossedOut} to false.
+     *
+     * @param pValue the count's value
+     */
+    public CountValue(int pValue) {
+        value = pValue;
+        isCrossedOut = false;
+    }
 
     /**
      * Constructor.
@@ -15,7 +26,7 @@ public class FieldCount {
      * @param pValue        the count's value
      * @param pIsCrossedOut boolean saying if the value is crossed out
      */
-    public FieldCount(int pValue, boolean pIsCrossedOut) {
+    public CountValue(int pValue, boolean pIsCrossedOut) {
         value = pValue;
         isCrossedOut = pIsCrossedOut;
     }
@@ -46,4 +57,20 @@ public class FieldCount {
     public void setIsCrossedOut(boolean pIsCrossedOut) {
         isCrossedOut = pIsCrossedOut;
     }
+
+    /**
+     * Overrides {@link Object#equals(Object)}.
+     *
+     * @param pOther an object to compare tho this one
+     * @return a boolean if the {@link CountValue}s are equal.
+     */
+    @Override
+    public boolean equals(Object pOther) {
+        if (pOther instanceof CountValue) {
+            CountValue other = (CountValue) pOther;
+            return this.value == other.value && this.isCrossedOut == other.isCrossedOut;
+        }
+        return false;
+    }
+
 }

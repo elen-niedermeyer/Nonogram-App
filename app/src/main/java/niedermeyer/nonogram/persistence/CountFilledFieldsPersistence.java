@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import niedermeyer.nonogram.gui.NonogramActivity;
-import niedermeyer.nonogram.logics.CountFilledFields;
+import niedermeyer.nonogram.logics.FilledFieldsCount;
 
 /**
  * @author Elen Niedermeyer
@@ -42,13 +42,13 @@ public class CountFilledFieldsPersistence {
     }
 
     /**
-     * Saves the given {@link CountFilledFields} object.
+     * Saves the given {@link FilledFieldsCount} object.
      * Makes a new file if there does not exist one yet.
      *
-     * @param pCounts        {@link CountFilledFields} object
+     * @param pCounts        {@link FilledFieldsCount} object
      * @param isColumnCounts a boolean, true if the given object contains the counts for the columns, false if it contains the counts for the rows
      */
-    public void saveCountFilledFields(CountFilledFields pCounts, boolean isColumnCounts) {
+    public void saveCountFilledFields(FilledFieldsCount pCounts, boolean isColumnCounts) {
         // make file object
         File countFile = null;
         if (isColumnCounts) {
@@ -72,11 +72,11 @@ public class CountFilledFieldsPersistence {
     }
 
     /**
-     * Loads the {@link CountFilledFields} object that contains the counts for the columns.
+     * Loads the {@link FilledFieldsCount} object that contains the counts for the columns.
      *
-     * @return the {@link CountFilledFields} object or null if it couldn't be loaded
+     * @return the {@link FilledFieldsCount} object or null if it couldn't be loaded
      */
-    public CountFilledFields loadCountsColumns() {
+    public FilledFieldsCount loadCountsColumns() {
         // make file object
         File countFile = new File(activity.getFilesDir(), COUNTS_COLUMN_FILE_NAME);
 
@@ -89,11 +89,11 @@ public class CountFilledFieldsPersistence {
     }
 
     /**
-     * Loads the {@link CountFilledFields} object that contains the counts for the rows.
+     * Loads the {@link FilledFieldsCount} object that contains the counts for the rows.
      *
-     * @return the {@link CountFilledFields} object or null if it couldn't be loaded
+     * @return the {@link FilledFieldsCount} object or null if it couldn't be loaded
      */
-    public CountFilledFields loadCountsRows() {
+    public FilledFieldsCount loadCountsRows() {
         // make file object
         File countFile = new File(activity.getFilesDir(), COUNTS_ROW_FILE_NAME);
 
@@ -106,14 +106,14 @@ public class CountFilledFieldsPersistence {
     }
 
     /**
-     * Reads a {@link CountFilledFields} object from the given file.
+     * Reads a {@link FilledFieldsCount} object from the given file.
      * It reads in the object as a byte stream and then makes a string of it. Parses the string from JSON with GSON library.
      *
      * @param pFileName the name of the file where the object can ba found
-     * @return an {@link CountFilledFields} object or null if there was a failure reading the file
+     * @return an {@link FilledFieldsCount} object or null if there was a failure reading the file
      */
-    private CountFilledFields readCountObject(String pFileName) {
-        CountFilledFields counts = null;
+    private FilledFieldsCount readCountObject(String pFileName) {
+        FilledFieldsCount counts = null;
 
         InputStream in = null;
         try {
@@ -125,7 +125,7 @@ public class CountFilledFieldsPersistence {
             // parse the input
             String countsJson = new String(input);
             Gson gson = new Gson();
-            counts = gson.fromJson(countsJson, CountFilledFields.class);
+            counts = gson.fromJson(countsJson, FilledFieldsCount.class);
 
         } catch (Exception e) {
             Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
@@ -142,13 +142,13 @@ public class CountFilledFieldsPersistence {
     }
 
     /**
-     * Writes a {@link CountFilledFields} object to a file.
-     * Therefore it serializes the {@link CountFilledFields} to a JSON string with GSON.
+     * Writes a {@link FilledFieldsCount} object to a file.
+     * Therefore it serializes the {@link FilledFieldsCount} to a JSON string with GSON.
      *
-     * @param pCounts   the {@link CountFilledFields} object to save in a file
+     * @param pCounts   the {@link FilledFieldsCount} object to save in a file
      * @param pFileName name of the file where the object should be saved
      */
-    private void writeCountObject(CountFilledFields pCounts, String pFileName) {
+    private void writeCountObject(FilledFieldsCount pCounts, String pFileName) {
         // serialize counts
         Gson gson = new Gson();
         String countsJson = gson.toJson(pCounts);

@@ -5,19 +5,19 @@ import java.util.ArrayList;
 /**
  * @author Elen Niedermeyer, last modified 2017-11-04
  */
-public class CountFilledFields {
+public class FilledFieldsCount {
 
     /**
      * The allCountsList list.
      */
-    private ArrayList<ArrayList<FieldCount>> allCountsList;
+    private ArrayList<ArrayList<CountValue>> allCountsList;
 
     /**
      * Constructor.
      * Initializes {@link #allCountsList} with a new empty list.
      */
-    public CountFilledFields() {
-        allCountsList = new ArrayList<ArrayList<FieldCount>>();
+    public FilledFieldsCount() {
+        allCountsList = new ArrayList<ArrayList<CountValue>>();
     }
 
     /**
@@ -25,7 +25,7 @@ public class CountFilledFields {
      *
      * @return {@link #allCountsList}
      */
-    public ArrayList<ArrayList<FieldCount>> getCountsList() {
+    public ArrayList<ArrayList<CountValue>> getCountsList() {
         return allCountsList;
     }
 
@@ -35,13 +35,13 @@ public class CountFilledFields {
      * @param pOuterIndex the index of the list in {@link #allCountsList}
      * @return the list of counts of the given index.
      */
-    public ArrayList<FieldCount> get(int pOuterIndex) {
+    public ArrayList<CountValue> get(int pOuterIndex) {
         return allCountsList.get(pOuterIndex);
     }
 
     /**
      * Getter for the count value with the given indices.
-     * Gives {@link FieldCount#value}.
+     * Gives {@link CountValue#value}.
      *
      * @param pOuterIndex the index of the value in {@link #allCountsList}
      * @param pInnerIndex the index of the value in a child of {@link #allCountsList}
@@ -52,7 +52,7 @@ public class CountFilledFields {
     }
 
     /**
-     * Getter for the {@link FieldCount#isCrossedOut}.
+     * Getter for the {@link CountValue#isCrossedOut}.
      *
      * @param pOuterIndex the index of the count in {@link #allCountsList}
      * @param pInnerIndex the index of the count in a child of {@link #allCountsList}
@@ -71,13 +71,13 @@ public class CountFilledFields {
     public void addCount(int pOuterIndex, int pValue) {
         try {
             // add the given count to the list
-            ArrayList<FieldCount> currentCounts = allCountsList.get(pOuterIndex);
-            currentCounts.add(new FieldCount(pValue, false));
+            ArrayList<CountValue> currentCounts = allCountsList.get(pOuterIndex);
+            currentCounts.add(new CountValue(pValue));
         } catch (IndexOutOfBoundsException e) {
             // make a new list for this index
             // add the given count to the new list
-            ArrayList<FieldCount> newCounts = new ArrayList<>();
-            newCounts.add(new FieldCount(pValue, false));
+            ArrayList<CountValue> newCounts = new ArrayList<>();
+            newCounts.add(new CountValue(pValue));
             allCountsList.add(newCounts);
         }
     }
@@ -90,8 +90,8 @@ public class CountFilledFields {
     public boolean isEmpty() {
         // check if there is at least one field proved
         for (int outerIndex = 0; outerIndex < allCountsList.size(); outerIndex++) {
-            ArrayList<FieldCount> fieldCounts = allCountsList.get(outerIndex);
-            for (int innerIndex = 0; innerIndex < fieldCounts.size(); innerIndex++) {
+            ArrayList<CountValue> countValues = allCountsList.get(outerIndex);
+            for (int innerIndex = 0; innerIndex < countValues.size(); innerIndex++) {
                 if (getValue(outerIndex, innerIndex) != 0) {
                     // there's an value != 0
                     // return false
@@ -101,7 +101,7 @@ public class CountFilledFields {
         }
 
         // returns true here
-        // there are only zeros int the count
+        // there are only zeros in the count
         return true;
     }
 
@@ -121,24 +121,63 @@ public class CountFilledFields {
     }
 
     /**
-     * Toggles the {@link FieldCount#isCrossedOut} attribute for the value with the given index.
+     * Toggles the {@link CountValue#isCrossedOut} attribute for the value with the given index.
      *
      * @param pOuterIndex the outer index of the value
      * @param pInnerIndex the inner index of the value
      */
     public void toggleCrossedOut(int pOuterIndex, int pInnerIndex) {
-        FieldCount fieldCount = allCountsList.get(pOuterIndex).get(pInnerIndex);
-        if (fieldCount.getIsCrossedOut()) {
+        CountValue countValue = allCountsList.get(pOuterIndex).get(pInnerIndex);
+        if (countValue.getIsCrossedOut()) {
             // count is crossed out
             // now it shouldn't be crossed out
-            fieldCount.setIsCrossedOut(false);
+            countValue.setIsCrossedOut(false);
         } else {
             // count is not crossed out
             // now it should be crossed out
-            fieldCount.setIsCrossedOut(true);
+            countValue.setIsCrossedOut(true);
         }
 
         // replace count in lists
-        allCountsList.get(pOuterIndex).set(pInnerIndex, fieldCount);
+        allCountsList.get(pOuterIndex).set(pInnerIndex, countValue);
     }
+
+    @Override
+    public boolean equals(Object pOther) {
+        if (pOther instanceof FilledFieldsCount) {
+            FilledFieldsCount other = (FilledFieldsCount) pOther;
+
+            if (allCountsList.size() != other.getCountsList().size()) {
+                // return false if the lists have different sizes
+                return false;
+            }
+
+            for (int i = 0; i < allCountsList.size(); i++) {
+                if (allCountsList.get(i).size() != other.get(i).size()) {
+                    // return false if the inner lists have different sizes
+                    return false;
+                }
+            }
+
+            for (int i = 0; i < allCountsList.size(); i++) {
+                ArrayList<CountValue> innerList = allCountsList.get(i);
+                for (int j = 0; j < innerList.size(); j++) {
+                    CountValue countValue = innerList.get(j);
+                    if (countValue != other.get(i).get(j)) {
+                        // return false if the field counts are different
+                        return false;
+                    }
+                }
+            }
+
+            // return true
+            // everything is equal
+            return true;
+        }
+
+        // return false
+        // the given object is of another type
+        return false;
+    }
+
 }

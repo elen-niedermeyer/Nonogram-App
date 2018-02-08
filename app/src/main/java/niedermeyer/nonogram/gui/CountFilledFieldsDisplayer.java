@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.logics.CountFilledFields;
-import niedermeyer.nonogram.logics.FieldCount;
+import niedermeyer.nonogram.logics.FilledFieldsCount;
+import niedermeyer.nonogram.logics.CountValue;
 import niedermeyer.nonogram.logics.NonogramGenerator;
 
 /**
@@ -30,8 +30,8 @@ public class CountFilledFieldsDisplayer {
     /**
      * Counts
      */
-    private CountFilledFields columnCounts;
-    private CountFilledFields rowCounts;
+    private FilledFieldsCount columnCounts;
+    private FilledFieldsCount rowCounts;
 
     /**
      * listener for each count view
@@ -78,7 +78,7 @@ public class CountFilledFieldsDisplayer {
      *
      * @return {@link #columnCounts}
      */
-    public CountFilledFields getColumnCounts() {
+    public FilledFieldsCount getColumnCounts() {
         return columnCounts;
     }
 
@@ -87,7 +87,7 @@ public class CountFilledFieldsDisplayer {
      *
      * @return {@link #rowCounts}
      */
-    public CountFilledFields getRowCounts() {
+    public FilledFieldsCount getRowCounts() {
         return rowCounts;
     }
 
@@ -122,7 +122,7 @@ public class CountFilledFieldsDisplayer {
             layout.setOrientation(LinearLayout.HORIZONTAL);
             layout.setGravity(Gravity.LEFT);
 
-            ArrayList<FieldCount> counts = rowCounts.get(rowCounter);
+            ArrayList<CountValue> counts = rowCounts.get(rowCounter);
 
             // add an text view for each count of the row
             for (int innerCounter = 0; innerCounter < counts.size(); innerCounter++) {
@@ -177,7 +177,7 @@ public class CountFilledFieldsDisplayer {
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.setGravity(Gravity.TOP);
 
-            ArrayList<FieldCount> counts = columnCounts.get(columnCounter);
+            ArrayList<CountValue> counts = columnCounts.get(columnCounter);
 
             // add the value in this row for each column
             for (int innerCounter = 0; innerCounter < counts.size(); innerCounter++) {
@@ -210,12 +210,12 @@ public class CountFilledFieldsDisplayer {
     /**
      * Toggles the background of the given view. It would be striked, if it wasn't before and the other way around.
      *
-     * @param pCounts           the {@link CountFilledFields} object that contains the count
+     * @param pCounts           the {@link FilledFieldsCount} object that contains the count
      * @param pView             the view to toggle the background
      * @param pOuterIndexOfView the outer index of the view in {@link #rowCounts}
      * @param pInnerIndexOfView the inner index of the view in {@link #rowCounts}
      */
-    private void toggleCount(CountFilledFields pCounts, View pView, int pOuterIndexOfView, int pInnerIndexOfView) {
+    private void toggleCount(FilledFieldsCount pCounts, View pView, int pOuterIndexOfView, int pInnerIndexOfView) {
         // if the clicked view was a row count
         // toggle the background, stroke or not
         if (pCounts.isValueCrossedOut(pOuterIndexOfView, pInnerIndexOfView)) {

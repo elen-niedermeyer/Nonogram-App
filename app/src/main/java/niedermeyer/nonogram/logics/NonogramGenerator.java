@@ -14,8 +14,8 @@ public class NonogramGenerator {
     /**
      * current counts
      */
-    private CountFilledFields countsColumns = null;
-    private CountFilledFields countsRows = null;
+    private FilledFieldsCount countsColumns = null;
+    private FilledFieldsCount countsRows = null;
 
     private Random random = new Random();
 
@@ -43,7 +43,7 @@ public class NonogramGenerator {
      *
      * @return {@link #countsColumns}
      */
-    public CountFilledFields getCountsColumns() {
+    public FilledFieldsCount getCountsColumns() {
         if (countsColumns == null) {
             countsColumns = countProvedFieldsPerColumn();
         }
@@ -53,9 +53,9 @@ public class NonogramGenerator {
     /**
      * Setter for {@link #countsColumns}.
      *
-     * @param pCountsColumn a {@link CountFilledFields}
+     * @param pCountsColumn a {@link FilledFieldsCount}
      */
-    public void setCountsColumns(CountFilledFields pCountsColumn) {
+    public void setCountsColumns(FilledFieldsCount pCountsColumn) {
         countsColumns = pCountsColumn;
     }
 
@@ -65,7 +65,7 @@ public class NonogramGenerator {
      *
      * @return {@link #countsRows}
      */
-    public CountFilledFields getCountsRows() {
+    public FilledFieldsCount getCountsRows() {
         if (countsRows == null) {
             countsRows = countProvedFieldsPerRow();
         }
@@ -75,9 +75,9 @@ public class NonogramGenerator {
     /**
      * Setter for {@link #countsRows}.
      *
-     * @param pCountsRow a {@link CountFilledFields}
+     * @param pCountsRow a {@link FilledFieldsCount}
      */
-    public void setCountsRows(CountFilledFields pCountsRow) {
+    public void setCountsRows(FilledFieldsCount pCountsRow) {
         countsRows = pCountsRow;
     }
 
@@ -128,12 +128,12 @@ public class NonogramGenerator {
 
     /**
      * Counts the groups in the rows of the {@link #nonogram}.
-     * Saves the counts in a {@link CountFilledFields} object.
+     * Saves the counts in a {@link FilledFieldsCount} object.
      *
-     * @return a {@link CountFilledFields} with the row counts of {@link #nonogram}
+     * @return a {@link FilledFieldsCount} with the row counts of {@link #nonogram}
      */
-    private CountFilledFields countProvedFieldsPerRow() {
-        CountFilledFields provedFields = new CountFilledFields();
+    private FilledFieldsCount countProvedFieldsPerRow() {
+        FilledFieldsCount provedFields = new FilledFieldsCount();
 
         // iterate over the rows of the nonogram
         for (int rowCount = 0; rowCount < nonogram.length; rowCount++) {
@@ -171,12 +171,12 @@ public class NonogramGenerator {
 
     /**
      * Counts the groups in the columns of the {@link #nonogram}.
-     * Saves the counts in a {@link CountFilledFields} object.
+     * Saves the counts in a {@link FilledFieldsCount} object.
      *
-     * @return a {@link CountFilledFields} with the column counts of {@link #nonogram}
+     * @return a {@link FilledFieldsCount} with the column counts of {@link #nonogram}
      */
-    private CountFilledFields countProvedFieldsPerColumn() {
-        CountFilledFields provedFields = new CountFilledFields();
+    private FilledFieldsCount countProvedFieldsPerColumn() {
+        FilledFieldsCount provedFields = new FilledFieldsCount();
 
         // iterate over the columns of the nonogram
         for (int columnCount = 0; columnCount < nonogram[0].length; columnCount++) {
