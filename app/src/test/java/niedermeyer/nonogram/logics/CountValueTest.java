@@ -13,7 +13,7 @@ public class CountValueTest {
     /**
      * Test for {@link CountValue#equals(Object)}.
      *
-     * @throws Exception if the test failed.
+     * @throws Exception if the test failed
      */
     @Test
     public void equals() throws Exception {
@@ -45,6 +45,11 @@ public class CountValueTest {
         assertEquals(false, countValueFour.equals(countValueTwo));
         assertEquals(false, countValueFour.equals(countValueThree));
         assertEquals(true, countValueFour.equals(countValueFour));
+
+        // compare to null
+        assertEquals(false, countValueOne.equals(null));
+        // compare to any object
+        assertEquals(false, countValueOne.equals(new Object()));
     }
 
 }

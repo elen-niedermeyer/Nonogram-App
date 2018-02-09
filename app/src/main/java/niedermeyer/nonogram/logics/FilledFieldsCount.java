@@ -142,6 +142,12 @@ public class FilledFieldsCount {
         allCountsList.get(pOuterIndex).set(pInnerIndex, countValue);
     }
 
+    /**
+     * Overrides {@link Object#equals(Object)}.
+     *
+     * @param pOther an object to compare to this one
+     * @return a boolean, true if the {@link FilledFieldsCount}s are equal.
+     */
     @Override
     public boolean equals(Object pOther) {
         if (pOther instanceof FilledFieldsCount) {
@@ -163,7 +169,7 @@ public class FilledFieldsCount {
                 ArrayList<CountValue> innerList = allCountsList.get(i);
                 for (int j = 0; j < innerList.size(); j++) {
                     CountValue countValue = innerList.get(j);
-                    if (countValue != other.get(i).get(j)) {
+                    if (!countValue.equals(other.get(i).get(j))) {
                         // return false if the field counts are different
                         return false;
                     }

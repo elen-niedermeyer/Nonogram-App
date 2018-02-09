@@ -61,8 +61,8 @@ public class CountValue {
     /**
      * Overrides {@link Object#equals(Object)}.
      *
-     * @param pOther an object to compare tho this one
-     * @return a boolean if the {@link CountValue}s are equal.
+     * @param pOther an object to compare to this one
+     * @return a boolean, true if the {@link CountValue}s are equal.
      */
     @Override
     public boolean equals(Object pOther) {
