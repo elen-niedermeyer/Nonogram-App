@@ -14,7 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import niedermeyer.nonogram.R;
 
 /**
- * @author Elen Niedermeyer, last modified 2017-09-21
+ * @author Elen Niedermeyer, last modified 2020-10-13
  */
 public class StartActivity extends AppCompatActivity {
 
@@ -66,19 +66,19 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        playButton = (Button) findViewById(R.id.activity_start_buttons_play);
+        playButton = findViewById(R.id.activity_start_buttons_play);
         playButton.setOnClickListener(buttonClick);
 
-        highscoreButton = (Button) findViewById(R.id.activity_start_buttons_highscore);
+        highscoreButton = findViewById(R.id.activity_start_buttons_highscore);
         highscoreButton.setOnClickListener(buttonClick);
 
-        howToPlayButton = (Button) findViewById(R.id.activity_start_buttons_howto);
+        howToPlayButton = findViewById(R.id.activity_start_buttons_howto);
         howToPlayButton.setOnClickListener(buttonClick);
 
-        optionsButton = (Button) findViewById(R.id.activity_start_buttons_options);
+        optionsButton = findViewById(R.id.activity_start_buttons_options);
         optionsButton.setOnClickListener(buttonClick);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_start_toolbar);
+        Toolbar toolbar = findViewById(R.id.activity_start_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new OnClickListener() {
             @Override
