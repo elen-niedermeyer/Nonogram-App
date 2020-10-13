@@ -10,7 +10,6 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NavUtils;
 
 import niedermeyer.nonogram.R;
 
@@ -58,6 +57,7 @@ public class StartActivity extends AppCompatActivity {
      * Overrides the method {@link AppCompatActivity#onCreate(Bundle, PersistableBundle)}.
      * Sets the layout.
      * Initializes the button {@link #playButton}, {@link #highscoreButton}, {@link #howToPlayButton} and {@link #optionsButton} and sets the listener {@link #buttonClick} for all buttons.
+     * Initializes the toolbar.
      *
      * @param savedInstanceState saved information about the activity given by the system
      */
