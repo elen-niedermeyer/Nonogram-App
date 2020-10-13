@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".gui.NonogramActivity"
+            android:name=".gui.GameActivity"
             android:parentActivityName=".gui.StartActivity" />
         <activity android:name=".gui.OptionsActivity" />
         <activity android:name=".gui.InstructionActivity" />

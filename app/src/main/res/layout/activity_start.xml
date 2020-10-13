@@ -36,7 +36,7 @@
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/howto"
+            android:text="@string/tutorial"
             app:icon="@drawable/ic_help_24dp" />
 
         <Button
@@ -47,7 +47,6 @@
             android:text="@string/options"
             app:icon="@drawable/ic_settings_24dp" />
     </LinearLayout>
-
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

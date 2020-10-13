@@ -1,16 +1,18 @@
 <resources>
     <string name="app_name">Nonogram</string>
-    <string name="toolbar_title">Nonogram %1$d x %2$d</string>
 
     <string name="empty"></string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
-    <!-- activities -->
+    <!-- main menu -->
     <string name="play">Play</string>
     <string name="statistics">Statistics</string>
-    <string name="howto">How to play</string>
+    <string name="tutorial">How to play</string>
     <string name="options">Options</string>
+
+    <!-- activities -->
+    <string name="game_activity">Game %1$dx%2$d</string>
 
     <!-- menu items -->
     <string name="new_game">New game</string>

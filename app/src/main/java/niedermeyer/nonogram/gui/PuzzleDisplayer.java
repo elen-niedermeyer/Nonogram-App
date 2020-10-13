@@ -24,7 +24,7 @@ public class PuzzleDisplayer {
     /**
      * Context activity
      */
-    private NonogramActivity activity;
+    private GameActivity activity;
 
     private CountFilledFieldsDisplayer countsDisplayer;
 
@@ -91,7 +91,7 @@ public class PuzzleDisplayer {
      *
      * @param pActivity the activity in which the class is used
      */
-    public PuzzleDisplayer(NonogramActivity pActivity) {
+    public PuzzleDisplayer(GameActivity pActivity) {
         activity = pActivity;
         countsDisplayer = new CountFilledFieldsDisplayer(activity, generator);
         statistics = new StatisticsPersistence(activity);
@@ -252,7 +252,7 @@ public class PuzzleDisplayer {
         statistics.saveNewScore();
 
         // show the animation
-        new Animations().showWonAnimation(activity);
+//        new Animations().showWonAnimation(activity);
     }
 
     /**
@@ -276,7 +276,7 @@ public class PuzzleDisplayer {
      * Adds the counts for the rows and for the columns with {@link CountFilledFieldsDisplayer}
      */
     private void generateNewGameField() {
-        TableLayout table = (TableLayout) activity.findViewById(R.id.activity_nonogram_field);
+        TableLayout table = (TableLayout) activity.findViewById(R.id.activity_game_field);
         // clear the field, remove all rows from table
         table.removeAllViews();
 
@@ -314,7 +314,7 @@ public class PuzzleDisplayer {
      * Adds the counts for the rows and for the columns with {@link CountFilledFieldsDisplayer}
      */
     private void generateSavedGameField() {
-        TableLayout table = (TableLayout) activity.findViewById(R.id.activity_nonogram_field);
+        TableLayout table = (TableLayout) activity.findViewById(R.id.activity_game_field);
         // clear the field, remove all rows from table
         table.removeAllViews();
 

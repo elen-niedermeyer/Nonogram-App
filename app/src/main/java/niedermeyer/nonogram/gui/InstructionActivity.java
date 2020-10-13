@@ -59,7 +59,7 @@ public class InstructionActivity extends AppCompatActivity {
          * Overrides the method {@link OnClickListener#onClick(View)}.
          * Updates the instruction with the next step.
          * Increases the {@link InstructionActivity#index} and sets the next string and table.
-         * If the end of the array is reached, start the {@link NonogramActivity} by an intent to start a game.
+         * If the end of the array is reached, start the {@link GameActivity} by an intent to start a game.
          *
          * @param v the clicked view, it can only be {@link InstructionActivity#root}
          */
@@ -178,6 +178,6 @@ public class InstructionActivity extends AppCompatActivity {
      * Used after the end of the instruction or when the user skips it.
      */
     private void changeToNonogramActivity() {
-        startActivity(new Intent(this, NonogramActivity.class));
+        startActivity(new Intent(this, GameActivity.class));
     }
 }

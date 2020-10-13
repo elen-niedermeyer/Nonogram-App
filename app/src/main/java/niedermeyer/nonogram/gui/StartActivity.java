@@ -32,7 +32,7 @@ public class StartActivity extends AppCompatActivity {
     private OnClickListener buttonClick = new OnClickListener() {
         /**
          * Overrides the method {@link OnClickListener#onClick(View)}.
-         * Makes an intent. It starts the {@link NonogramActivity}, {@link StatisticsActivity}, {@link InstructionActivity} or {@link OptionsActivity} according to which button was clicked.
+         * Makes an intent. It starts the {@link GameActivity}, {@link StatisticsActivity}, {@link InstructionActivity} or {@link OptionsActivity} according to which button was clicked.
          *
          * @param v the clicked button view, can be {@link StartActivity#playButton}, {@link StartActivity#highscoreButton}, {@link StartActivity#howToPlayButton} or {@link StartActivity#optionsButton}
          */
@@ -41,7 +41,7 @@ public class StartActivity extends AppCompatActivity {
             Intent i = null;
             Context context = v.getContext();
             if (v == playButton) {
-                i = new Intent(context, NonogramActivity.class);
+                i = new Intent(context, GameActivity.class);
             } else if (v == highscoreButton) {
                 i = new Intent(context, StatisticsActivity.class);
             } else if (v == howToPlayButton) {
@@ -78,6 +78,7 @@ public class StartActivity extends AppCompatActivity {
         optionsButton = findViewById(R.id.activity_start_buttons_options);
         optionsButton.setOnClickListener(buttonClick);
 
+        // sets the toolbar
         Toolbar toolbar = findViewById(R.id.activity_start_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new OnClickListener() {

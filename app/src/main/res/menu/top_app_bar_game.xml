@@ -2,34 +2,34 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".gui.NonogramActivity">
+    tools:context=".gui.GameActivity">
 
     <item
-        android:id="@+id/toolbar_game_size"
-        android:title="@string/empty"
-        app:showAsAction="always|collapseActionView" />
-
-    <item
-        android:id="@+id/menu_activity_nonogram_new_puzzle"
+        android:id="@+id/toolbar_game_new_puzzle"
+        android:icon="@drawable/ic_add_24dp"
         android:title="@string/new_game"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/menu_activity_nonogram_reset_puzzle"
+        android:id="@+id/toolbar_game_reset_puzzle"
+        android:icon="@drawable/ic_renew_24dp"
         android:title="@string/reset_game"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_activity_nonogram_puzzle_rows"
+        android:id="@+id/toolbar_game_puzzle_rows"
+        android:icon="@drawable/ic_settings_24dp"
         android:title="@string/number_of_rows"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/menu_activity_nonogram_puzzle_columns"
+        android:id="@+id/toolbar_game_puzzle_columns"
+        android:icon="@drawable/ic_settings_24dp"
         android:title="@string/number_of_columns"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/menu_activity_nonogram_instruction"
-        android:title="@string/howto"
+        android:id="@+id/toolbar_game_tutorial"
+        android:icon="@drawable/ic_help_24dp"
+        android:title="@string/tutorial"
         app:showAsAction="never" />
 </menu>
