@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".gui.NonogramActivity">
+
+    <item
+        android:id="@+id/toolbar_game_size"
+        android:title="@string/empty"
+        app:showAsAction="always|collapseActionView" />
+
+    <item
+        android:id="@+id/menu_activity_nonogram_new_puzzle"
+        android:title="@string/new_game"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_activity_nonogram_reset_puzzle"
+        android:title="@string/reset_game"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_activity_nonogram_puzzle_rows"
+        android:title="@string/number_of_rows"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_activity_nonogram_puzzle_columns"
+        android:title="@string/number_of_columns"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_activity_nonogram_instruction"
+        android:title="@string/howto"
+        app:showAsAction="never" />
+</menu>

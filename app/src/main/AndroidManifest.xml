@@ -9,13 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NonogramActivity">
+        <activity android:name=".gui.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".gui.NonogramActivity"
+            android:parentActivityName=".gui.StartActivity" />
+        <activity android:name=".gui.OptionsActivity" />
+        <activity android:name=".gui.InstructionActivity" />
+        <activity android:name=".gui.StatisticsActivity" />
     </application>
 
 </manifest>

@@ -1,16 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root_view_game"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_nonogram_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:background="@color/background_color"
+    tools:context="niedermeyer.nonogram.gui.NonogramActivity">
 
-    <TableLayout
-        android:id="@+id/game_table"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/activity_nonogram_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    </TableLayout>
+    <ScrollView
+        android:id="@+id/activity_nonogram_scroll_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/activity_nonogram_toolbar"
+        android:layout_margin="@dimen/distance_views_1"
+        android:background="@color/background_color"
+        android:fillViewport="true">
 
-</LinearLayout>
+        <HorizontalScrollView
+            android:id="@+id/activity_nonogram_scroll_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_color">
+
+            <TableLayout
+                android:id="@+id/activity_nonogram_field"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/background_color" />
+
+        </HorizontalScrollView>
+    </ScrollView>
+
+    <!-- view for won animation -->
+    <LinearLayout
+        android:id="@+id/activity_nonogram_animation_won"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/activity_nonogram_toolbar"
+        android:background="@color/transparent_nearly"
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/won" />
+
+        <TextView
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/click_here_new_game" />
+
+    </LinearLayout>
+
+</RelativeLayout>
 
