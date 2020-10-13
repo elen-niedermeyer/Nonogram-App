@@ -2,9 +2,10 @@ package niedermeyer.nonogram.gui;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.NumberPicker;
+
+import androidx.appcompat.app.AlertDialog;
 
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.logics.NonogramConstants;

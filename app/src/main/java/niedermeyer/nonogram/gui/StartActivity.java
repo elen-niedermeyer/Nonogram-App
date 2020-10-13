@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NavUtils;
 
 import niedermeyer.nonogram.R;
 
@@ -74,5 +77,14 @@ public class StartActivity extends AppCompatActivity {
 
         optionsButton = (Button) findViewById(R.id.activity_start_buttons_options);
         optionsButton.setOnClickListener(buttonClick);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_start_toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }
