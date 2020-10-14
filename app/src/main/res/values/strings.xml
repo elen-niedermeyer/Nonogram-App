@@ -27,7 +27,7 @@
     <string name="about_developer">About the developer</string>
 
     <!-- how to play activity -->
-    <string name="instruction_1">Nonograms are Japanese logic puzzles.\nYou\'ve got a puzzle like this.\n All fields are empty.</string>
+    <string name="instruction_1">Nonograms are Japanese logic puzzles.\nYou\'ve got a puzzle like this. All fields are empty.</string>
     <string name="instruction_2">The numbers define groups of boxes in each row and column. These groups must be filled.</string>
     <string name="instruction_3">Mark filled fields black (clicking once) and empty fields with a cross (clicking twice) or leave it out.</string>
     <string name="instruction_4">Two numbers means two groups in a row or column. There must be at least one empty field between two groups.\nThe groups are in the order of the numbers.</string>

@@ -45,7 +45,7 @@ public class StartActivity extends AppCompatActivity {
             } else if (v == highscoreButton) {
                 i = new Intent(context, StatisticsActivity.class);
             } else if (v == howToPlayButton) {
-                i = new Intent(context, InstructionActivity.class);
+              //  i = new Intent(context, InstructionActivity.class);
             } else if (v == optionsButton) {
                 i = new Intent(context, OptionsActivity.class);
             }

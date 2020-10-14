@@ -1,7 +1,6 @@
 package niedermeyer.nonogram.gui;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +9,8 @@ import android.view.View;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.persistence.CountFilledFieldsPersistence;
@@ -94,8 +95,8 @@ public class GameActivity extends AppCompatActivity {
 
                 case R.id.toolbar_game_tutorial:
                     // open the tutorial activity
-                    Intent i = new Intent(GameActivity.this, InstructionActivity.class);
-                    startActivity(i);
+                    //Intent i = new Intent(GameActivity.this, InstructionActivity.class);
+                    //startActivity(i);
 
                 default:
                     return false;
@@ -140,7 +141,6 @@ public class GameActivity extends AppCompatActivity {
      * Overrides {@link AppCompatActivity#onCreate(Bundle)}.
      * Sets the layout.
      * Initializes {@link #persistence}, {@link #puzzleSize} and {@link #countsPersistence}.
-     * Starts {@link InstructionActivity} if it's the first puzzle.
      *
      * @param savedInstanceState saved information about the activity given by the system
      */
@@ -155,9 +155,10 @@ public class GameActivity extends AppCompatActivity {
         countsPersistence = new CountFilledFieldsPersistence(this);
 
         // start the instruction activity if it's the first puzzle
-        if (persistence.isFirstPuzzle()) {
-            startActivity(new Intent(this, InstructionActivity.class));
-        }
+        //if (persistence.isFirstPuzzle()) {
+         //   startActivity(new Intent(this, InstructionActivity.class));
+
+       // }
 
         // sets the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_game_toolbar);
@@ -182,6 +183,13 @@ public class GameActivity extends AppCompatActivity {
             // start new game if the size was changed
             puzzleDisplayer.displayNewGame();
         }
+
+        FragmentManager man = getSupportFragmentManager();
+        TutorialDialogFragment frag = new TutorialDialogFragment();
+        FragmentTransaction transaction = man.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.add(android.R.id.content, frag)
+                .addToBackStack(null).commit();
     }
 
     /**

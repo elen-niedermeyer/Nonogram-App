@@ -7,37 +7,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <TextView />
+        <TextView android:textColor="@color/accent_red" />
 
         <TextView
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2\n1" />
+            android:text="2\n1"
+            android:textColor="@color/accent_red" />
 
         <TextView
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5" />
+            android:text="5"
+            android:textColor="@color/accent_red" />
 
         <TextView
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1\n1" />
+            android:text="1\n1"
+            android:textColor="@color/accent_red" />
 
         <TextView
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4" />
+            android:text="4"
+            android:textColor="@color/accent_red" />
 
         <TextView
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1\n3" />
+            android:text="1\n3"
+            android:textColor="@color/accent_red" />
     </TableRow>
 
     <TableRow
@@ -48,32 +53,33 @@
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2   2" />
+            android:text="2   2"
+            android:textColor="@color/accent_red" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_cross" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
     </TableRow>
 
     <TableRow
@@ -84,32 +90,33 @@
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4" />
+            android:text="4"
+            android:textColor="@color/accent_red" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_cross" />
+            android:background="@drawable/game_field_btn_white" />
     </TableRow>
 
     <TableRow
@@ -120,32 +127,33 @@
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1   2" />
+            android:text="1   2"
+            android:textColor="@color/accent_red" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_cross" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_cross" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
     </TableRow>
 
     <TableRow
@@ -156,32 +164,33 @@
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5" />
+            android:text="5"
+            android:textColor="@color/accent_red" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
     </TableRow>
 
     <TableRow
@@ -192,31 +201,32 @@
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1   1" />
+            android:text="1   1"
+            android:textColor="@color/accent_red" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_cross" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_cross" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_cross" />
+            android:background="@drawable/game_field_btn_white" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="@dimen/field_button_size"
             android:layout_height="@dimen/field_button_size"
-            android:background="@drawable/game_field_btn_black" />
+            android:background="@drawable/game_field_btn_white" />
     </TableRow>
 </TableLayout>
