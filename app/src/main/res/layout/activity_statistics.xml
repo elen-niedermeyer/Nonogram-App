@@ -1,35 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!-- vertical scroll view -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!-- vertical scroll view -->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_statistics_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color"
     android:orientation="vertical">
 
-    <TableLayout
-        android:id="@+id/activity_statistics_table"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="*">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!-- table head -->
-        <TableRow>
+        <TableLayout
+            android:id="@+id/activity_statistics_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
 
-            <TextView
-                style="@style/Heading"
-                android:text="@string/heading_size"
-                android:layout_margin="@dimen/distance_views_2" />
+            <!-- table head -->
+            <TableRow>
 
-            <TextView
-                style="@style/Heading"
-                android:gravity="end"
-                android:text="@string/number_of_games"
-                android:layout_margin="@dimen/distance_views_2" />
+                <TextView
+                    android:layout_margin="@dimen/distance_views_2"
+                    android:gravity="center"
+                    android:text="@string/game_size"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
-        </TableRow>
+                <TextView
+                    android:layout_margin="@dimen/distance_views_2"
+                    android:gravity="center"
+                    android:text="@string/number_of_games"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+            </TableRow>
 
-    </TableLayout>
+        </TableLayout>
+    </androidx.core.widget.NestedScrollView>
 
-</ScrollView>
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/activity_start_toolbar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/top_app_bar"
+            app:navigationIcon="@drawable/ic_arrow_back_24dp"
+            app:title="@string/app_name" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

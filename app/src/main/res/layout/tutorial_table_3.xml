@@ -13,32 +13,37 @@
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2\n1" />
+            android:text="2\n1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
         <TextView
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="5"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="@color/accent_red" />
 
         <TextView
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1\n1" />
+            android:text="1\n1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
         <TextView
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4" />
+            android:text="4"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
         <TextView
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1\n3" />
+            android:text="1\n3"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
     </TableRow>
 
     <TableRow
@@ -49,7 +54,8 @@
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2   2" />
+            android:text="2 2"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
         <RelativeLayout
             android:layout_width="@dimen/field_button_size"
@@ -85,7 +91,8 @@
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4" />
+            android:text="4"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
         <RelativeLayout
             android:layout_width="@dimen/field_button_size"
@@ -121,7 +128,8 @@
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1   2" />
+            android:text="1 2"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
         <RelativeLayout
             android:layout_width="@dimen/field_button_size"
@@ -158,6 +166,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="5"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="@color/accent_red" />
 
         <RelativeLayout
@@ -194,7 +203,8 @@
             style="@style/CountViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1   1" />
+            android:text="1 1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
         <RelativeLayout
             android:layout_width="@dimen/field_button_size"

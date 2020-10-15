@@ -12,7 +12,8 @@
         android:layout_alignBottom="@id/number_picker_rows"
         android:layout_centerHorizontal="true"
         android:gravity="center_vertical"
-        android:text="@string/size_separator" />
+        android:text="@string/size_separator"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
     <NumberPicker
         android:id="@+id/number_picker_rows"
@@ -28,7 +29,8 @@
         android:layout_alignStart="@id/number_picker_rows"
         android:layout_alignParentTop="true"
         android:gravity="start"
-        android:text="@string/rows" />
+        android:text="@string/rows"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
     <NumberPicker
         android:id="@+id/number_picker_columns"
@@ -44,7 +46,8 @@
         android:layout_alignStart="@id/number_picker_columns"
         android:layout_alignParentTop="true"
         android:gravity="start"
-        android:text="@string/columns" />
+        android:text="@string/columns"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
 
 </RelativeLayout>
