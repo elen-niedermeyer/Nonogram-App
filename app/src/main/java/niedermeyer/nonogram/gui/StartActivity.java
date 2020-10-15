@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 
 import niedermeyer.nonogram.R;
 
@@ -23,7 +24,7 @@ public class StartActivity extends AppCompatActivity {
      */
     private Button playButton;
     private Button highscoreButton;
-    private Button howToPlayButton;
+    private Button tutorialButton;
     private Button optionsButton;
 
     /**
@@ -32,9 +33,9 @@ public class StartActivity extends AppCompatActivity {
     private OnClickListener buttonClick = new OnClickListener() {
         /**
          * Overrides the method {@link OnClickListener#onClick(View)}.
-         * Makes an intent. It starts the {@link GameActivity}, {@link StatisticsActivity}, {@link InstructionActivity} or {@link OptionsActivity} according to which button was clicked.
+         * Makes an intent. It starts the {@link GameActivity}, {@link StatisticsActivity}, the tutorial through {@link DialogHelper#openTutorialDialogFullscreen(FragmentManager)} or {@link OptionsActivity} according to which button was clicked.
          *
-         * @param v the clicked button view, can be {@link StartActivity#playButton}, {@link StartActivity#highscoreButton}, {@link StartActivity#howToPlayButton} or {@link StartActivity#optionsButton}
+         * @param v the clicked button view, can be {@link StartActivity#playButton}, {@link StartActivity#highscoreButton}, {@link StartActivity#tutorialButton} or {@link StartActivity#optionsButton}
          */
         @Override
         public void onClick(View v) {
@@ -42,21 +43,23 @@ public class StartActivity extends AppCompatActivity {
             Context context = v.getContext();
             if (v == playButton) {
                 i = new Intent(context, GameActivity.class);
+                startActivity(i);
             } else if (v == highscoreButton) {
                 i = new Intent(context, StatisticsActivity.class);
-            } else if (v == howToPlayButton) {
-              //  i = new Intent(context, InstructionActivity.class);
+                startActivity(i);
+            } else if (v == tutorialButton) {
+                new DialogHelper().openTutorialDialogFullscreen(getSupportFragmentManager());
             } else if (v == optionsButton) {
                 i = new Intent(context, OptionsActivity.class);
+                startActivity(i);
             }
-            startActivity(i);
         }
     };
 
     /**
      * Overrides the method {@link AppCompatActivity#onCreate(Bundle, PersistableBundle)}.
      * Sets the layout.
-     * Initializes the button {@link #playButton}, {@link #highscoreButton}, {@link #howToPlayButton} and {@link #optionsButton} and sets the listener {@link #buttonClick} for all buttons.
+     * Initializes the button {@link #playButton}, {@link #highscoreButton}, {@link #tutorialButton} and {@link #optionsButton} and sets the listener {@link #buttonClick} for all buttons.
      * Initializes the toolbar.
      *
      * @param savedInstanceState saved information about the activity given by the system
@@ -66,16 +69,16 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        playButton = findViewById(R.id.activity_start_buttons_play);
+        playButton = findViewById(R.id.activity_start_btn_play);
         playButton.setOnClickListener(buttonClick);
 
-        highscoreButton = findViewById(R.id.activity_start_buttons_highscore);
+        highscoreButton = findViewById(R.id.activity_start_btn_statistics);
         highscoreButton.setOnClickListener(buttonClick);
 
-        howToPlayButton = findViewById(R.id.activity_start_buttons_howto);
-        howToPlayButton.setOnClickListener(buttonClick);
+        tutorialButton = findViewById(R.id.activity_start_btn_tutorial);
+        tutorialButton.setOnClickListener(buttonClick);
 
-        optionsButton = findViewById(R.id.activity_start_buttons_options);
+        optionsButton = findViewById(R.id.activity_start_btn_options);
         optionsButton.setOnClickListener(buttonClick);
 
         // sets the toolbar

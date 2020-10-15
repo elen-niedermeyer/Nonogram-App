@@ -20,7 +20,6 @@
             android:name=".gui.GameActivity"
             android:parentActivityName=".gui.StartActivity" />
         <activity android:name=".gui.OptionsActivity" />
-        <activity android:name=".gui.InstructionActivity" />
         <activity android:name=".gui.StatisticsActivity" />
     </application>
 

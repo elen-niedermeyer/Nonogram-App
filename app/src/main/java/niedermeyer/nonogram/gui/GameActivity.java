@@ -94,9 +94,8 @@ public class GameActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.toolbar_game_tutorial:
-                    // open the tutorial activity
-                    //Intent i = new Intent(GameActivity.this, InstructionActivity.class);
-                    //startActivity(i);
+                    // open the tutorial
+                    new DialogHelper().openTutorialDialogFullscreen(getSupportFragmentManager());
 
                 default:
                     return false;
@@ -154,12 +153,6 @@ public class GameActivity extends AppCompatActivity {
         puzzleSize = new PuzzleSizePersistence(this);
         countsPersistence = new CountFilledFieldsPersistence(this);
 
-        // start the instruction activity if it's the first puzzle
-        //if (persistence.isFirstPuzzle()) {
-         //   startActivity(new Intent(this, InstructionActivity.class));
-
-       // }
-
         // sets the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_game_toolbar);
         setSupportActionBar(toolbar);
@@ -184,12 +177,10 @@ public class GameActivity extends AppCompatActivity {
             puzzleDisplayer.displayNewGame();
         }
 
-        FragmentManager man = getSupportFragmentManager();
-        TutorialDialogFragment frag = new TutorialDialogFragment();
-        FragmentTransaction transaction = man.beginTransaction();
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.add(android.R.id.content, frag)
-                .addToBackStack(null).commit();
+        // start the tutorial if it's the first puzzle
+        if (persistence.isFirstPuzzle()) {
+            new DialogHelper().openTutorialDialogFullscreen(getSupportFragmentManager());
+        }
     }
 
     /**

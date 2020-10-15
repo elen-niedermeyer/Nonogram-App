@@ -17,7 +17,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/activity_start_buttons_play"
+            android:id="@+id/activity_start_btn_play"
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             app:icon="@drawable/ic_play_arrow_24dp" />
 
         <Button
-            android:id="@+id/activity_start_buttons_highscore"
+            android:id="@+id/activity_start_btn_statistics"
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             app:icon="@drawable/ic_bar_chart_24dp" />
 
         <Button
-            android:id="@+id/activity_start_buttons_howto"
+            android:id="@+id/activity_start_btn_tutorial"
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             app:icon="@drawable/ic_help_24dp" />
 
         <Button
-            android:id="@+id/activity_start_buttons_options"
+            android:id="@+id/activity_start_btn_options"
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
