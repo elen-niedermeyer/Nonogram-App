@@ -6,11 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.persistence.CountFilledFieldsPersistence;
@@ -18,13 +15,11 @@ import niedermeyer.nonogram.persistence.PuzzlePersistence;
 import niedermeyer.nonogram.persistence.PuzzleSizePersistence;
 
 /**
- * @author Elen Niedermeyer, last updated 2020-10-13
+ * @author Elen Niedermeyer, last updated 2020-10-15
  */
 public class GameActivity extends AppCompatActivity {
 
     private PuzzleDisplayer puzzleDisplayer = new PuzzleDisplayer(this);
-
-    private NumberPickerDialog numberPickerDialog = new NumberPickerDialog(this);
 
     /**
      * Persistences
@@ -37,7 +32,7 @@ public class GameActivity extends AppCompatActivity {
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            final MenuItem clickedItem = item;
+            DialogHelper dialogHelper = new DialogHelper();
 
             // switch on the item id
             switch (item.getItemId()) {
@@ -51,51 +46,20 @@ public class GameActivity extends AppCompatActivity {
                     puzzleDisplayer.resetGame();
                     return true;
 
-                case R.id.toolbar_game_puzzle_rows:
-                    // make the number picker dialog
-                    AlertDialog dialogRows = numberPickerDialog.makeDialog(true);
-                    final int saveNumberRows = PuzzleSizePersistence.numberOfRows;
-                    dialogRows.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                case R.id.toolbar_game_puzzle_size:
+                    // make the game size dialog
+                    dialogHelper.openGameSizeDialog(getLayoutInflater(), new DialogInterface.OnDismissListener() {
                         @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            if (saveNumberRows != PuzzleSizePersistence.numberOfRows) {
-                                // if the number of rows was changed
-                                // update title of item and of the title bar
-                                clickedItem.setTitle(String.format(getString(R.string.number_of_rows_text), PuzzleSizePersistence.numberOfRows));
-                                updateToolbarTitle();
-                                // start a new game with the new size
-                                puzzleDisplayer.displayNewGame();
-                            }
+                        public void onDismiss(DialogInterface dialogInterface) {
+                            puzzleDisplayer.displayNewGame();
                         }
                     });
-                    // show the dialog
-                    dialogRows.show();
-                    return true;
-
-                case R.id.toolbar_game_puzzle_columns:
-                    // make the number picker dialog
-                    AlertDialog dialogColumns = numberPickerDialog.makeDialog(false);
-                    final int saveNumberColumns = PuzzleSizePersistence.numberOfColumns;
-                    dialogColumns.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            if (saveNumberColumns != PuzzleSizePersistence.numberOfColumns) {
-                                // if the number of column was changed
-                                // update title of item and of the tool bar
-                                clickedItem.setTitle(String.format(getString(R.string.number_of_columns_text), PuzzleSizePersistence.numberOfColumns));
-                                updateToolbarTitle();
-                                // start a new game with the new size
-                                puzzleDisplayer.displayNewGame();
-                            }
-                        }
-                    });
-                    // show the dialog
-                    dialogColumns.show();
                     return true;
 
                 case R.id.toolbar_game_tutorial:
                     // open the tutorial
-                    new DialogHelper().openTutorialDialogFullscreen(getSupportFragmentManager());
+                    dialogHelper.openTutorialDialogFullscreen(getSupportFragmentManager());
+                    return true;
 
                 default:
                     return false;
@@ -114,7 +78,7 @@ public class GameActivity extends AppCompatActivity {
 
     /**
      * Overrides {@link AppCompatActivity#onCreateOptionsMenu(Menu)}.
-     * Inflates the menu. Sets the text of some items.
+     * Inflates the overflow menu.
      *
      * @param menu the menu to initialize
      * @return true, if the menu was created
@@ -124,15 +88,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
 
         getMenuInflater().inflate(R.menu.top_app_bar_game, menu);
-
-        // sets the text of the item that shows how much rows the puzzle has
-        MenuItem rowsNumber = menu.findItem(R.id.toolbar_game_puzzle_rows);
-        rowsNumber.setTitle(String.format(getString(R.string.number_of_rows_text), PuzzleSizePersistence.numberOfRows));
-
-        // sets the text of the item that shows how much columns the puzzle has
-        MenuItem columnsNumber = menu.findItem(R.id.toolbar_game_puzzle_columns);
-        columnsNumber.setTitle(String.format(getString(R.string.number_of_columns_text), PuzzleSizePersistence.numberOfColumns));
-
         return true;
     }
 
@@ -149,14 +104,9 @@ public class GameActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_game);
 
-        persistence = new PuzzlePersistence(this);
-        puzzleSize = new PuzzleSizePersistence(this);
-        countsPersistence = new CountFilledFieldsPersistence(this);
-
         // sets the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_game_toolbar);
         setSupportActionBar(toolbar);
-        updateToolbarTitle();
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,6 +116,9 @@ public class GameActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(toolbarMenuClickListener);
 
         // load the last game
+        persistence = new PuzzlePersistence(this);
+        puzzleSize = new PuzzleSizePersistence(this);
+        countsPersistence = new CountFilledFieldsPersistence(this);
         // start a new game
         int[][] nonogram = persistence.loadLastNonogram();
         int[][] currentField = persistence.loadLastUserField();
@@ -197,15 +150,6 @@ public class GameActivity extends AppCompatActivity {
         persistence.saveCurrentField(puzzleDisplayer.getUsersCurrentField());
         countsPersistence.saveCountFilledFields(puzzleDisplayer.getColumnCounts(), true);
         countsPersistence.saveCountFilledFields(puzzleDisplayer.getRowCounts(), false);
-    }
-
-    /**
-     * Updates the title of the toolbar.
-     * It's necessary if the puzzle size was updated.
-     */
-    private void updateToolbarTitle() {
-        String title = String.format(getString(R.string.game_activity), PuzzleSizePersistence.numberOfColumns, PuzzleSizePersistence.numberOfRows);
-        getSupportActionBar().setTitle(title);
     }
 
 }

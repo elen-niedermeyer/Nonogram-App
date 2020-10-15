@@ -16,15 +16,9 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/toolbar_game_puzzle_rows"
+        android:id="@+id/toolbar_game_puzzle_size"
         android:icon="@drawable/ic_settings_24dp"
-        android:title="@string/number_of_rows"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/toolbar_game_puzzle_columns"
-        android:icon="@drawable/ic_settings_24dp"
-        android:title="@string/number_of_columns"
+        android:title="@string/game_size"
         app:showAsAction="never" />
 
     <item

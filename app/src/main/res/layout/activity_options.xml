@@ -26,7 +26,7 @@
                 style="@style/Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/number_of_rows" />
+                android:text="@string/rows" />
 
             <Button
                 android:id="@+id/activity_options_btn_rows"
@@ -41,7 +41,7 @@
                 style="@style/Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/number_of_columns" />
+                android:text="@string/columns" />
 
             <Button
                 android:id="@+id/activity_options_btn_columns"

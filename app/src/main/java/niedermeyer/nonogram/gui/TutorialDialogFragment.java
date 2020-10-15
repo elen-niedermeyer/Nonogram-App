@@ -13,6 +13,9 @@ import androidx.fragment.app.DialogFragment;
 
 import niedermeyer.nonogram.R;
 
+/**
+ * @author Elen Niedermeyer, last updated 2020-10-15
+ */
 public class TutorialDialogFragment extends DialogFragment {
 
     private LayoutInflater inflater;
@@ -133,7 +136,7 @@ public class TutorialDialogFragment extends DialogFragment {
     }
 
     /**
-     * Initializes the arra {@link #tablesLayoutIds}.
+     * Initializes the array {@link #tablesLayoutIds}.
      */
     private void initTableArray() {
         // load table layouts

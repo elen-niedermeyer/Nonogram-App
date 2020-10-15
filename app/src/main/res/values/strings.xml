@@ -7,18 +7,20 @@
 
     <!-- main menu -->
     <string name="play">Play</string>
-    <string name="statistics">Statistics</string>
+    <string name="statistics">Game Statistics</string>
     <string name="tutorial">How to play</string>
     <string name="options">Options</string>
 
     <!-- activities -->
-    <string name="game_activity">Game %1$dx%2$d</string>
+    <string name="game_activity">Game</string>
 
     <!-- menu items -->
     <string name="new_game">New game</string>
     <string name="reset_game">Reset game</string>
-    <string name="number_of_rows">Number of rows</string>
-    <string name="number_of_columns">Number of columns</string>
+    <string name="game_size">Game size</string>
+    <string name="rows">Rows</string>
+    <string name="columns">Columns</string>
+    <string name="size_separator">x</string>
     <!-- menu items text -->
     <string name="number_of_rows_text">Number of rows: %1$d</string>
     <string name="number_of_columns_text">Number of columns: %1$d</string>
