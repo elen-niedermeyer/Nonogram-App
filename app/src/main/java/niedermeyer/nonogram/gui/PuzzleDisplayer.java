@@ -253,6 +253,7 @@ public class PuzzleDisplayer {
 
         // show the animation
 //        new Animations().showWonAnimation(activity);
+        displayNewGame();
     }
 
     /**
