@@ -30,7 +30,7 @@ public class GameWonDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.game_won, container, false);
-        layout.findViewById(R.id.game_won_root);
+        layout.findViewById(R.id.game_won_root).setOnClickListener(clickOnDisplay);
 
         return layout;
     }

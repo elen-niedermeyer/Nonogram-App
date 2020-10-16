@@ -10,6 +10,7 @@ import android.widget.TableRow;
 import java.util.Arrays;
 
 import niedermeyer.nonogram.R;
+import niedermeyer.nonogram.gui.dialogs.DialogHelper;
 import niedermeyer.nonogram.logics.FilledFieldsCount;
 import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.logics.NonogramGenerator;
@@ -245,14 +246,16 @@ public class PuzzleDisplayer {
 
     /**
      * If the puzzle was solved, this method saves it in the statistics.
-     * Also shows the won animation. The animation will start a new puzzle then.
+     * Opens the won dialog and starts a new puzzle
      */
     private void doActionsAfterPuzzleWasSolved() {
         // save won puzzle in statistics
         statistics.saveNewScore();
 
-        // show the animation
-//        new Animations().showWonAnimation(activity);
+        // show the won dialog
+        new DialogHelper().openGameWonDialogFullscreen(activity.getSupportFragmentManager());
+
+        // start new game
         displayNewGame();
     }
 
