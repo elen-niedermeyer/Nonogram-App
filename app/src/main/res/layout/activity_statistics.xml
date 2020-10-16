@@ -23,7 +23,7 @@
                 <TextView
                     android:layout_margin="@dimen/distance_views_2"
                     android:gravity="center"
-                    android:text="@string/game_size"
+                    android:text="@string/field_size"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
                 <TextView
@@ -41,13 +41,13 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/activity_start_toolbar"
+            android:id="@+id/activity_statistics_toolbar"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:menu="@menu/top_app_bar"
             app:navigationIcon="@drawable/ic_arrow_back_24dp"
-            app:title="@string/app_name" />
+            app:title="@string/statistics" />
 
     </com.google.android.material.appbar.AppBarLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
