@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="nothing">0dp</dimen>
+    <dimen name="margin">16dp</dimen>
 
     <!-- general -->
     <dimen name="distance_views_1">5dp</dimen>
-    <dimen name="distance_views_2">10dp</dimen>
-    <dimen name="distance_views_3">25dp</dimen>
 
     <!-- game field -->
     <dimen name="field_button_size">35dp</dimen>
     <dimen name="count_numbers">18sp</dimen>
-
-    <!-- buttons -->
-    <dimen name="button_corners">6dp</dimen>
 </resources>

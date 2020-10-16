@@ -1,38 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?><!-- vertical scroll view -->
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_statistics_root"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_game_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context="niedermeyer.nonogram.gui.GameActivity">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/activity_game_scroll_vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TableLayout
-            android:id="@+id/activity_statistics_table"
+        <HorizontalScrollView
+            android:id="@+id/activity_game_scroll_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:stretchColumns="*">
+            android:layout_height="wrap_content">
 
-            <!-- table head -->
-            <TableRow>
+            <TableLayout
+                android:id="@+id/activity_game_field"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
 
-                <TextView
-                    android:gravity="center"
-                    android:text="@string/field_size"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
-
-                <TextView
-                    android:gravity="center"
-                    android:text="@string/number_of_games"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
-            </TableRow>
-
-        </TableLayout>
+        </HorizontalScrollView>
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.appbar.AppBarLayout
@@ -40,13 +32,15 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/activity_statistics_toolbar"
+            android:id="@+id/activity_game_toolbar"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:menu="@menu/top_app_bar"
+            app:menu="@menu/top_app_bar_game"
             app:navigationIcon="@drawable/ic_arrow_back_24dp"
-            app:title="@string/statistics" />
+            app:title="@string/game_activity" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+

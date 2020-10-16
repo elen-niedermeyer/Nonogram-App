@@ -11,7 +11,7 @@ import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import niedermeyer.nonogram.gui.NonogramActivity;
+import niedermeyer.nonogram.gui.GameActivity;
 import niedermeyer.nonogram.logics.FilledFieldsCount;
 
 /**
@@ -63,7 +63,7 @@ public class CountFilledFieldsPersistence {
             try {
                 countFile.createNewFile();
             } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+                Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
             }
         }
 
@@ -128,13 +128,13 @@ public class CountFilledFieldsPersistence {
             counts = gson.fromJson(countsJson, FilledFieldsCount.class);
 
         } catch (Exception e) {
-            Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+            Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
         } finally {
             // close the stream
             try {
                 in.close();
             } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+                Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
             }
         }
 
@@ -159,13 +159,13 @@ public class CountFilledFieldsPersistence {
             out = activity.openFileOutput(pFileName, Context.MODE_PRIVATE);
             out.write(countsJson.getBytes());
         } catch (Exception e) {
-            Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+            Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
         } finally {
             // close the stream
             try {
                 out.close();
             } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+                Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
             }
         }
     }

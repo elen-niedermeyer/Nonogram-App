@@ -1,31 +1,28 @@
 <resources>
     <string name="app_name">Nonogram</string>
-    <string name="toolbar_title">Nonogram %1$d x %2$d</string>
 
     <string name="empty"></string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
     <!-- activities -->
+    <string name="game_activity">Game</string>
     <string name="play">Play</string>
-    <string name="statistics">Statistics</string>
-    <string name="howto">How to play</string>
+    <string name="statistics">Game Statistics</string>
+    <string name="tutorial">How to play</string>
     <string name="options">Options</string>
 
     <!-- menu items -->
     <string name="new_game">New game</string>
     <string name="reset_game">Reset game</string>
-    <string name="number_of_rows">Number of rows</string>
-    <string name="number_of_columns">Number of columns</string>
-    <!-- menu items text -->
-    <string name="number_of_rows_text">Number of rows: %1$d</string>
-    <string name="number_of_columns_text">Number of columns: %1$d</string>
-    <!-- menu headings -->
-    <string name="field_size_heading">Game field size</string>
-    <string name="about_developer">About the developer</string>
+    <string name="field_size">Field size</string>
+    <string name="rows">Rows</string>
+    <string name="columns">Columns</string>
+    <string name="size_separator">x</string>
+    <string name="about">About the developer</string>
 
     <!-- how to play activity -->
-    <string name="instruction_1">Nonograms are Japanese logic puzzles.\nYou\'ve got a puzzle like this.\n All fields are empty.</string>
+    <string name="instruction_1">Nonograms are Japanese logic puzzles.\nYou\'ve got a puzzle like this. All fields are empty.</string>
     <string name="instruction_2">The numbers define groups of boxes in each row and column. These groups must be filled.</string>
     <string name="instruction_3">Mark filled fields black (clicking once) and empty fields with a cross (clicking twice) or leave it out.</string>
     <string name="instruction_4">Two numbers means two groups in a row or column. There must be at least one empty field between two groups.\nThe groups are in the order of the numbers.</string>
@@ -34,18 +31,16 @@
     <string name="skip_tutorial">Skip tutorial</string>
     <string name="click_here_continue">Tap to continue</string>
 
+    <!-- statistics activity -->
+    <string name="number_of_games">Solved puzzles</string>
+
+    <!-- won dialog -->
+    <string name="won">You solved the puzzle</string>
+    <string name="won_continue">Tab to start a new puzzle</string>
+
     <!-- game activitiy count views -->
     <string name="tag_row_count">row_%1$d_%2$d</string>
     <string name="tag_colum_count">column_%1$d_%2$d</string>
-
-    <!-- statistics activity -->
-    <string name="heading_size">Game size</string>
-    <string name="number_of_games">Solved puzzles</string>
-    <string name="puzzle_size_row_column">%1$d x %2$d</string>
-
-    <!-- won animation -->
-    <string name="won">You solved the puzzle</string>
-    <string name="click_here_new_game">Tab to start a new puzzle</string>
 
     <!-- preferences -->
     <string name="prefs_group_puzzle_size">game_size</string>

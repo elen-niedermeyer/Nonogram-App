@@ -24,7 +24,7 @@ public class CountFilledFieldsDisplayer {
     /**
      * Context activity.
      */
-    private NonogramActivity activity;
+    private GameActivity activity;
     private NonogramGenerator nonogram;
 
     /**
@@ -68,7 +68,7 @@ public class CountFilledFieldsDisplayer {
      * @param pActivity the context activity
      * @param pNonogram the current nonogram
      */
-    public CountFilledFieldsDisplayer(NonogramActivity pActivity, NonogramGenerator pNonogram) {
+    public CountFilledFieldsDisplayer(GameActivity pActivity, NonogramGenerator pNonogram) {
         activity = pActivity;
         nonogram = pNonogram;
     }

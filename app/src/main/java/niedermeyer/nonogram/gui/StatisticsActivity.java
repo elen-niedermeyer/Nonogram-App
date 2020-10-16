@@ -2,11 +2,14 @@ package niedermeyer.nonogram.gui;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.Locale;
 
@@ -15,7 +18,7 @@ import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.persistence.StatisticsPersistence;
 
 /**
- * @author Elen Niedermeyer, last modified 2017-09-21
+ * @author Elen Niedermeyer, last modified 2020-10-15
  */
 public class StatisticsActivity extends AppCompatActivity {
 
@@ -30,6 +33,16 @@ public class StatisticsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+
+        // sets the toolbar
+        Toolbar toolbar = findViewById(R.id.activity_statistics_toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         // add rows to the table given in the layout
         addRows();
@@ -59,14 +72,14 @@ public class StatisticsActivity extends AppCompatActivity {
                     TableRow row = new TableRow(this);
 
                     // make the view with the puzzle's size
-                    TextView puzzleSizeView = new TextView(this, null, R.style.Text);
-                    puzzleSizeView.setTextAppearance(this, R.style.Text);
-                    puzzleSizeView.setText(String.format(getString(R.string.puzzle_size_row_column), rowCount, columnCount));
+                    TextView puzzleSizeView = new TextView(this, null, R.style.TextAppearance_MaterialComponents_Body1);
+                    puzzleSizeView.setTextAppearance(this, R.style.TextAppearance_MaterialComponents_Body1);
+                    puzzleSizeView.setText(String.format(Locale.getDefault(), "%1$d %2$s %3$d", rowCount, getString(R.string.size_separator), columnCount));
                     puzzleSizeView.setGravity(Gravity.CENTER);
 
                     // make the view with the number of solved puzzles
-                    TextView numberOfSolvedPuzzlesView = new TextView(this, null, R.style.Text);
-                    numberOfSolvedPuzzlesView.setTextAppearance(this, R.style.Text);
+                    TextView numberOfSolvedPuzzlesView = new TextView(this, null, R.style.TextAppearance_MaterialComponents_Body1);
+                    numberOfSolvedPuzzlesView.setTextAppearance(this, R.style.TextAppearance_MaterialComponents_Body1);
                     numberOfSolvedPuzzlesView.setText(String.format(Locale.getDefault(), "%1$d", numberOfSavedPuzzles));
                     numberOfSolvedPuzzlesView.setGravity(Gravity.CENTER);
 

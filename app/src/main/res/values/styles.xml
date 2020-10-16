@@ -1,52 +1,12 @@
 <resources>
 
     <!-- Base application theme -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="colorAccent">@color/color_accent</item>
-    </style>
-
-    <!-- general -->
-    <!-- general - buttons -->
-    <style name="ButtonStyle">
-        <item name="android:background">@drawable/buttons</item>
-        <item name="android:layout_margin">@dimen/distance_views_1</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="ButtonStyleHeading">
-        <item name="android:background">@drawable/buttons</item>
-        <item name="android:layout_margin">@dimen/distance_views_1</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <!-- general - text -->
-    <style name="Heading">
-        <item name="android:layout_margin">@dimen/distance_views_1</item>
-        <item name="android:textSize">26sp</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text">
-        <item name="android:layout_marginLeft">@dimen/distance_views_1</item>
-        <item name="android:layout_marginRight">@dimen/distance_views_1</item>
-        <item name="android:layout_marginTop">@dimen/distance_views_1</item>
-        <item name="android:layout_marginBottom">@dimen/distance_views_1</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <!-- general - divider -->
-    <style name="Divider">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/gray</item>
-        <item name="android:layout_marginTop">@dimen/distance_views_2</item>
-        <item name="android:layout_marginBottom">@dimen/distance_views_2</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">#1976d2</item>
+        <item name="colorPrimaryVariant">#63a4ff</item>
+        <item name="colorPrimaryDark">#004ba0</item>
+        <item name="colorSecondary">#ffa726</item>
+        <item name="colorSecondaryVariant">#ffd95b</item>
     </style>
 
     <!-- playing field -->
@@ -58,16 +18,5 @@
         <item name="android:padding">@dimen/distance_views_1</item>
         <item name="android:typeface">monospace</item>
     </style>
-
-    <!-- menu -->
-    <style name="MenuItems">
-        <item name="android:background">@drawable/menu_item</item>
-        <item name="android:padding">@dimen/distance_views_1</item>
-        <item name="android:layout_marginRight">@dimen/distance_views_1</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

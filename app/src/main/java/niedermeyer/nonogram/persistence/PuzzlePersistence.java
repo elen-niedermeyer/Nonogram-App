@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.gui.NonogramActivity;
+import niedermeyer.nonogram.gui.GameActivity;
 
 /**
  * @author Elen Niedermeyer, last updated 2017-10-08
@@ -52,7 +52,7 @@ public class PuzzlePersistence {
             try {
                 nonogramFile.createNewFile();
             } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+                Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
             }
         }
 
@@ -72,7 +72,7 @@ public class PuzzlePersistence {
             try {
                 currentFieldFile.createNewFile();
             } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+                Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
             }
         }
 
@@ -141,13 +141,13 @@ public class PuzzlePersistence {
             out = new ObjectOutputStream(activity.openFileOutput(pFileName, Context.MODE_PRIVATE));
             out.writeObject(pObject);
         } catch (Exception e) {
-            Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+            Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
         } finally {
             // close the stream
             try {
                 out.close();
             } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+                Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
             }
         }
     }
@@ -166,13 +166,13 @@ public class PuzzlePersistence {
             in = new ObjectInputStream(activity.openFileInput(pFileName));
             readArray = (int[][]) in.readObject();
         } catch (Exception e) {
-            Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+            Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
         } finally {
             // close the stream
             try {
                 in.close();
             } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+                Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
             }
         }
 
