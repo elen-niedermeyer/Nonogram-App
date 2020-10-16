@@ -20,16 +20,16 @@ public class DialogHelper {
                 .addToBackStack(null).commit();
     }
 
-    public void openGameSizeDialog(LayoutInflater layoutInflater, DialogInterface.OnDismissListener onDismissListener) {
-        AlertDialog dialogRows = new GameSizeDialog().makeDialog(layoutInflater);
+    public void openFieldSizeDialog(LayoutInflater layoutInflater, DialogInterface.OnDismissListener onDismissListener) {
+        AlertDialog dialogRows = new FieldSizeDialog().makeDialog(layoutInflater);
         if (onDismissListener != null) {
             dialogRows.setOnDismissListener(onDismissListener);
         }
         dialogRows.show();
     }
 
-    public void openGameSizeDialog(LayoutInflater layoutInflater) {
-        openGameSizeDialog(layoutInflater, null);
+    public void openFieldSizeDialog(LayoutInflater layoutInflater) {
+        openFieldSizeDialog(layoutInflater, null);
     }
 
 

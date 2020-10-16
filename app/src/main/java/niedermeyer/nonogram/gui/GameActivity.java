@@ -47,8 +47,8 @@ public class GameActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.toolbar_game_puzzle_size:
-                    // make the game size dialog
-                    dialogHelper.openGameSizeDialog(getLayoutInflater(), new DialogInterface.OnDismissListener() {
+                    // make the field size dialog
+                    dialogHelper.openFieldSizeDialog(getLayoutInflater(), new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialogInterface) {
                             puzzleDisplayer.displayNewGame();

@@ -1,5 +1,6 @@
 package niedermeyer.nonogram.gui;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,7 @@ import niedermeyer.nonogram.persistence.PuzzleSizePersistence;
 /**
  * @author Elen Niedermeyer, last updated 2020-10-15
  */
-public class GameSizeDialog {
+public class FieldSizeDialog {
 
     /**
      * Makes a number picker dialog for choosing the puzzle size.
@@ -24,9 +25,9 @@ public class GameSizeDialog {
      * @param layoutInflater
      * @return the number picker dialog
      */
-    public AlertDialog makeDialog(LayoutInflater layoutInflater) {
+    public AlertDialog makeDialog(final LayoutInflater layoutInflater) {
         // inflate the layout
-        View layout = layoutInflater.inflate(R.layout.dialog_number_picker, null);
+        final View layout = layoutInflater.inflate(R.layout.dialog_number_picker, null);
 
         final NumberPicker pickerRows = (NumberPicker) layout.findViewById(R.id.number_picker_rows);
         setMinMax(pickerRows);
@@ -39,13 +40,14 @@ public class GameSizeDialog {
         // make and return the dialog
         return new MaterialAlertDialogBuilder(layout.getContext())
                 .setView(layout)
-                .setTitle(R.string.game_size)
+                .setTitle(R.string.field_size)
                 // save the new value if the positive button was clicked
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface pDialog, int which) {
                         PuzzleSizePersistence.numberOfRows = pickerRows.getValue();
                         PuzzleSizePersistence.numberOfColumns = pickerColumns.getValue();
+                        new PuzzleSizePersistence((Activity) layoutInflater.getContext()).savePuzzleSize();
                         pDialog.dismiss();
                     }
                 })
