@@ -1,4 +1,4 @@
-package niedermeyer.nonogram.gui;
+package niedermeyer.nonogram.gui.dialogs;
 
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
@@ -32,5 +32,12 @@ public class DialogHelper {
         openFieldSizeDialog(layoutInflater, null);
     }
 
+    public void openGameWonDialogFullscreen(FragmentManager fragmentManager) {
+        GameWonDialogFragment fragment = new GameWonDialogFragment();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.add(android.R.id.content, fragment)
+                .addToBackStack(null).commit();
+    }
 
 }

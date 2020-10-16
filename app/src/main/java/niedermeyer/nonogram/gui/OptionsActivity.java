@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Locale;
 
 import niedermeyer.nonogram.R;
+import niedermeyer.nonogram.gui.dialogs.DialogHelper;
 import niedermeyer.nonogram.persistence.PuzzleSizePersistence;
 
 /**

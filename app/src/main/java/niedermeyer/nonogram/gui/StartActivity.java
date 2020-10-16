@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 
 import niedermeyer.nonogram.R;
+import niedermeyer.nonogram.gui.dialogs.DialogHelper;
 
 /**
  * @author Elen Niedermeyer, last modified 2020-10-13

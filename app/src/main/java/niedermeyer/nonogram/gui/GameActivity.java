@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import niedermeyer.nonogram.R;
+import niedermeyer.nonogram.gui.dialogs.DialogHelper;
 import niedermeyer.nonogram.persistence.CountFilledFieldsPersistence;
 import niedermeyer.nonogram.persistence.PuzzlePersistence;
 import niedermeyer.nonogram.persistence.PuzzleSizePersistence;

@@ -1,4 +1,4 @@
-package niedermeyer.nonogram.gui;
+package niedermeyer.nonogram.gui.dialogs;
 
 import android.app.Activity;
 import android.content.DialogInterface;

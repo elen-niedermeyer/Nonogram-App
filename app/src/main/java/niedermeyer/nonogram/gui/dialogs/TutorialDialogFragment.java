@@ -1,4 +1,4 @@
-package niedermeyer.nonogram.gui;
+package niedermeyer.nonogram.gui.dialogs;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
