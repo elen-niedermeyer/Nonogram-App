@@ -3,10 +3,10 @@
     android:id="@+id/tutorial_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="?attr/colorSurface"
     android:clickable="true"
     android:focusable="true"
-    android:padding="16dp">
+    android:padding="@dimen/margin">
 
     <Button
         android:id="@+id/tutorial_btn_skip"

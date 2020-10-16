@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:text="1\n3"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="@color/accent_red" />
+            android:textColor="?attr/colorSecondary" />
     </TableRow>
 
     <TableRow

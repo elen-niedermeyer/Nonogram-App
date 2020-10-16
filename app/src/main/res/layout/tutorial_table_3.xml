@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text="5"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="@color/accent_red" />
+            android:textColor="?attr/colorSecondary" />
 
         <TextView
             style="@style/CountViews"
@@ -167,7 +167,7 @@
             android:layout_height="wrap_content"
             android:text="5"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="@color/accent_red" />
+            android:textColor="?attr/colorSecondary" />
 
         <RelativeLayout
             android:layout_width="@dimen/field_button_size"

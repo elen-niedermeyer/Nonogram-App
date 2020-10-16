@@ -5,14 +5,12 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
-    <!-- main menu -->
+    <!-- activities -->
+    <string name="game_activity">Game</string>
     <string name="play">Play</string>
     <string name="statistics">Game Statistics</string>
     <string name="tutorial">How to play</string>
     <string name="options">Options</string>
-
-    <!-- activities -->
-    <string name="game_activity">Game</string>
 
     <!-- menu items -->
     <string name="new_game">New game</string>
@@ -21,11 +19,6 @@
     <string name="rows">Rows</string>
     <string name="columns">Columns</string>
     <string name="size_separator">x</string>
-    <!-- menu items text -->
-    <string name="number_of_rows_text">Number of rows: %1$d</string>
-    <string name="number_of_columns_text">Number of columns: %1$d</string>
-    <!-- menu headings -->
-    <string name="field_size_heading">Game field size</string>
     <string name="about">About the developer</string>
 
     <!-- how to play activity -->
@@ -38,15 +31,13 @@
     <string name="skip_tutorial">Skip tutorial</string>
     <string name="click_here_continue">Tap to continue</string>
 
+    <!-- statistics activity -->
+    <string name="number_of_games">Solved puzzles</string>
+
     <!-- game activitiy count views -->
     <string name="tag_row_count">row_%1$d_%2$d</string>
     <string name="tag_colum_count">column_%1$d_%2$d</string>
-
-    <!-- statistics activity -->
-    <string name="heading_size">Game size</string>
-    <string name="number_of_games">Solved puzzles</string>
-    <string name="puzzle_size_row_column">%1$d x %2$d</string>
-
+    
     <!-- won animation -->
     <string name="won">You solved the puzzle</string>
     <string name="click_here_new_game">Tab to start a new puzzle</string>
