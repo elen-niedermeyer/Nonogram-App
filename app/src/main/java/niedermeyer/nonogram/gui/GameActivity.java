@@ -12,11 +12,11 @@ import androidx.appcompat.widget.Toolbar;
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.gui.dialogs.DialogHelper;
 import niedermeyer.nonogram.persistence.CountFilledFieldsPersistence;
+import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 import niedermeyer.nonogram.persistence.PuzzlePersistence;
-import niedermeyer.nonogram.persistence.PuzzleSizePersistence;
 
 /**
- * @author Elen Niedermeyer, last updated 2020-10-15
+ * @author Elen Niedermeyer, last updated 2020-10-18
  */
 public class GameActivity extends AppCompatActivity {
 
@@ -26,7 +26,7 @@ public class GameActivity extends AppCompatActivity {
      * Persistences
      */
     private PuzzlePersistence persistence;
-    private PuzzleSizePersistence puzzleSize;
+    private GameOptionsPersistence puzzleSize;
     private CountFilledFieldsPersistence countsPersistence;
 
     private Toolbar.OnMenuItemClickListener toolbarMenuClickListener = new Toolbar.OnMenuItemClickListener() {
@@ -118,12 +118,14 @@ public class GameActivity extends AppCompatActivity {
 
         // load the last game
         persistence = new PuzzlePersistence(this);
-        puzzleSize = new PuzzleSizePersistence(this);
+        puzzleSize = new GameOptionsPersistence(this);
         countsPersistence = new CountFilledFieldsPersistence(this);
+
         // start a new game
+        GameOptionsPersistence gameOptions = new GameOptionsPersistence(this);
         int[][] nonogram = persistence.loadLastNonogram();
         int[][] currentField = persistence.loadLastUserField();
-        if (nonogram != null && nonogram.length == PuzzleSizePersistence.numberOfRows && nonogram[0].length == PuzzleSizePersistence.numberOfColumns) {
+        if (nonogram != null && nonogram.length == gameOptions.getNumberOfRows() && nonogram[0].length == gameOptions.getNumberOfColumns()) {
             // start puzzle with loaded arrays if the size haven't changed
             puzzleDisplayer.displayNewGame(nonogram, currentField, countsPersistence.loadCountsColumns(), countsPersistence.loadCountsRows());
         } else {
@@ -146,7 +148,6 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        puzzleSize.savePuzzleSize();
         persistence.saveNonogram(puzzleDisplayer.getNonogram());
         persistence.saveCurrentField(puzzleDisplayer.getUsersCurrentField());
         countsPersistence.saveCountFilledFields(puzzleDisplayer.getColumnCounts(), true);

@@ -43,10 +43,11 @@
     <string name="tag_colum_count">column_%1$d_%2$d</string>
 
     <!-- preferences -->
-    <string name="prefs_group_puzzle_size">game_size</string>
+    <string name="prefs_game_options">game_size</string>
     <string name="prefs_group_statistics">statistics</string>
     <string name="prefs_rows">number_of_rows</string>
     <string name="prefs_columns">number_of_columns</string>
+    <string name="prefs_cell_size">cell_size</string>
     <string name="prefs_first_game">first_game</string>
     <string name="prefs_statistic">statistics_%1$d_%2$d</string>
     <string name="string_devider">_</string>

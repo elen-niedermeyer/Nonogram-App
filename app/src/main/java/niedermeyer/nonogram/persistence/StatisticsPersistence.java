@@ -46,7 +46,8 @@ public class StatisticsPersistence {
      * Gets the count of solved puzzles for the current puzzle size. Add one to the count. Saves the new count.
      */
     public void saveNewScore() {
-        String prefName = getPreferenceName(PuzzleSizePersistence.numberOfRows, PuzzleSizePersistence.numberOfColumns);
+        GameOptionsPersistence gameOptionsPersistence = new GameOptionsPersistence(activity);
+        String prefName = getPreferenceName(gameOptionsPersistence.getNumberOfRows(), gameOptionsPersistence.getNumberOfColumns());
         // update the count of solved puzzles
         int count = getCountOfSSolvedPuzzles(prefName);
         count = count + 1;

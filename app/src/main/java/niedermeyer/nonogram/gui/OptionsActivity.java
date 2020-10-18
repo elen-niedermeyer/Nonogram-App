@@ -13,10 +13,10 @@ import java.util.Locale;
 
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.gui.dialogs.DialogHelper;
-import niedermeyer.nonogram.persistence.PuzzleSizePersistence;
+import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 
 /**
- * @author Elen Niedermeyer, last modified 2020-10-16
+ * @author Elen Niedermeyer, last modified 2020-10-18
  */
 public class OptionsActivity extends AppCompatActivity {
 
@@ -42,15 +42,16 @@ public class OptionsActivity extends AppCompatActivity {
             }
         });
 
+        final GameOptionsPersistence gameOptions = new GameOptionsPersistence(this);
         final Button fieldSizeButton = findViewById(R.id.activity_options_btn_field_size);
-        fieldSizeButton.setText(String.format(Locale.getDefault(), "%1$d %2$s %3$d", PuzzleSizePersistence.numberOfRows, getString(R.string.size_separator), PuzzleSizePersistence.numberOfColumns));
+        fieldSizeButton.setText(String.format(Locale.getDefault(), "%1$d %2$s %3$d", gameOptions.getNumberOfRows(), getString(R.string.size_separator), gameOptions.getNumberOfColumns()));
         fieldSizeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new DialogHelper().openFieldSizeDialog(getLayoutInflater(), new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
-                        fieldSizeButton.setText(String.format(Locale.getDefault(), "%1$d %2$s %3$d", PuzzleSizePersistence.numberOfRows, getString(R.string.size_separator), PuzzleSizePersistence.numberOfColumns));
+                        fieldSizeButton.setText(String.format(Locale.getDefault(), "%1$d %2$s %3$d", gameOptions.getNumberOfRows(), getString(R.string.size_separator), gameOptions.getNumberOfColumns()));
                     }
                 });
             }

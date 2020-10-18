@@ -14,11 +14,11 @@ import niedermeyer.nonogram.gui.dialogs.DialogHelper;
 import niedermeyer.nonogram.logics.FilledFieldsCount;
 import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.logics.NonogramGenerator;
-import niedermeyer.nonogram.persistence.PuzzleSizePersistence;
+import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 import niedermeyer.nonogram.persistence.StatisticsPersistence;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-09-30
+ * @author Elen Niedermeyer, last updated 2020-10-28
  */
 public class PuzzleDisplayer {
 
@@ -34,6 +34,9 @@ public class PuzzleDisplayer {
      */
     private NonogramGenerator generator = new NonogramGenerator();
     private int[][] nonogram;
+
+
+    private GameOptionsPersistence gameOptions;
 
     /**
      * Statistics
@@ -69,13 +72,13 @@ public class PuzzleDisplayer {
             // changes the clicked field
             int fieldValue = usersCurrentField[rowNumber][columnNumber];
             if (fieldValue == NonogramConstants.FIELD_NO_DECISION) {
-                v.setBackgroundResource(R.drawable.game_field_btn_black);
+                v.setBackgroundResource(R.drawable.game_cell_black);
                 usersCurrentField[rowNumber][columnNumber] = NonogramConstants.FIELD_PROVED;
             } else if (fieldValue == NonogramConstants.FIELD_PROVED) {
-                v.setBackgroundResource(R.drawable.game_field_btn_cross);
+                v.setBackgroundResource(R.drawable.game_cell_cross);
                 usersCurrentField[rowNumber][columnNumber] = NonogramConstants.FIELD_EMPTY;
             } else if (fieldValue == NonogramConstants.FIELD_EMPTY) {
-                v.setBackgroundResource(R.drawable.game_field_btn_white);
+                v.setBackgroundResource(R.drawable.game_cell_white);
                 usersCurrentField[rowNumber][columnNumber] = NonogramConstants.FIELD_NO_DECISION;
             }
 
@@ -141,8 +144,9 @@ public class PuzzleDisplayer {
      * Generates the GUI by {@link #generateNewGameField()}.
      */
     public void displayNewGame() {
-        int numberOfRows = PuzzleSizePersistence.numberOfRows;
-        int numberOfColumns = PuzzleSizePersistence.numberOfColumns;
+        gameOptions = new GameOptionsPersistence(activity);
+        int numberOfRows = gameOptions.getNumberOfRows();
+        int numberOfColumns = gameOptions.getNumberOfColumns();
 
         // make new puzzle and initialize the private fields
         generator.makeNewGame(numberOfRows, numberOfColumns);
@@ -164,6 +168,7 @@ public class PuzzleDisplayer {
      * @param pUsersCurrentField an array that should represent {@link #usersCurrentField}
      */
     public void displayNewGame(int[][] pNonogram, int[][] pUsersCurrentField, FilledFieldsCount pCountsColumns, FilledFieldsCount pCountsRows) {
+        gameOptions = new GameOptionsPersistence(activity);
         if (pNonogram != null) {
             // initialize nonogram object
             nonogram = pNonogram;
@@ -191,6 +196,7 @@ public class PuzzleDisplayer {
      * Just makes a new GUI for the current nonogram by {@link #generateNewGameField()}.
      */
     public void resetGame() {
+        gameOptions = new GameOptionsPersistence(activity);
         generateNewGameField();
     }
 
@@ -299,7 +305,7 @@ public class PuzzleDisplayer {
                 newButton.setTag(rowCounter + activity.getString(R.string.string_devider) + columnCounter);
 
                 // set background
-                newButton.setBackgroundResource(R.drawable.game_field_btn_white);
+                newButton.setBackgroundResource(R.drawable.game_cell_white);
 
                 // add button to row
                 row.addView(newButton);
@@ -338,11 +344,11 @@ public class PuzzleDisplayer {
 
                 // set background resource for the given field in usersCurrentField
                 if (usersCurrentField[rowCounter][columnCounter] == NonogramConstants.FIELD_NO_DECISION) {
-                    newButton.setBackgroundResource(R.drawable.game_field_btn_white);
+                    newButton.setBackgroundResource(R.drawable.game_cell_white);
                 } else if (usersCurrentField[rowCounter][columnCounter] == NonogramConstants.FIELD_PROVED) {
-                    newButton.setBackgroundResource(R.drawable.game_field_btn_black);
+                    newButton.setBackgroundResource(R.drawable.game_cell_black);
                 } else if (usersCurrentField[rowCounter][columnCounter] == NonogramConstants.FIELD_EMPTY) {
-                    newButton.setBackgroundResource(R.drawable.game_field_btn_cross);
+                    newButton.setBackgroundResource(R.drawable.game_cell_cross);
                 }
 
                 // add button to row
@@ -365,7 +371,7 @@ public class PuzzleDisplayer {
     private Button makeFieldButton() {
         Button b = new Button(activity);
         // set size
-        int buttonSize = (int) activity.getResources().getDimension(R.dimen.field_button_size);
+        int buttonSize = gameOptions.getCellSize();
         b.setLayoutParams(new TableRow.LayoutParams(buttonSize, buttonSize));
         // set the onClickListener implemented in this class
         b.setOnClickListener(fieldOnClick);
