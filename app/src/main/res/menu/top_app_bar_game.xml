@@ -9,10 +9,17 @@
         android:icon="@drawable/ic_add_24dp"
         android:title="@string/new_game"
         app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/toolbar_game_reset_puzzle"
         android:icon="@drawable/ic_renew_24dp"
         android:title="@string/reset_game"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/toolbar_game_zoom"
+        android:icon="@drawable/ic_search_24dp"
+        android:title="@string/zoom"
         app:showAsAction="ifRoom" />
 
     <item

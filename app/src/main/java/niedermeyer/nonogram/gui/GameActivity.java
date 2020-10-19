@@ -20,13 +20,15 @@ import niedermeyer.nonogram.persistence.PuzzlePersistence;
  */
 public class GameActivity extends AppCompatActivity {
 
+    private static final int ZOOM_STEP = 10;
+
     private PuzzleDisplayer puzzleDisplayer = new PuzzleDisplayer(this);
 
     /**
      * Persistences
      */
     private PuzzlePersistence persistence;
-    private GameOptionsPersistence puzzleSize;
+    private GameOptionsPersistence gameOptions;
     private CountFilledFieldsPersistence countsPersistence;
 
     private Toolbar.OnMenuItemClickListener toolbarMenuClickListener = new Toolbar.OnMenuItemClickListener() {
@@ -45,6 +47,10 @@ public class GameActivity extends AppCompatActivity {
                 case R.id.toolbar_game_reset_puzzle:
                     // reset the current puzzle
                     puzzleDisplayer.resetGame();
+                    return true;
+
+                case R.id.toolbar_game_zoom:
+                    gameOptions.setCellSize(gameOptions.getCellSize() + 5);
                     return true;
 
                 case R.id.toolbar_game_puzzle_size:
@@ -95,7 +101,7 @@ public class GameActivity extends AppCompatActivity {
     /**
      * Overrides {@link AppCompatActivity#onCreate(Bundle)}.
      * Sets the layout.
-     * Initializes {@link #persistence}, {@link #puzzleSize} and {@link #countsPersistence}.
+     * Initializes {@link #persistence}, {@link #gameOptions} and {@link #countsPersistence}.
      *
      * @param savedInstanceState saved information about the activity given by the system
      */
@@ -118,11 +124,10 @@ public class GameActivity extends AppCompatActivity {
 
         // load the last game
         persistence = new PuzzlePersistence(this);
-        puzzleSize = new GameOptionsPersistence(this);
+        gameOptions = new GameOptionsPersistence(this);
         countsPersistence = new CountFilledFieldsPersistence(this);
 
         // start a new game
-        GameOptionsPersistence gameOptions = new GameOptionsPersistence(this);
         int[][] nonogram = persistence.loadLastNonogram();
         int[][] currentField = persistence.loadLastUserField();
         if (nonogram != null && nonogram.length == gameOptions.getNumberOfRows() && nonogram[0].length == gameOptions.getNumberOfColumns()) {
