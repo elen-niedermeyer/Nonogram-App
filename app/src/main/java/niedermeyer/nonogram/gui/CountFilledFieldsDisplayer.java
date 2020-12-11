@@ -97,26 +97,28 @@ public class CountFilledFieldsDisplayer {
     }
 
     /**
-     * Adds the counts to the given table by {@link #addCountsRows(TableLayout)} and {@link #addColumnCounts(TableLayout)}.
+     * Adds the counts to the given table by {@link #addCountsRows(TableLayout, int)} and {@link #addColumnCounts(TableLayout)}.
      * The row counts must be added first.
      *
      * @param pTable the table layout on which tha counts should be added
      * @return the given modified table layout
      */
     public TableLayout addCounts(TableLayout pTable) {
-        pTable = addCountsRows(pTable);
+        pTable = addCountsRows(pTable, 0);
+        pTable = addCountsRows(pTable, -1);
         pTable = addColumnCounts(pTable);
         return pTable;
     }
 
     /**
      * Initializes or updates {@link #rowCounts}.
-     * Makes a view with counts at the start of each row of the given table.
+     * Makes a view with counts at the given index of each row of the given table.
      *
      * @param pTable the table where the counts should be added
+     * @param pIndex index where to add the view
      * @return the modified table
      */
-    private TableLayout addCountsRows(TableLayout pTable) {
+    private TableLayout addCountsRows(TableLayout pTable, int pIndex) {
         // get row counts
         rowCounts = nonogram.getCountsRows();
 
@@ -125,7 +127,7 @@ public class CountFilledFieldsDisplayer {
             // make a new layout
             LinearLayout layout = new LinearLayout(activity);
             layout.setOrientation(LinearLayout.HORIZONTAL);
-            layout.setGravity(Gravity.LEFT);
+            layout.setGravity(pIndex == 0 ? Gravity.LEFT : Gravity.RIGHT);
 
             ArrayList<CountValue> counts = rowCounts.get(rowCounter);
 
@@ -141,7 +143,7 @@ public class CountFilledFieldsDisplayer {
                 countView.setClickable(true);
                 countView.setOnClickListener(countOnClick);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                params.setMargins(0, 0, (int) (new GameOptionsPersistence(activity).getCellSize() * TEXT_MARGIN_FACTOR), 0);
+                params.setMargins((int) ((new GameOptionsPersistence(activity).getCellSize() * TEXT_MARGIN_FACTOR)/2), 0, (int) ((new GameOptionsPersistence(activity).getCellSize() * TEXT_MARGIN_FACTOR)/2), 0);
                 countView.setLayoutParams(params);
 
                 // load the crossed out background if necessary
@@ -155,7 +157,7 @@ public class CountFilledFieldsDisplayer {
 
             // get the row and add the new layout at index 0
             TableRow row = (TableRow) pTable.getChildAt(rowCounter);
-            row.addView(layout, 0);
+            row.addView(layout, pIndex);
         }
 
         return pTable;
