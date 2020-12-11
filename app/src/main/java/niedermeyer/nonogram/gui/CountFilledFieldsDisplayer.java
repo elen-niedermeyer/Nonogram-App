@@ -128,7 +128,7 @@ public class CountFilledFieldsDisplayer {
             // make a new layout
             LinearLayout layout = new LinearLayout(activity);
             layout.setOrientation(LinearLayout.HORIZONTAL);
-            layout.setGravity(pIndex == 0 ? Gravity.END : Gravity.START);
+            layout.setGravity(pIndex == 0 ? Gravity.RIGHT : Gravity.LEFT);
 
             ArrayList<CountValue> counts = rowCounts.get(rowCounter);
 
