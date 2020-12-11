@@ -16,7 +16,7 @@ import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.gui.dialogs.DialogHelper;
 
 /**
- * @author Elen Niedermeyer, last modified 2020-10-13
+ * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class StartActivity extends AppCompatActivity {
 
@@ -31,7 +31,7 @@ public class StartActivity extends AppCompatActivity {
     /**
      * Listener for clicks on the buttons.
      */
-    private OnClickListener buttonClick = new OnClickListener() {
+    private final OnClickListener buttonClick = new OnClickListener() {
         /**
          * Overrides the method {@link OnClickListener#onClick(View)}.
          * Makes an intent. It starts the {@link GameActivity}, {@link StatisticsActivity}, the tutorial through {@link DialogHelper#openTutorialDialogFullscreen(FragmentManager)} or {@link OptionsActivity} according to which button was clicked.

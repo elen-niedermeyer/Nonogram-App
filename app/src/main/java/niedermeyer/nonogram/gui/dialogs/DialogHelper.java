@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 /**
- * @author Elen Niedermeyer, last updated 2020-10-15
+ * @author Elen Niedermeyer, last modified 2020-10-15
  */
 public class DialogHelper {
 

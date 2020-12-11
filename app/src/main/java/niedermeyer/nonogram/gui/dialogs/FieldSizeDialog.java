@@ -14,7 +14,7 @@ import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 
 /**
- * @author Elen Niedermeyer, last updated 2020-10-15
+ * @author Elen Niedermeyer, last modified 2020-10-15
  */
 public class FieldSizeDialog {
 

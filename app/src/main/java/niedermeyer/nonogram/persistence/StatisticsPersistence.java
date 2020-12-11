@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import niedermeyer.nonogram.R;
 
 /**
- * @author Elen Niedermeyer, last modified 2017-10-08
+ * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class StatisticsPersistence {
 
@@ -19,7 +19,7 @@ public class StatisticsPersistence {
     /**
      * context activity
      */
-    private Activity activity;
+    private final Activity activity;
 
     /**
      * Constructor, sets {@link #activity}.

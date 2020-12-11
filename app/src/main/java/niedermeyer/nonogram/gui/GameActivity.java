@@ -16,13 +16,13 @@ import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 import niedermeyer.nonogram.persistence.PuzzlePersistence;
 
 /**
- * @author Elen Niedermeyer, last updated 2020-10-18
+ * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class GameActivity extends AppCompatActivity {
 
     private static final int ZOOM_STEP = 10;
 
-    private PuzzleDisplayer puzzleDisplayer = new PuzzleDisplayer(this);
+    private final PuzzleDisplayer puzzleDisplayer = new PuzzleDisplayer(this);
 
     /**
      * Persistences
@@ -31,7 +31,7 @@ public class GameActivity extends AppCompatActivity {
     private GameOptionsPersistence gameOptions;
     private CountFilledFieldsPersistence countsPersistence;
 
-    private Toolbar.OnMenuItemClickListener toolbarMenuClickListener = new Toolbar.OnMenuItemClickListener() {
+    private final Toolbar.OnMenuItemClickListener toolbarMenuClickListener = new Toolbar.OnMenuItemClickListener() {
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
@@ -49,8 +49,12 @@ public class GameActivity extends AppCompatActivity {
                     puzzleDisplayer.resetGame();
                     return true;
 
-                case R.id.toolbar_game_zoom:
-                    gameOptions.setCellSize(gameOptions.getCellSize() + 5);
+                case R.id.toolbar_game_zoom_in:
+                    zoomGameField(ZOOM_STEP);
+                    return true;
+
+                case R.id.toolbar_game_zoom_out:
+                    zoomGameField(-ZOOM_STEP);
                     return true;
 
                 case R.id.toolbar_game_puzzle_size:
@@ -127,16 +131,7 @@ public class GameActivity extends AppCompatActivity {
         gameOptions = new GameOptionsPersistence(this);
         countsPersistence = new CountFilledFieldsPersistence(this);
 
-        // start a new game
-        int[][] nonogram = persistence.loadLastNonogram();
-        int[][] currentField = persistence.loadLastUserField();
-        if (nonogram != null && nonogram.length == gameOptions.getNumberOfRows() && nonogram[0].length == gameOptions.getNumberOfColumns()) {
-            // start puzzle with loaded arrays if the size haven't changed
-            puzzleDisplayer.displayNewGame(nonogram, currentField, countsPersistence.loadCountsColumns(), countsPersistence.loadCountsRows());
-        } else {
-            // start new game if the size was changed
-            puzzleDisplayer.displayNewGame();
-        }
+        startGame();
 
         // start the tutorial if it's the first puzzle
         if (persistence.isFirstPuzzle()) {
@@ -153,10 +148,43 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
+        saveGame();
+    }
+
+    /**
+     * Starts a new game or saved game if available.
+     */
+    private void startGame() {
+        int[][] nonogram = persistence.loadLastNonogram();
+        int[][] currentField = persistence.loadLastUserField();
+        if (nonogram != null && nonogram.length == gameOptions.getNumberOfRows() && nonogram[0].length == gameOptions.getNumberOfColumns()) {
+            // start puzzle with loaded arrays if the size haven't changed
+            puzzleDisplayer.displayNewGame(nonogram, currentField, countsPersistence.loadCountsColumns(), countsPersistence.loadCountsRows());
+        } else {
+            // start new game if the size was changed
+            puzzleDisplayer.displayNewGame();
+        }
+    }
+
+    /**
+     * Saves the current game.
+     */
+    private void saveGame() {
         persistence.saveNonogram(puzzleDisplayer.getNonogram());
         persistence.saveCurrentField(puzzleDisplayer.getUsersCurrentField());
         countsPersistence.saveCountFilledFields(puzzleDisplayer.getColumnCounts(), true);
         countsPersistence.saveCountFilledFields(puzzleDisplayer.getRowCounts(), false);
+    }
+
+    /**
+     * Reloads the game with new cell size.
+     *
+     * @param sizeDelta the delta for cell size
+     */
+    private void zoomGameField(int sizeDelta) {
+        saveGame();
+        gameOptions.setCellSize(gameOptions.getCellSize() + sizeDelta);
+        startGame();
     }
 
 }

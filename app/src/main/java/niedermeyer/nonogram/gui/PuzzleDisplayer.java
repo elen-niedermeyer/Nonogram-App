@@ -18,21 +18,21 @@ import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 import niedermeyer.nonogram.persistence.StatisticsPersistence;
 
 /**
- * @author Elen Niedermeyer, last updated 2020-10-28
+ * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class PuzzleDisplayer {
 
     /**
      * Context activity
      */
-    private GameActivity activity;
+    private final GameActivity activity;
 
-    private CountFilledFieldsDisplayer countsDisplayer;
+    private final CountFilledFieldsDisplayer countsDisplayer;
 
     /**
      * Logical elements
      */
-    private NonogramGenerator generator = new NonogramGenerator();
+    private final NonogramGenerator generator = new NonogramGenerator();
     private int[][] nonogram;
 
 
@@ -41,7 +41,7 @@ public class PuzzleDisplayer {
     /**
      * Statistics
      */
-    private StatisticsPersistence statistics;
+    private final StatisticsPersistence statistics;
 
     /**
      * Field that the users creates
@@ -51,7 +51,7 @@ public class PuzzleDisplayer {
     /**
      * Listener for the buttons on the puzzle.
      */
-    private OnClickListener fieldOnClick = new OnClickListener() {
+    private final OnClickListener fieldOnClick = new OnClickListener() {
         /**
          * Overrides {@link OnClickListener#onClick(View)}.
          * Changes the background of the clicked field in the puzzle:

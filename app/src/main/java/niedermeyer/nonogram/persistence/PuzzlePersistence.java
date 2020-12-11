@@ -14,7 +14,7 @@ import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.gui.GameActivity;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-10-08
+ * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class PuzzlePersistence {
 
@@ -27,7 +27,7 @@ public class PuzzlePersistence {
     /**
      * Context activity
      */
-    private Activity activity;
+    private final Activity activity;
 
     /**
      * Constructor. Initializes {@link #activity}.

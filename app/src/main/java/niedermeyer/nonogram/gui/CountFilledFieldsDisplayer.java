@@ -19,7 +19,7 @@ import niedermeyer.nonogram.logics.NonogramGenerator;
 import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 
 /**
- * @author Elen Niedermeyer, last updated 2020-10-18
+ * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class CountFilledFieldsDisplayer {
 
@@ -29,8 +29,8 @@ public class CountFilledFieldsDisplayer {
     /**
      * Context activity.
      */
-    private GameActivity activity;
-    private NonogramGenerator nonogram;
+    private final GameActivity activity;
+    private final NonogramGenerator nonogram;
 
     /**
      * Counts
@@ -41,7 +41,7 @@ public class CountFilledFieldsDisplayer {
     /**
      * listener for each count view
      */
-    private OnClickListener countOnClick = new OnClickListener() {
+    private final OnClickListener countOnClick = new OnClickListener() {
         /**
          * Parses the clicked views tag.
          * Toggles the background of the view.

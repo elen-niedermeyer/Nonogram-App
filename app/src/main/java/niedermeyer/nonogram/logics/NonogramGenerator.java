@@ -3,7 +3,7 @@ package niedermeyer.nonogram.logics;
 import java.util.Random;
 
 /**
- * @author Elen Niedermeyer, last modified 2017-11-01
+ * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class NonogramGenerator {
 
@@ -17,7 +17,7 @@ public class NonogramGenerator {
     private FilledFieldsCount countsColumns = null;
     private FilledFieldsCount countsRows = null;
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
     /**
      * Getter for {@link #nonogram}.
