@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Nonogram</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="game_activity">Rätsel</string>
+    <string name="play">Spielen</string>
+    <string name="statistics">Statistik</string>
+    <string name="options">Optionen</string>
+    <string name="tutorial">Anleitung</string>
+    <string name="new_game">Neues Rätsel</string>
+    <string name="zoom_in">Vergrößern</string>
+    <string name="zoom_out">Verkleinern</string>
+    <string name="rows">Zeilen</string>
+    <string name="columns">Spalten</string>
+    <string name="about">Über die Entwicklerin</string>
+    <string name="zoom">Zoom</string>
+    <string name="reset_game">Neustarten</string>
+    <string name="click_here_continue">Tippe zum Fortfahren</string>
+    <string name="number_of_games">Gelöste Rätsel</string>
+    <string name="won">Du hast das Rätsel gelöst</string>
+    <string name="won_continue">Tippe, um ein neues Rätsel zu starten</string>
+    <string name="instruction_1">Nonogramme sind japanische Logikrätsel. Du hast ein Rätsel wie dieses. Alle Felder sind leet.</string>
+    <string name="instruction_2">Die Zahlen stehen für Felder in jeder Zeile und Spalte, die ausgefüllt werden müssen.</string>
+    <string name="instruction_3">Markiere gefüllte Felder schwarz (einmal tippen) und leere Felder mit einem Kreuz (zweimel tippen) oder lasse letztere weiß.</string>
+    <string name="instruction_4">Zwei Zahlen definieren zwei Gruppen in einer Zeile oder Spalte. Zwischen den Gruppen muss mindestens ein leeres Feld sein. Die Gruppen sind in der gleichen Reihenfolge wie die Zahlen.</string>
+    <string name="instruction_5">Finde alle gefüllten Felder. The Nonogramme sind computergeneriert. Es kann in seltenen Fällen vorkommen, dass es mehrere Lösungen gibt.</string>
+    <string name="instruction_6">Stelle die Größe deines Rätsels im Menü ein.</string>
+    <string name="skip_tutorial">Anleitung überspringen</string>
+    <string name="field_size">Rätselgröße</string>
+</resources>
