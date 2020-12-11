@@ -44,7 +44,7 @@
 
     <!-- game activitiy count views -->
     <string name="tag_row_count" translatable="false">row_%1$d_%2$d</string>
-    <string name="tag_colum_count" translatable="false">column_%1$d_%2$d</string>
+    <string name="tag_column_count" translatable="false">column_%1$d_%2$d</string>
 
     <!-- preferences -->
     <string name="prefs_game_options" translatable="false">game_size</string>

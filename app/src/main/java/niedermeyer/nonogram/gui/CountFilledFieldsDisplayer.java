@@ -18,6 +18,8 @@ import niedermeyer.nonogram.logics.FilledFieldsCount;
 import niedermeyer.nonogram.logics.NonogramGenerator;
 import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 
+import static android.view.View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION;
+
 /**
  * @author Elen Niedermeyer, last modified 2020-12-11
  */
@@ -43,7 +45,7 @@ public class CountFilledFieldsDisplayer {
      */
     private final OnClickListener countOnClick = new OnClickListener() {
         /**
-         * Parses the clicked views tag.
+         * Parses the clicked views content description.
          * Toggles the background of the view.
          *
          * @param v clicked view
@@ -51,18 +53,26 @@ public class CountFilledFieldsDisplayer {
         @Override
         public void onClick(View v) {
             // parse the tag
-            String tag = (String) v.getTag();
+            String tag = (String) v.getContentDescription();
             String[] tagParsed = tag.split(activity.getString(R.string.string_devider));
             String rowOrColumn = tagParsed[0];
             int outerIndex = Integer.parseInt(tagParsed[1]);
             int innerIndex = Integer.parseInt(tagParsed[2]);
 
+            ArrayList<View> views = new ArrayList<>();
+            activity.findViewById(R.id.activity_game_root).findViewsWithText(views, tag, FIND_VIEWS_WITH_CONTENT_DESCRIPTION);
+
             // toggle the counts background
             if (rowOrColumn.equals(activity.getString(R.string.row))) {
-                toggleCount(rowCounts, v, outerIndex, innerIndex);
+                for (View view : views) {
+                    toggleCount(rowCounts, view, outerIndex, innerIndex);
+                }
+                rowCounts.toggleCrossedOut(outerIndex, innerIndex);
             } else if (rowOrColumn.equals(activity.getString(R.string.column))) {
-                toggleCount(columnCounts, v, outerIndex, innerIndex);
-
+                for (View view : views) {
+                    toggleCount(columnCounts, view, outerIndex, innerIndex);
+                }
+                columnCounts.toggleCrossedOut(outerIndex, innerIndex);
             }
         }
     };
@@ -140,7 +150,7 @@ public class CountFilledFieldsDisplayer {
                 TextView countView = new TextView(activity);
                 countView.setText(String.format(Locale.getDefault(), "%d", value));
                 countView.setTextSize(TypedValue.COMPLEX_UNIT_PX, new GameOptionsPersistence(activity).getCellSize() * TEXT_SIZE_FACTOR);
-                countView.setTag(String.format(activity.getString(R.string.tag_row_count), rowCounter, innerCounter));
+                countView.setContentDescription(String.format(activity.getString(R.string.tag_row_count), rowCounter, innerCounter));
                 countView.setClickable(true);
                 countView.setOnClickListener(countOnClick);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -200,7 +210,7 @@ public class CountFilledFieldsDisplayer {
                 TextView countView = new TextView(activity);
                 countView.setText(String.format(Locale.getDefault(), "%d", value));
                 countView.setTextSize(TypedValue.COMPLEX_UNIT_PX, new GameOptionsPersistence(activity).getCellSize() * TEXT_SIZE_FACTOR);
-                countView.setTag(String.format(activity.getString(R.string.tag_row_count), columnCounter, innerCounter));
+                countView.setContentDescription(String.format(activity.getString(R.string.tag_column_count), columnCounter, innerCounter));
                 countView.setClickable(true);
                 countView.setOnClickListener(countOnClick);
                 countView.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -240,6 +250,5 @@ public class CountFilledFieldsDisplayer {
             // set the strike resource
             pView.setBackgroundResource(R.drawable.puzzle_count_crossed_out);
         }
-        pCounts.toggleCrossedOut(pOuterIndexOfView, pInnerIndexOfView);
     }
 }
