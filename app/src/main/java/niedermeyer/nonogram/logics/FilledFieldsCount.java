@@ -3,14 +3,14 @@ package niedermeyer.nonogram.logics;
 import java.util.ArrayList;
 
 /**
- * @author Elen Niedermeyer, last modified 2017-11-04
+ * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class FilledFieldsCount {
 
     /**
      * The allCountsList list.
      */
-    private ArrayList<ArrayList<CountValue>> allCountsList;
+    private final ArrayList<ArrayList<CountValue>> allCountsList;
 
     /**
      * Constructor.
@@ -128,15 +128,9 @@ public class FilledFieldsCount {
      */
     public void toggleCrossedOut(int pOuterIndex, int pInnerIndex) {
         CountValue countValue = allCountsList.get(pOuterIndex).get(pInnerIndex);
-        if (countValue.getIsCrossedOut()) {
-            // count is crossed out
-            // now it shouldn't be crossed out
-            countValue.setIsCrossedOut(false);
-        } else {
-            // count is not crossed out
-            // now it should be crossed out
-            countValue.setIsCrossedOut(true);
-        }
+
+        // toggle crossed out
+        countValue.setIsCrossedOut(!countValue.getIsCrossedOut());
 
         // replace count in lists
         allCountsList.get(pOuterIndex).set(pInnerIndex, countValue);

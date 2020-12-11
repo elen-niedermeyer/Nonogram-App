@@ -6,6 +6,6 @@
     <dimen name="distance_views_1">5dp</dimen>
 
     <!-- game field -->
-    <dimen name="field_button_size">35dp</dimen>
+    <dimen name="default_game_cell_size">35dp</dimen>
     <dimen name="count_numbers">18sp</dimen>
 </resources>

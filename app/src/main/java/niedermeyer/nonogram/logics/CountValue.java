@@ -1,11 +1,11 @@
 package niedermeyer.nonogram.logics;
 
 /**
- * @author Elen Niedermeyer, last modified 2017-11-04
+ * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class CountValue {
 
-    private int value;
+    private final int value;
     private boolean isCrossedOut;
 
     /**

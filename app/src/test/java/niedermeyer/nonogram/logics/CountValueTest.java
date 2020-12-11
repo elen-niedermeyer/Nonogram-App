@@ -5,8 +5,7 @@ import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 
 /**
- * @author Elen Niedermeyer
- *         Last modified 2017-02-08
+ * @author Elen Niedermeyer, last modified 2017-02-08
  */
 public class CountValueTest {
 

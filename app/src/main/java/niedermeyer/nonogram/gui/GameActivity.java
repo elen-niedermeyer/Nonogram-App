@@ -12,24 +12,26 @@ import androidx.appcompat.widget.Toolbar;
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.gui.dialogs.DialogHelper;
 import niedermeyer.nonogram.persistence.CountFilledFieldsPersistence;
+import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 import niedermeyer.nonogram.persistence.PuzzlePersistence;
-import niedermeyer.nonogram.persistence.PuzzleSizePersistence;
 
 /**
- * @author Elen Niedermeyer, last updated 2020-10-15
+ * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class GameActivity extends AppCompatActivity {
 
-    private PuzzleDisplayer puzzleDisplayer = new PuzzleDisplayer(this);
+    private static final int ZOOM_STEP = 10;
+
+    private final PuzzleDisplayer puzzleDisplayer = new PuzzleDisplayer(this);
 
     /**
      * Persistences
      */
     private PuzzlePersistence persistence;
-    private PuzzleSizePersistence puzzleSize;
+    private GameOptionsPersistence gameOptions;
     private CountFilledFieldsPersistence countsPersistence;
 
-    private Toolbar.OnMenuItemClickListener toolbarMenuClickListener = new Toolbar.OnMenuItemClickListener() {
+    private final Toolbar.OnMenuItemClickListener toolbarMenuClickListener = new Toolbar.OnMenuItemClickListener() {
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
@@ -45,6 +47,14 @@ public class GameActivity extends AppCompatActivity {
                 case R.id.toolbar_game_reset_puzzle:
                     // reset the current puzzle
                     puzzleDisplayer.resetGame();
+                    return true;
+
+                case R.id.toolbar_game_zoom_in:
+                    zoomGameField(ZOOM_STEP);
+                    return true;
+
+                case R.id.toolbar_game_zoom_out:
+                    zoomGameField(-ZOOM_STEP);
                     return true;
 
                 case R.id.toolbar_game_puzzle_size:
@@ -95,7 +105,7 @@ public class GameActivity extends AppCompatActivity {
     /**
      * Overrides {@link AppCompatActivity#onCreate(Bundle)}.
      * Sets the layout.
-     * Initializes {@link #persistence}, {@link #puzzleSize} and {@link #countsPersistence}.
+     * Initializes {@link #persistence}, {@link #gameOptions} and {@link #countsPersistence}.
      *
      * @param savedInstanceState saved information about the activity given by the system
      */
@@ -118,18 +128,10 @@ public class GameActivity extends AppCompatActivity {
 
         // load the last game
         persistence = new PuzzlePersistence(this);
-        puzzleSize = new PuzzleSizePersistence(this);
+        gameOptions = new GameOptionsPersistence(this);
         countsPersistence = new CountFilledFieldsPersistence(this);
-        // start a new game
-        int[][] nonogram = persistence.loadLastNonogram();
-        int[][] currentField = persistence.loadLastUserField();
-        if (nonogram != null && nonogram.length == PuzzleSizePersistence.numberOfRows && nonogram[0].length == PuzzleSizePersistence.numberOfColumns) {
-            // start puzzle with loaded arrays if the size haven't changed
-            puzzleDisplayer.displayNewGame(nonogram, currentField, countsPersistence.loadCountsColumns(), countsPersistence.loadCountsRows());
-        } else {
-            // start new game if the size was changed
-            puzzleDisplayer.displayNewGame();
-        }
+
+        startGame();
 
         // start the tutorial if it's the first puzzle
         if (persistence.isFirstPuzzle()) {
@@ -146,11 +148,43 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        puzzleSize.savePuzzleSize();
+        saveGame();
+    }
+
+    /**
+     * Starts a new game or saved game if available.
+     */
+    private void startGame() {
+        int[][] nonogram = persistence.loadLastNonogram();
+        int[][] currentField = persistence.loadLastUserField();
+        if (nonogram != null && nonogram.length == gameOptions.getNumberOfRows() && nonogram[0].length == gameOptions.getNumberOfColumns()) {
+            // start puzzle with loaded arrays if the size haven't changed
+            puzzleDisplayer.displayNewGame(nonogram, currentField, countsPersistence.loadCountsColumns(), countsPersistence.loadCountsRows());
+        } else {
+            // start new game if the size was changed
+            puzzleDisplayer.displayNewGame();
+        }
+    }
+
+    /**
+     * Saves the current game.
+     */
+    private void saveGame() {
         persistence.saveNonogram(puzzleDisplayer.getNonogram());
         persistence.saveCurrentField(puzzleDisplayer.getUsersCurrentField());
         countsPersistence.saveCountFilledFields(puzzleDisplayer.getColumnCounts(), true);
         countsPersistence.saveCountFilledFields(puzzleDisplayer.getRowCounts(), false);
+    }
+
+    /**
+     * Reloads the game with new cell size.
+     *
+     * @param sizeDelta the delta for cell size
+     */
+    private void zoomGameField(int sizeDelta) {
+        saveGame();
+        gameOptions.setCellSize(gameOptions.getCellSize() + sizeDelta);
+        startGame();
     }
 
 }

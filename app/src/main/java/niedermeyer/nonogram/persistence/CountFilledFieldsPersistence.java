@@ -15,8 +15,7 @@ import niedermeyer.nonogram.gui.GameActivity;
 import niedermeyer.nonogram.logics.FilledFieldsCount;
 
 /**
- * @author Elen Niedermeyer
- *         Last update 2017-11-04
+ * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class CountFilledFieldsPersistence {
 
@@ -29,7 +28,7 @@ public class CountFilledFieldsPersistence {
     /**
      * Context activity
      */
-    private Activity activity;
+    private final Activity activity;
 
     /**
      * Constructor.

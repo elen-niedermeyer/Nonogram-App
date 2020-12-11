@@ -10,14 +10,14 @@ import androidx.fragment.app.DialogFragment;
 import niedermeyer.nonogram.R;
 
 /**
- * @author Elen Niedermeyer, last updated 2020-10-16
+ * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class GameWonDialogFragment extends DialogFragment {
 
     /**
      * Listener for clicks. Shows the next step.
      */
-    private View.OnClickListener clickOnDisplay = new View.OnClickListener() {
+    private final View.OnClickListener clickOnDisplay = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             dismiss();

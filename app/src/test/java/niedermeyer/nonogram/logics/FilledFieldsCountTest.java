@@ -10,8 +10,7 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 
 /**
- * @author Elen Niedermeyer
- *         Last modified 2018-02-08
+ * @author Elen Niedermeyer, last modified 2018-02-08
  */
 public class FilledFieldsCountTest {
 

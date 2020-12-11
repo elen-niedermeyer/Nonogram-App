@@ -1,5 +1,6 @@
 package niedermeyer.nonogram.gui;
 
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,20 +13,24 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.logics.FilledFieldsCount;
 import niedermeyer.nonogram.logics.CountValue;
+import niedermeyer.nonogram.logics.FilledFieldsCount;
 import niedermeyer.nonogram.logics.NonogramGenerator;
+import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-10-07
+ * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class CountFilledFieldsDisplayer {
+
+    private static final float TEXT_SIZE_FACTOR = 0.7f;
+    private static final float TEXT_MARGIN_FACTOR = 0.5f;
 
     /**
      * Context activity.
      */
-    private GameActivity activity;
-    private NonogramGenerator nonogram;
+    private final GameActivity activity;
+    private final NonogramGenerator nonogram;
 
     /**
      * Counts
@@ -36,7 +41,7 @@ public class CountFilledFieldsDisplayer {
     /**
      * listener for each count view
      */
-    private OnClickListener countOnClick = new OnClickListener() {
+    private final OnClickListener countOnClick = new OnClickListener() {
         /**
          * Parses the clicked views tag.
          * Toggles the background of the view.
@@ -129,11 +134,15 @@ public class CountFilledFieldsDisplayer {
                 int value = counts.get(innerCounter).getValue();
 
                 // make a new text view
-                TextView countView = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_counts, null);
+                TextView countView = new TextView(activity);
                 countView.setText(String.format(Locale.getDefault(), "%d", value));
+                countView.setTextSize(TypedValue.COMPLEX_UNIT_PX, new GameOptionsPersistence(activity).getCellSize() * TEXT_SIZE_FACTOR);
                 countView.setTag(String.format(activity.getString(R.string.tag_row_count), rowCounter, innerCounter));
                 countView.setClickable(true);
                 countView.setOnClickListener(countOnClick);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.setMargins(0, 0, (int) (new GameOptionsPersistence(activity).getCellSize() * TEXT_MARGIN_FACTOR), 0);
+                countView.setLayoutParams(params);
 
                 // load the crossed out background if necessary
                 if (counts.get(innerCounter).getIsCrossedOut()) {
@@ -184,11 +193,13 @@ public class CountFilledFieldsDisplayer {
                 int value = counts.get(innerCounter).getValue();
 
                 // make a new text view
-                TextView countView = (TextView) activity.getLayoutInflater().inflate(R.layout.activity_nonogram_counts, null);
+                TextView countView = new TextView(activity);
                 countView.setText(String.format(Locale.getDefault(), "%d", value));
+                countView.setTextSize(TypedValue.COMPLEX_UNIT_PX, new GameOptionsPersistence(activity).getCellSize() * TEXT_SIZE_FACTOR);
                 countView.setTag(String.format(activity.getString(R.string.tag_row_count), columnCounter, innerCounter));
                 countView.setClickable(true);
                 countView.setOnClickListener(countOnClick);
+                countView.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 // load the crossed out background if necessary
                 if (counts.get(innerCounter).getIsCrossedOut()) {
