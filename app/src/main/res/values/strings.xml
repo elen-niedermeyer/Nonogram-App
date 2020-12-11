@@ -1,28 +1,28 @@
 <resources>
     <string name="app_name">Nonogram</string>
 
-    <string name="empty"></string>
+    <string name="empty" translatable="false"></string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
     <!-- activities -->
-    <string name="game_activity">Game</string>
+    <string name="game_activity">Puzzle</string>
     <string name="play">Play</string>
-    <string name="statistics">Game Statistics</string>
+    <string name="statistics">Statistics</string>
     <string name="tutorial">How to play</string>
     <string name="options">Options</string>
 
     <!-- menu items -->
-    <string name="new_game">New game</string>
-    <string name="reset_game">Reset game</string>
-    <string name="field_size">Field size</string>
+    <string name="new_game">New puzzle</string>
+    <string name="reset_game">Reset puzzle</string>
+    <string name="field_size">Puzzle size</string>
     <string name="zoom">Zoom</string>
     <string name="zoom_in">Zoom in</string>
     <string name="zoom_out">Zoom out</string>
-    <string name="percent_sign">%</string>
+    <string name="percent_sign" translatable="false">%</string>
     <string name="rows">Rows</string>
     <string name="columns">Columns</string>
-    <string name="size_separator">x</string>
+    <string name="size_separator" translatable="false">x</string>
     <string name="about">About the developer</string>
 
     <!-- how to play activity -->
@@ -43,18 +43,18 @@
     <string name="won_continue">Tab to start a new puzzle</string>
 
     <!-- game activitiy count views -->
-    <string name="tag_row_count">row_%1$d_%2$d</string>
-    <string name="tag_colum_count">column_%1$d_%2$d</string>
+    <string name="tag_row_count" translatable="false">row_%1$d_%2$d</string>
+    <string name="tag_colum_count" translatable="false">column_%1$d_%2$d</string>
 
     <!-- preferences -->
-    <string name="prefs_game_options">game_size</string>
-    <string name="prefs_group_statistics">statistics</string>
-    <string name="prefs_rows">number_of_rows</string>
-    <string name="prefs_columns">number_of_columns</string>
-    <string name="prefs_cell_size">cell_size</string>
-    <string name="prefs_first_game">first_game</string>
-    <string name="prefs_statistic">statistics_%1$d_%2$d</string>
-    <string name="string_devider">_</string>
-    <string name="row">row</string>
-    <string name="column">column</string>
+    <string name="prefs_game_options" translatable="false">game_size</string>
+    <string name="prefs_group_statistics" translatable="false">statistics</string>
+    <string name="prefs_rows" translatable="false">number_of_rows</string>
+    <string name="prefs_columns" translatable="false">number_of_columns</string>
+    <string name="prefs_cell_size" translatable="false">cell_size</string>
+    <string name="prefs_first_game" translatable="false">first_game</string>
+    <string name="prefs_statistic" translatable="false">statistics_%1$d_%2$d</string>
+    <string name="string_devider" translatable="false">_</string>
+    <string name="row" translatable="false">row</string>
+    <string name="column" translatable="false">column</string>
 </resources>
