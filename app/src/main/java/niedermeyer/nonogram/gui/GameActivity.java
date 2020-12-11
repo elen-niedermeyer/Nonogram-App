@@ -130,7 +130,6 @@ public class GameActivity extends AppCompatActivity {
         persistence = new PuzzlePersistence(this);
         gameOptions = new GameOptionsPersistence(this);
         countsPersistence = new CountFilledFieldsPersistence(this);
-
         startGame();
 
         // start the tutorial if it's the first puzzle
