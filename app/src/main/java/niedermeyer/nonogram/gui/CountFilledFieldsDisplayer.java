@@ -153,9 +153,7 @@ public class CountFilledFieldsDisplayer {
                 countView.setContentDescription(String.format(activity.getString(R.string.tag_row_count), rowCounter, innerCounter));
                 countView.setClickable(true);
                 countView.setOnClickListener(countOnClick);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                params.setMargins((int) ((new GameOptionsPersistence(activity).getCellSize() * TEXT_MARGIN_FACTOR) / 2), 0, (int) ((new GameOptionsPersistence(activity).getCellSize() * TEXT_MARGIN_FACTOR) / 2), 0);
-                countView.setLayoutParams(params);
+                countView.setPadding((int) ((new GameOptionsPersistence(activity).getCellSize() * TEXT_MARGIN_FACTOR) / 2), 0, (int) ((new GameOptionsPersistence(activity).getCellSize() * TEXT_MARGIN_FACTOR) / 2), 0);
 
                 // load the crossed out background if necessary
                 if (counts.get(innerCounter).getIsCrossedOut()) {
