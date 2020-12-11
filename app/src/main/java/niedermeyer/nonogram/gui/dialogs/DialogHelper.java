@@ -28,10 +28,6 @@ public class DialogHelper {
         dialogRows.show();
     }
 
-    public void openFieldSizeDialog(LayoutInflater layoutInflater) {
-        openFieldSizeDialog(layoutInflater, null);
-    }
-
     public void openGameWonDialogFullscreen(FragmentManager fragmentManager) {
         GameWonDialogFragment fragment = new GameWonDialogFragment();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

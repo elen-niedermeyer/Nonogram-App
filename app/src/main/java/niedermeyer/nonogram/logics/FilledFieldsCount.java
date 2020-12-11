@@ -17,7 +17,7 @@ public class FilledFieldsCount {
      * Initializes {@link #allCountsList} with a new empty list.
      */
     public FilledFieldsCount() {
-        allCountsList = new ArrayList<ArrayList<CountValue>>();
+        allCountsList = new ArrayList<>();
     }
 
     /**
@@ -41,7 +41,7 @@ public class FilledFieldsCount {
 
     /**
      * Getter for the count value with the given indices.
-     * Gives {@link CountValue#value}.
+     * Gives {@link CountValue#getValue()}.
      *
      * @param pOuterIndex the index of the value in {@link #allCountsList}
      * @param pInnerIndex the index of the value in a child of {@link #allCountsList}
@@ -52,7 +52,7 @@ public class FilledFieldsCount {
     }
 
     /**
-     * Getter for the {@link CountValue#isCrossedOut}.
+     * Getter for the {@link CountValue#getIsCrossedOut()}.
      *
      * @param pOuterIndex the index of the count in {@link #allCountsList}
      * @param pInnerIndex the index of the count in a child of {@link #allCountsList}
@@ -121,7 +121,7 @@ public class FilledFieldsCount {
     }
 
     /**
-     * Toggles the {@link CountValue#isCrossedOut} attribute for the value with the given index.
+     * Toggles the {@link CountValue#getIsCrossedOut()} attribute for the value with the given index.
      *
      * @param pOuterIndex the outer index of the value
      * @param pInnerIndex the inner index of the value

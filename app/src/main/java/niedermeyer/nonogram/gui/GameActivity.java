@@ -79,15 +79,6 @@ public class GameActivity extends AppCompatActivity {
     };
 
     /**
-     * Getter for the {@link PuzzleDisplayer}.
-     *
-     * @return {@link #puzzleDisplayer}
-     */
-    public PuzzleDisplayer getGameHandler() {
-        return this.puzzleDisplayer;
-    }
-
-    /**
      * Overrides {@link AppCompatActivity#onCreateOptionsMenu(Menu)}.
      * Inflates the overflow menu.
      *

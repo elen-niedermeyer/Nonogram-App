@@ -84,7 +84,6 @@ public class StatisticsPersistence {
      */
     private int getCountOfSSolvedPuzzles(String pPrefName) {
         SharedPreferences prefs = activity.getSharedPreferences(activity.getString(R.string.prefs_group_statistics), Context.MODE_PRIVATE);
-        int count = prefs.getInt(pPrefName, SCORE_DEFAULT);
-        return count;
+        return prefs.getInt(pPrefName, SCORE_DEFAULT);
     }
 }

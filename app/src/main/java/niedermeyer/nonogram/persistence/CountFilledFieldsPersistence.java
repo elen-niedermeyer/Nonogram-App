@@ -49,7 +49,7 @@ public class CountFilledFieldsPersistence {
      */
     public void saveCountFilledFields(FilledFieldsCount pCounts, boolean isColumnCounts) {
         // make file object
-        File countFile = null;
+        File countFile;
         if (isColumnCounts) {
             countFile = new File(activity.getFilesDir(), COUNTS_COLUMN_FILE_NAME);
         } else {

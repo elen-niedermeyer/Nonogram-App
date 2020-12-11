@@ -54,7 +54,7 @@ public class CountFilledFieldsDisplayer {
         public void onClick(View v) {
             // parse the tag
             String tag = (String) v.getContentDescription();
-            String[] tagParsed = tag.split(activity.getString(R.string.string_devider));
+            String[] tagParsed = tag.split(activity.getString(R.string.string_divider));
             String rowOrColumn = tagParsed[0];
             int outerIndex = Integer.parseInt(tagParsed[1]);
             int innerIndex = Integer.parseInt(tagParsed[2]);
@@ -138,7 +138,7 @@ public class CountFilledFieldsDisplayer {
             // make a new layout
             LinearLayout layout = new LinearLayout(activity);
             layout.setOrientation(LinearLayout.HORIZONTAL);
-            layout.setGravity(pIndex == 0 ? Gravity.RIGHT : Gravity.LEFT);
+            layout.setGravity(pIndex == 0 ? Gravity.END : Gravity.START);
 
             ArrayList<CountValue> counts = rowCounts.get(rowCounter);
 
@@ -231,7 +231,7 @@ public class CountFilledFieldsDisplayer {
     }
 
     /**
-     * Toggles the background of the given view. It would be striked, if it wasn't before and the other way around.
+     * Toggles the background of the given view. It would be stroked, if it wasn't before and the other way around.
      *
      * @param pCounts           the {@link FilledFieldsCount} object that contains the count
      * @param pView             the view to toggle the background

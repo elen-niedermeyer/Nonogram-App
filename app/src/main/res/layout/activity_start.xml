@@ -5,7 +5,6 @@
     android:id="@+id/activity_start_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
     tools:context="niedermeyer.nonogram.gui.StartActivity">
 
     <LinearLayout

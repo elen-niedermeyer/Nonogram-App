@@ -21,7 +21,7 @@ public class FieldSizeDialog {
     /**
      * Makes a number picker dialog for choosing the puzzle size.
      *
-     * @param layoutInflater
+     * @param layoutInflater the layout inflater of the context
      * @return the number picker dialog
      */
     public AlertDialog makeDialog(final LayoutInflater layoutInflater) {

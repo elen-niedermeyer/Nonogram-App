@@ -120,18 +120,18 @@ public class PuzzleDisplayer {
     }
 
     /**
-     * Getter for {@link CountFilledFieldsDisplayer#columnCounts}.
+     * Getter for {@link CountFilledFieldsDisplayer#getColumnCounts()}.
      *
-     * @return {@link CountFilledFieldsDisplayer#columnCounts}
+     * @return {@link CountFilledFieldsDisplayer#getColumnCounts()}
      */
     public FilledFieldsCount getColumnCounts() {
         return countsDisplayer.getColumnCounts();
     }
 
     /**
-     * Getter for {@link CountFilledFieldsDisplayer#rowCounts}.
+     * Getter for {@link CountFilledFieldsDisplayer#getRowCounts()}.
      *
-     * @return {@link CountFilledFieldsDisplayer#rowCounts}
+     * @return {@link CountFilledFieldsDisplayer#getRowCounts()}
      */
     public FilledFieldsCount getRowCounts() {
         return countsDisplayer.getRowCounts();
@@ -210,7 +210,7 @@ public class PuzzleDisplayer {
      */
     private int parseRowNumberFromFieldView(View pView) {
         String tag = (String) pView.getTag();
-        String[] tagSplit = tag.split(activity.getString(R.string.string_devider));
+        String[] tagSplit = tag.split(activity.getString(R.string.string_divider));
         return Integer.parseInt(tagSplit[0]);
     }
 
@@ -224,7 +224,7 @@ public class PuzzleDisplayer {
      */
     private int parseColumnNumberFromFieldView(View pView) {
         String tag = (String) pView.getTag();
-        String[] tagSplit = tag.split(activity.getString(R.string.string_devider));
+        String[] tagSplit = tag.split(activity.getString(R.string.string_divider));
         return Integer.parseInt(tagSplit[1]);
     }
 
@@ -302,7 +302,7 @@ public class PuzzleDisplayer {
             for (int columnCounter = 0; columnCounter < nonogram[rowCounter].length; columnCounter++) {
                 Button newButton = makeFieldButton();
                 // set tag
-                newButton.setTag(rowCounter + activity.getString(R.string.string_devider) + columnCounter);
+                newButton.setTag(rowCounter + activity.getString(R.string.string_divider) + columnCounter);
 
                 // set background
                 newButton.setBackgroundResource(R.drawable.game_cell_white);
@@ -340,7 +340,7 @@ public class PuzzleDisplayer {
             for (int columnCounter = 0; columnCounter < nonogram[rowCounter].length; columnCounter++) {
                 Button newButton = makeFieldButton();
                 // set tag
-                newButton.setTag(rowCounter + activity.getString(R.string.string_devider) + columnCounter);
+                newButton.setTag(rowCounter + activity.getString(R.string.string_divider) + columnCounter);
 
                 // set background resource for the given field in usersCurrentField
                 if (usersCurrentField[rowCounter][columnCounter] == NonogramConstants.FIELD_NO_DECISION) {

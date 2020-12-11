@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -35,11 +36,11 @@ public class NonogramGeneratorTest {
 
         ArrayList<ArrayList<CountValue>> expectedCounts = new ArrayList<>();
         // add first column
-        expectedCounts.add(new ArrayList<CountValue>(Arrays.asList(new CountValue(1, false))));
+        expectedCounts.add(new ArrayList<>(Collections.singletonList(new CountValue(1, false))));
         // add second column
-        expectedCounts.add(new ArrayList<CountValue>(Arrays.asList(new CountValue(1, false), new CountValue(1, false))));
+        expectedCounts.add(new ArrayList<>(Arrays.asList(new CountValue(1, false), new CountValue(1, false))));
         // add third column
-        expectedCounts.add(new ArrayList<CountValue>(Arrays.asList(new CountValue(5, false))));
+        expectedCounts.add(new ArrayList<>(Collections.singletonList(new CountValue(5, false))));
 
         // compare sizes
         assertEquals("Column counts do not have the same size", expectedCounts.size(), actualCounts.size());

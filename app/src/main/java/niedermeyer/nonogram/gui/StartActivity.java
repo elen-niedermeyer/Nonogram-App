@@ -40,7 +40,7 @@ public class StartActivity extends AppCompatActivity {
          */
         @Override
         public void onClick(View v) {
-            Intent i = null;
+            Intent i;
             Context context = v.getContext();
             if (v == playButton) {
                 i = new Intent(context, GameActivity.class);

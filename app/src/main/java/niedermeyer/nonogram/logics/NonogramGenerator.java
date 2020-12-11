@@ -114,7 +114,7 @@ public class NonogramGenerator {
             for (int j = 0; j < nonogram[i].length; j++) {
                 int k = random.nextInt(2);
                 // gives 0 or 1
-                // set FIELD_PROVED for 1 and FIELD_EMTPY for 0
+                // set FIELD_PROVED for 1 and FIELD_EMPTY for 0
                 if (k == 1) {
                     nonogram[i][j] = NonogramConstants.FIELD_PROVED;
                 } else {
@@ -182,13 +182,13 @@ public class NonogramGenerator {
         for (int columnCount = 0; columnCount < nonogram[0].length; columnCount++) {
             int res = 0;
             // iterate over each value in the column
-            for (int valueInColumnCount = 0; valueInColumnCount < nonogram.length; valueInColumnCount++) {
-                if (nonogram[valueInColumnCount][columnCount] == NonogramConstants.FIELD_PROVED) {
+            for (int[] columns : nonogram) {
+                if (columns[columnCount] == NonogramConstants.FIELD_PROVED) {
                     // here's a group of proved fields
                     // add 1 for each field to the counter
                     res += 1;
                 }
-                if (nonogram[valueInColumnCount][columnCount] == NonogramConstants.FIELD_EMPTY && res != 0) {
+                if (columns[columnCount] == NonogramConstants.FIELD_EMPTY && res != 0) {
                     // here's the end of one group
                     // add the number to the list and resets the counter
                     provedFields.addCount(columnCount, res);

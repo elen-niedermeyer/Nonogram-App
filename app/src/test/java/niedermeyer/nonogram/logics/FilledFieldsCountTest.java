@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
@@ -40,7 +41,7 @@ public class FilledFieldsCountTest {
         List<CountValue> expectedIndexZero = new ArrayList<>(Arrays.asList(new CountValue(1), new CountValue(2)));
         assertEquals(expectedIndexZero, exampleCount.get(0));
         // expected list on index 1
-        List<CountValue> expectedIndexOne = new ArrayList<>(Arrays.asList(new CountValue(3)));
+        List<CountValue> expectedIndexOne = new ArrayList<>(Collections.singletonList(new CountValue(3)));
         assertEquals(expectedIndexOne, exampleCount.get(1));
     }
 
