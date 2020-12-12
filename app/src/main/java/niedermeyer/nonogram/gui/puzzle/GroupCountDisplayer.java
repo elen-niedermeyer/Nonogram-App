@@ -28,43 +28,6 @@ public class GroupCountDisplayer {
     private final Context context;
 
     /**
-     * listener for each count view
-     */
-    private final View.OnClickListener countOnClick = new View.OnClickListener() {
-        /**
-         * Parses the clicked views content description.
-         * Toggles the background of the view.
-         *
-         * @param v clicked view
-         */
-        @Override
-        public void onClick(View v) {
-            // parse the tag
-            String tag = (String) v.getContentDescription();
-            String[] tagParsed = tag.split(context.getString(R.string.string_divider));
-            String rowOrColumn = tagParsed[0];
-            int outerIndex = Integer.parseInt(tagParsed[1]);
-            int innerIndex = Integer.parseInt(tagParsed[2]);
-
-          /*  ArrayList<View> views = new ArrayList<>();
-            context.findViewById(R.id.activity_game_root).findViewsWithText(views, tag, FIND_VIEWS_WITH_CONTENT_DESCRIPTION);
-
-            // toggle the counts background
-            if (rowOrColumn.equals(context.getString(R.string.row))) {
-                for (View view : views) {
-                    toggleCount(rowCounts, view, outerIndex, innerIndex);
-                }
-                rowCounts.toggleCrossedOut(outerIndex, innerIndex);
-            } else if (rowOrColumn.equals(context.getString(R.string.column))) {
-                for (View view : views) {
-                    toggleCount(columnCounts, view, outerIndex, innerIndex);
-                }
-                columnCounts.toggleCrossedOut(outerIndex, innerIndex);
-            }*/
-        }
-    };
-
-    /**
      * Constructor. Initializes {@link #context}.
      *
      * @param pContext the context activity
@@ -80,7 +43,7 @@ public class GroupCountDisplayer {
      * @param pIndex    index of the row
      * @return the modified table
      */
-    public LinearLayout getRowCountView(GroupCount pRowCount, int pIndex) {
+    public LinearLayout getRowCountView(GroupCount pRowCount, int pIndex, View.OnClickListener pOnCountClick) {
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.HORIZONTAL);
 
@@ -91,8 +54,8 @@ public class GroupCountDisplayer {
             int value = counts.get(i).getValue();
 
             // make a new text view
-            TextView countView = getTextView(counts.get(i));
-            countView.setContentDescription(String.format(context.getString(R.string.tag_column_count), pIndex, i));
+            TextView countView = getTextView(counts.get(i), pOnCountClick);
+            countView.setContentDescription(String.format(context.getString(R.string.tag_row_count), pIndex, i));
             countView.setPadding((int) ((new GameOptionsPersistence(context).getCellSize() * TEXT_MARGIN_FACTOR) / 2), 0, (int) ((new GameOptionsPersistence(context).getCellSize() * TEXT_MARGIN_FACTOR) / 2), 0);
 
             // load the crossed out background if necessary
@@ -107,7 +70,7 @@ public class GroupCountDisplayer {
         return layout;
     }
 
-    public TableRow getColumnCountRow(GroupCount pColumnCount) {
+    public TableRow getColumnCountRow(GroupCount pColumnCount, View.OnClickListener pOnCountClick) {
         TableRow tableRow = new TableRow(context);
         TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
         tableRow.setLayoutParams(rowParams);
@@ -116,7 +79,7 @@ public class GroupCountDisplayer {
         tableRow.addView(new LinearLayout(context));
 
         for (int columnIndex = 0; columnIndex < pColumnCount.getCounts().size(); columnIndex++) {
-            tableRow.addView(getColumnCountView(pColumnCount, columnIndex));
+            tableRow.addView(getColumnCountView(pColumnCount, columnIndex, pOnCountClick));
         }
         return tableRow;
     }
@@ -128,7 +91,7 @@ public class GroupCountDisplayer {
      * @param pIndex
      * @return the modified table
      */
-    public LinearLayout getColumnCountView(GroupCount pColumnCount, int pIndex) {
+    public LinearLayout getColumnCountView(GroupCount pColumnCount, int pIndex, View.OnClickListener pOnCountClick) {
         // make a new layout
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -138,7 +101,7 @@ public class GroupCountDisplayer {
 
         // add the value in this row for each column
         for (int i = 0; i < counts.size(); i++) {
-            TextView countView = getTextView(counts.get(i));
+            TextView countView = getTextView(counts.get(i), pOnCountClick);
             countView.setContentDescription(String.format(context.getString(R.string.tag_column_count), pIndex, i));
 
             // add the view to the new layout
@@ -148,13 +111,13 @@ public class GroupCountDisplayer {
         return layout;
     }
 
-    private TextView getTextView(CountValue pCountValue) {
+    private TextView getTextView(CountValue pCountValue, View.OnClickListener pOnCountClick) {
         // make a new text view
         TextView countView = new TextView(context);
         countView.setText(String.format(Locale.getDefault(), "%d", pCountValue.getValue()));
         countView.setTextSize(TypedValue.COMPLEX_UNIT_PX, new GameOptionsPersistence(context).getCellSize() * TEXT_SIZE_FACTOR);
         countView.setClickable(true);
-        countView.setOnClickListener(countOnClick);
+        countView.setOnClickListener(pOnCountClick);
         countView.setGravity(Gravity.CENTER_HORIZONTAL);
 
         // load the crossed out background if necessary
@@ -173,7 +136,7 @@ public class GroupCountDisplayer {
      * @param pOuterIndexOfView the outer index of the view
      * @param pInnerIndexOfView the inner index of the view
      */
-    private void toggleCount(GroupCount pCounts, View pView, int pOuterIndexOfView, int pInnerIndexOfView) {
+    public void toggleCount(GroupCount pCounts, View pView, int pOuterIndexOfView, int pInnerIndexOfView) {
         // if the clicked view was a row count
         // toggle the background, stroke or not
         if (pCounts.isValueCrossedOut(pOuterIndexOfView, pInnerIndexOfView)) {
