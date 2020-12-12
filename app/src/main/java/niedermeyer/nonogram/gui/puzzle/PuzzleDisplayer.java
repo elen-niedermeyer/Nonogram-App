@@ -18,8 +18,8 @@ import static android.view.View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION;
 
 public class PuzzleDisplayer {
 
-    private Context context;
-    private GroupCountDisplayer groupCountDisplayer;
+    private final Context context;
+    private final GroupCountDisplayer groupCountDisplayer;
     private GroupCount rowCount;
     private GroupCount columnCount;
 

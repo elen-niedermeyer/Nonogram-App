@@ -51,8 +51,6 @@ public class GroupCountDisplayer {
 
         // add an text view for each count of the row
         for (int i = 0; i < counts.size(); i++) {
-            int value = counts.get(i).getValue();
-
             // make a new text view
             TextView countView = getTextView(counts.get(i), pOnCountClick);
             countView.setContentDescription(String.format(context.getString(R.string.tag_row_count), pIndex, i));

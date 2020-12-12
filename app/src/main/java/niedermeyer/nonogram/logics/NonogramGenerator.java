@@ -51,15 +51,6 @@ public class NonogramGenerator {
     }
 
     /**
-     * Setter for {@link #rowCount}.
-     *
-     * @param pCountsRow a {@link GroupCount}
-     */
-    public void setRowCount(GroupCount pCountsRow) {
-        rowCount = pCountsRow;
-    }
-
-    /**
      * Getter for {@link #columnCount}.
      * Sets {@link #columnCount} if it's not initialized yet and returns it.
      *
@@ -70,15 +61,6 @@ public class NonogramGenerator {
             columnCount = createColumnCount();
         }
         return columnCount;
-    }
-
-    /**
-     * Setter for {@link #columnCount}.
-     *
-     * @param pCountsColumn a {@link GroupCount}
-     */
-    public void setColumnCount(GroupCount pCountsColumn) {
-        columnCount = pCountsColumn;
     }
 
     /**
