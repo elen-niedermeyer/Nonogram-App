@@ -14,7 +14,7 @@ import java.util.Locale;
 
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.logics.CountValue;
-import niedermeyer.nonogram.logics.FilledFieldsCount;
+import niedermeyer.nonogram.logics.GroupCount;
 import niedermeyer.nonogram.logics.NonogramGenerator;
 import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 
@@ -37,8 +37,8 @@ public class CountFilledFieldsDisplayer {
     /**
      * Counts
      */
-    private FilledFieldsCount columnCounts;
-    private FilledFieldsCount rowCounts;
+    private GroupCount columnCounts;
+    private GroupCount rowCounts;
 
     /**
      * listener for each count view
@@ -93,7 +93,7 @@ public class CountFilledFieldsDisplayer {
      *
      * @return {@link #columnCounts}
      */
-    public FilledFieldsCount getColumnCounts() {
+    public GroupCount getColumnCounts() {
         return columnCounts;
     }
 
@@ -102,7 +102,7 @@ public class CountFilledFieldsDisplayer {
      *
      * @return {@link #rowCounts}
      */
-    public FilledFieldsCount getRowCounts() {
+    public GroupCount getRowCounts() {
         return rowCounts;
     }
 
@@ -131,16 +131,16 @@ public class CountFilledFieldsDisplayer {
      */
     private TableLayout addCountsRows(TableLayout pTable, int pIndex) {
         // get row counts
-        rowCounts = nonogram.getCountsRows();
+        rowCounts = nonogram.getRowCount();
 
         // add the counts at the start of each row of the table
-        for (int rowCounter = 0; rowCounter < rowCounts.getCountsList().size(); rowCounter++) {
+        for (int rowCounter = 0; rowCounter < rowCounts.getCounts().size(); rowCounter++) {
             // make a new layout
             LinearLayout layout = new LinearLayout(activity);
             layout.setOrientation(LinearLayout.HORIZONTAL);
             layout.setGravity(pIndex == 0 ? Gravity.END : Gravity.START);
 
-            ArrayList<CountValue> counts = rowCounts.get(rowCounter);
+            ArrayList<CountValue> counts = rowCounts.getList(rowCounter);
 
             // add an text view for each count of the row
             for (int innerCounter = 0; innerCounter < counts.size(); innerCounter++) {
@@ -156,7 +156,7 @@ public class CountFilledFieldsDisplayer {
                 countView.setPadding((int) ((new GameOptionsPersistence(activity).getCellSize() * TEXT_MARGIN_FACTOR) / 2), 0, (int) ((new GameOptionsPersistence(activity).getCellSize() * TEXT_MARGIN_FACTOR) / 2), 0);
 
                 // load the crossed out background if necessary
-                if (counts.get(innerCounter).getIsCrossedOut()) {
+                if (counts.get(innerCounter).isCrossedOut()) {
                     countView.setBackgroundResource(R.drawable.puzzle_count_crossed_out);
                 }
 
@@ -182,7 +182,7 @@ public class CountFilledFieldsDisplayer {
      */
     private TableLayout addColumnCounts(TableLayout pTable, int pIndex) {
         // get column counts
-        columnCounts = nonogram.getCountsColumns();
+        columnCounts = nonogram.getColumnCount();
 
         TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
         // make a new row
@@ -192,13 +192,13 @@ public class CountFilledFieldsDisplayer {
         // add an empty text view at the start, here are the row counts
         columnCountsRow.addView(new LinearLayout(activity));
 
-        for (int columnCounter = 0; columnCounter < columnCounts.getCountsList().size(); columnCounter++) {
+        for (int columnCounter = 0; columnCounter < columnCounts.getCounts().size(); columnCounter++) {
             // make a new layout
             LinearLayout layout = new LinearLayout(activity);
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.setGravity(pIndex == 0 ? Gravity.BOTTOM : Gravity.TOP);
 
-            ArrayList<CountValue> counts = columnCounts.get(columnCounter);
+            ArrayList<CountValue> counts = columnCounts.getList(columnCounter);
 
             // add the value in this row for each column
             for (int innerCounter = 0; innerCounter < counts.size(); innerCounter++) {
@@ -214,7 +214,7 @@ public class CountFilledFieldsDisplayer {
                 countView.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 // load the crossed out background if necessary
-                if (counts.get(innerCounter).getIsCrossedOut()) {
+                if (counts.get(innerCounter).isCrossedOut()) {
                     countView.setBackgroundResource(R.drawable.puzzle_count_crossed_out);
                 }
 
@@ -233,12 +233,12 @@ public class CountFilledFieldsDisplayer {
     /**
      * Toggles the background of the given view. It would be stroked, if it wasn't before and the other way around.
      *
-     * @param pCounts           the {@link FilledFieldsCount} object that contains the count
+     * @param pCounts           the {@link GroupCount} object that contains the count
      * @param pView             the view to toggle the background
      * @param pOuterIndexOfView the outer index of the view in {@link #rowCounts}
      * @param pInnerIndexOfView the inner index of the view in {@link #rowCounts}
      */
-    private void toggleCount(FilledFieldsCount pCounts, View pView, int pOuterIndexOfView, int pInnerIndexOfView) {
+    private void toggleCount(GroupCount pCounts, View pView, int pOuterIndexOfView, int pInnerIndexOfView) {
         // if the clicked view was a row count
         // toggle the background, stroke or not
         if (pCounts.isValueCrossedOut(pOuterIndexOfView, pInnerIndexOfView)) {

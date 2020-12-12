@@ -3,7 +3,7 @@ package niedermeyer.nonogram.logics;
 import java.util.Random;
 
 /**
- * @author Elen Niedermeyer, last modified 2020-12-11
+ * @author Elen Niedermeyer, last modified 2020-12-12
  */
 public class NonogramGenerator {
 
@@ -14,8 +14,8 @@ public class NonogramGenerator {
     /**
      * current counts
      */
-    private FilledFieldsCount countsColumns = null;
-    private FilledFieldsCount countsRows = null;
+    private GroupCount rowCount = null;
+    private GroupCount columnCount = null;
 
     private final Random random = new Random();
 
@@ -38,52 +38,52 @@ public class NonogramGenerator {
     }
 
     /**
-     * Getter for {@link #countsColumns}.
-     * Sets {@link #countsColumns} if it's not initialized yet and returns it.
+     * Getter for {@link #rowCount}.
+     * Sets {@link #rowCount} if it's not initialized yet and returns it.
      *
-     * @return {@link #countsColumns}
+     * @return {@link #rowCount}
      */
-    public FilledFieldsCount getCountsColumns() {
-        if (countsColumns == null) {
-            countsColumns = countProvedFieldsPerColumn();
+    public GroupCount getRowCount() {
+        if (rowCount == null) {
+            rowCount = createRowCount();
         }
-        return countsColumns;
+        return rowCount;
     }
 
     /**
-     * Setter for {@link #countsColumns}.
+     * Setter for {@link #rowCount}.
      *
-     * @param pCountsColumn a {@link FilledFieldsCount}
+     * @param pCountsRow a {@link GroupCount}
      */
-    public void setCountsColumns(FilledFieldsCount pCountsColumn) {
-        countsColumns = pCountsColumn;
+    public void setRowCount(GroupCount pCountsRow) {
+        rowCount = pCountsRow;
     }
 
     /**
-     * Getter for {@link #countsRows}.
-     * Sets {@link #countsRows} if it's not initialized yet and returns it.
+     * Getter for {@link #columnCount}.
+     * Sets {@link #columnCount} if it's not initialized yet and returns it.
      *
-     * @return {@link #countsRows}
+     * @return {@link #columnCount}
      */
-    public FilledFieldsCount getCountsRows() {
-        if (countsRows == null) {
-            countsRows = countProvedFieldsPerRow();
+    public GroupCount getColumnCount() {
+        if (columnCount == null) {
+            columnCount = createColumnCount();
         }
-        return countsRows;
+        return columnCount;
     }
 
     /**
-     * Setter for {@link #countsRows}.
+     * Setter for {@link #columnCount}.
      *
-     * @param pCountsRow a {@link FilledFieldsCount}
+     * @param pCountsColumn a {@link GroupCount}
      */
-    public void setCountsRows(FilledFieldsCount pCountsRow) {
-        countsRows = pCountsRow;
+    public void setColumnCount(GroupCount pCountsColumn) {
+        columnCount = pCountsColumn;
     }
 
     /**
      * Makes a new game field. Generates a nonogram and counts the fields in rows and columns.
-     * Sets {@link #nonogram}, {@link #countsRows} and {@link #countsColumns}.
+     * Sets {@link #nonogram}, {@link #rowCount} and {@link #columnCount}.
      * Makes a new nonogram again if all fields of the generated one are empty.
      *
      * @param pNumberOfRows    the number of rows the new game field should have
@@ -92,14 +92,14 @@ public class NonogramGenerator {
     public void makeNewGame(int pNumberOfRows, int pNumberOfColumns) {
         do {
             nonogram = generateNonogram(pNumberOfRows, pNumberOfColumns);
-            countsRows = countProvedFieldsPerRow();
-            countsColumns = countProvedFieldsPerColumn();
-        } while (countsRows.isEmpty());
+            rowCount = createRowCount();
+            columnCount = createColumnCount();
+        } while (rowCount.isEmpty());
     }
 
     /**
      * Generates a new nonogram of the given size.
-     * Makes an two dimensional array of the given size. Fills the array with random {@link NonogramConstants#FIELD_EMPTY} and {@link NonogramConstants#FIELD_PROVED}.
+     * Makes an two dimensional array of the given size. Fills the array with random {@link NonogramConstants#FIELD_EMPTY} and {@link NonogramConstants#FIELD_FILLED}.
      *
      * @param pNumberOfRows    the number of rows the new game field should have
      * @param pNumberOfColumns the number of columns the new game field should have
@@ -112,14 +112,7 @@ public class NonogramGenerator {
         // fill the array with random values
         for (int i = 0; i < nonogram.length; i++) {
             for (int j = 0; j < nonogram[i].length; j++) {
-                int k = random.nextInt(2);
-                // gives 0 or 1
-                // set FIELD_PROVED for 1 and FIELD_EMPTY for 0
-                if (k == 1) {
-                    nonogram[i][j] = NonogramConstants.FIELD_PROVED;
-                } else {
-                    nonogram[i][j] = NonogramConstants.FIELD_EMPTY;
-                }
+                nonogram[i][j] = random.nextInt(2);
             }
         }
 
@@ -128,70 +121,71 @@ public class NonogramGenerator {
 
     /**
      * Counts the groups in the rows of the {@link #nonogram}.
-     * Saves the counts in a {@link FilledFieldsCount} object.
+     * Saves the counts in a {@link GroupCount} object.
      *
-     * @return a {@link FilledFieldsCount} with the row counts of {@link #nonogram}
+     * @return a {@link GroupCount} with the row counts of {@link #nonogram}
      */
-    private FilledFieldsCount countProvedFieldsPerRow() {
-        FilledFieldsCount provedFields = new FilledFieldsCount();
+    private GroupCount createRowCount() {
+        GroupCount newRowCount = new GroupCount();
 
         // iterate over the rows of the nonogram
-        for (int rowCount = 0; rowCount < nonogram.length; rowCount++) {
-            int groupElements = 0;
-            // iterate over each value in the row
-            for (int valueInRowCount = 0; valueInRowCount < nonogram[rowCount].length; valueInRowCount++) {
-                if (nonogram[rowCount][valueInRowCount] == NonogramConstants.FIELD_PROVED) {
-                    // here's a group of proved fields
-                    // add 1 for each field to the counter
-                    groupElements += 1;
+        for (int[] row : nonogram) {
+            for (int rowCount = 0; rowCount < nonogram.length; rowCount++) {
+                int groupElements = 0;
+                // iterate over each value in the row
+                for (int value : nonogram[rowCount]) {
+                    if (value == NonogramConstants.FIELD_FILLED) {
+                        // here's a group of filled fields
+                        // add 1 for each field to the counter
+                        groupElements += 1;
+                    }
+                    if (value == NonogramConstants.FIELD_EMPTY && groupElements != 0) {
+                        // here's the end of one group
+                        // add the number and resets the counter
+                        newRowCount.addValueToList(rowCount, groupElements);
+                        groupElements = 0;
+                    }
                 }
-                if (nonogram[rowCount][valueInRowCount] == NonogramConstants.FIELD_EMPTY && groupElements != 0) {
-                    // here's the end of one group
-                    // add the number and resets the counter
-                    provedFields.addCount(rowCount, groupElements);
-                    groupElements = 0;
+                // end of the for loop for a row
+
+                if (groupElements != 0) {
+                    // add the last counter if there is one
+                    newRowCount.addValueToList(rowCount, groupElements);
                 }
-            }
-            // end of the for loop for a row
 
-            if (groupElements != 0) {
-                // add the last counter if there is one
-                provedFields.addCount(rowCount, groupElements);
-            }
-
-            if (provedFields.isEmpty(rowCount)) {
-                // if the list is empty, there are no proved fields
-                // add 0
-                provedFields.addCount(rowCount, 0);
+                if (newRowCount.existsList(rowCount)) {
+                    // if the list is empty, there are no filled fields
+                    // add 0
+                    newRowCount.addValueToList(rowCount, 0);
+                }
             }
         }
-
-        return provedFields;
+        return newRowCount;
     }
 
     /**
      * Counts the groups in the columns of the {@link #nonogram}.
-     * Saves the counts in a {@link FilledFieldsCount} object.
+     * Saves the counts in a {@link GroupCount} object.
      *
-     * @return a {@link FilledFieldsCount} with the column counts of {@link #nonogram}
+     * @return a {@link GroupCount} with the column counts of {@link #nonogram}
      */
-    private FilledFieldsCount countProvedFieldsPerColumn() {
-        FilledFieldsCount provedFields = new FilledFieldsCount();
+    private GroupCount createColumnCount() {
+        GroupCount newColumnCount = new GroupCount();
 
         // iterate over the columns of the nonogram
         for (int columnCount = 0; columnCount < nonogram[0].length; columnCount++) {
             int res = 0;
             // iterate over each value in the column
             for (int[] columns : nonogram) {
-                if (columns[columnCount] == NonogramConstants.FIELD_PROVED) {
-                    // here's a group of proved fields
+                if (columns[columnCount] == NonogramConstants.FIELD_FILLED) {
+                    // here's a group of filled fields
                     // add 1 for each field to the counter
                     res += 1;
                 }
                 if (columns[columnCount] == NonogramConstants.FIELD_EMPTY && res != 0) {
                     // here's the end of one group
                     // add the number to the list and resets the counter
-                    provedFields.addCount(columnCount, res);
+                    newColumnCount.addValueToList(columnCount, res);
                     res = 0;
                 }
             }
@@ -199,16 +193,17 @@ public class NonogramGenerator {
 
             if (res != 0) {
                 // add the last counter to the list if there is one
-                provedFields.addCount(columnCount, res);
+                newColumnCount.addValueToList(columnCount, res);
             }
 
-            if (provedFields.isEmpty(columnCount)) {
+            if (newColumnCount.existsList(columnCount)) {
                 // if the list is empty, there are no proved fields
                 // add 0 to the list
-                provedFields.addCount(columnCount, 0);
+                newColumnCount.addValueToList(columnCount, 0);
             }
         }
 
-        return provedFields;
+        return newColumnCount;
     }
 }
+

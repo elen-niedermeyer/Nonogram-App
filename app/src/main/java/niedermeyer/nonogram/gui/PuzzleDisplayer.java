@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.gui.dialogs.DialogHelper;
-import niedermeyer.nonogram.logics.FilledFieldsCount;
+import niedermeyer.nonogram.logics.GroupCount;
 import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.logics.NonogramGenerator;
 import niedermeyer.nonogram.persistence.GameOptionsPersistence;
@@ -55,8 +55,8 @@ public class PuzzleDisplayer {
         /**
          * Overrides {@link OnClickListener#onClick(View)}.
          * Changes the background of the clicked field in the puzzle:
-         * If the field was {@link NonogramConstants#FIELD_NO_DECISION} it becomes {@link NonogramConstants#FIELD_PROVED}.
-         * If it was {@link NonogramConstants#FIELD_PROVED} it becomes {@link NonogramConstants#FIELD_EMPTY}.
+         * If the field was {@link NonogramConstants#FIELD_NO_DECISION} it becomes {@link NonogramConstants#FIELD_FILLED}.
+         * If it was {@link NonogramConstants#FIELD_FILLED} it becomes {@link NonogramConstants#FIELD_EMPTY}.
          * If it was {@link NonogramConstants#FIELD_EMPTY} it becomes {@link NonogramConstants#FIELD_NO_DECISION}.
          * <p>
          * Looks if the nonogram is solved.
@@ -73,8 +73,8 @@ public class PuzzleDisplayer {
             int fieldValue = usersCurrentField[rowNumber][columnNumber];
             if (fieldValue == NonogramConstants.FIELD_NO_DECISION) {
                 v.setBackgroundResource(R.drawable.game_cell_black);
-                usersCurrentField[rowNumber][columnNumber] = NonogramConstants.FIELD_PROVED;
-            } else if (fieldValue == NonogramConstants.FIELD_PROVED) {
+                usersCurrentField[rowNumber][columnNumber] = NonogramConstants.FIELD_FILLED;
+            } else if (fieldValue == NonogramConstants.FIELD_FILLED) {
                 v.setBackgroundResource(R.drawable.game_cell_cross);
                 usersCurrentField[rowNumber][columnNumber] = NonogramConstants.FIELD_EMPTY;
             } else if (fieldValue == NonogramConstants.FIELD_EMPTY) {
@@ -124,7 +124,7 @@ public class PuzzleDisplayer {
      *
      * @return {@link CountFilledFieldsDisplayer#getColumnCounts()}
      */
-    public FilledFieldsCount getColumnCounts() {
+    public GroupCount getColumnCounts() {
         return countsDisplayer.getColumnCounts();
     }
 
@@ -133,7 +133,7 @@ public class PuzzleDisplayer {
      *
      * @return {@link CountFilledFieldsDisplayer#getRowCounts()}
      */
-    public FilledFieldsCount getRowCounts() {
+    public GroupCount getRowCounts() {
         return countsDisplayer.getRowCounts();
     }
 
@@ -167,14 +167,14 @@ public class PuzzleDisplayer {
      * @param pNonogram          an array that should represent {@link #nonogram}
      * @param pUsersCurrentField an array that should represent {@link #usersCurrentField}
      */
-    public void displayNewGame(int[][] pNonogram, int[][] pUsersCurrentField, FilledFieldsCount pCountsColumns, FilledFieldsCount pCountsRows) {
+    public void displayNewGame(int[][] pNonogram, int[][] pUsersCurrentField, GroupCount pCountsColumns, GroupCount pCountsRows) {
         gameOptions = new GameOptionsPersistence(activity);
         if (pNonogram != null) {
             // initialize nonogram object
             nonogram = pNonogram;
             generator.setNonogram(pNonogram);
-            generator.setCountsColumns(pCountsColumns);
-            generator.setCountsRows(pCountsRows);
+            generator.setColumnCount(pCountsColumns);
+            generator.setRowCount(pCountsRows);
 
             // initialize user-generated field array
             if (pUsersCurrentField != null) {
@@ -345,7 +345,7 @@ public class PuzzleDisplayer {
                 // set background resource for the given field in usersCurrentField
                 if (usersCurrentField[rowCounter][columnCounter] == NonogramConstants.FIELD_NO_DECISION) {
                     newButton.setBackgroundResource(R.drawable.game_cell_white);
-                } else if (usersCurrentField[rowCounter][columnCounter] == NonogramConstants.FIELD_PROVED) {
+                } else if (usersCurrentField[rowCounter][columnCounter] == NonogramConstants.FIELD_FILLED) {
                     newButton.setBackgroundResource(R.drawable.game_cell_black);
                 } else if (usersCurrentField[rowCounter][columnCounter] == NonogramConstants.FIELD_EMPTY) {
                     newButton.setBackgroundResource(R.drawable.game_cell_cross);

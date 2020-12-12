@@ -1,7 +1,7 @@
 package niedermeyer.nonogram.logics;
 
 /**
- * @author Elen Niedermeyer, last modified 2020-12-11
+ * @author Elen Niedermeyer, last modified 2020-12-12
  */
 public class CountValue {
 
@@ -45,7 +45,7 @@ public class CountValue {
      *
      * @return {@link #isCrossedOut}
      */
-    public boolean getIsCrossedOut() {
+    public boolean isCrossedOut() {
         return isCrossedOut;
     }
 
@@ -54,7 +54,7 @@ public class CountValue {
      *
      * @param pIsCrossedOut boolean saying if the value is crossed out
      */
-    public void setIsCrossedOut(boolean pIsCrossedOut) {
+    public void setCrossedOut(boolean pIsCrossedOut) {
         isCrossedOut = pIsCrossedOut;
     }
 
