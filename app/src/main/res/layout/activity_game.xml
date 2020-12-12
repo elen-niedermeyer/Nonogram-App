@@ -19,10 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TableLayout
-                android:id="@+id/activity_game_field"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
 
         </HorizontalScrollView>
     </androidx.core.widget.NestedScrollView>

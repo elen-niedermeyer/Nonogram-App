@@ -129,7 +129,6 @@ public class NonogramGenerator {
         GroupCount newRowCount = new GroupCount();
 
         // iterate over the rows of the nonogram
-        for (int[] row : nonogram) {
             for (int rowCount = 0; rowCount < nonogram.length; rowCount++) {
                 int groupElements = 0;
                 // iterate over each value in the row
@@ -159,7 +158,6 @@ public class NonogramGenerator {
                     newRowCount.addValueToList(rowCount, 0);
                 }
             }
-        }
         return newRowCount;
     }
 
