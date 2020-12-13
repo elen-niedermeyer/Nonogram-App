@@ -12,20 +12,20 @@ import androidx.fragment.app.FragmentTransaction;
  */
 public class DialogHelper {
 
-    public void openTutorialDialogFullscreen(FragmentManager fragmentManager) {
-        TutorialDialogFragment fragment = new TutorialDialogFragment();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.add(android.R.id.content, fragment)
-                .addToBackStack(null).commit();
-    }
-
     public void openFieldSizeDialog(LayoutInflater layoutInflater, DialogInterface.OnDismissListener onDismissListener) {
         AlertDialog dialogRows = new FieldSizeDialog().makeDialog(layoutInflater);
         if (onDismissListener != null) {
             dialogRows.setOnDismissListener(onDismissListener);
         }
         dialogRows.show();
+    }
+
+    public void openTutorialDialogFullscreen(FragmentManager fragmentManager) {
+        TutorialDialogFragment fragment = new TutorialDialogFragment();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.add(android.R.id.content, fragment)
+                .addToBackStack(null).commit();
     }
 
     public void openGameWonDialogFullscreen(FragmentManager fragmentManager) {

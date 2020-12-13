@@ -5,15 +5,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.gui.dialogs.DialogHelper;
-import niedermeyer.nonogram.persistence.CountFilledFieldsPersistence;
+import niedermeyer.nonogram.gui.puzzle.PuzzleDisplayer;
 import niedermeyer.nonogram.persistence.GameOptionsPersistence;
-import niedermeyer.nonogram.persistence.PuzzlePersistence;
+import niedermeyer.nonogram.persistence.StatisticsPersistence;
+
 
 /**
  * @author Elen Niedermeyer, last modified 2020-12-11
@@ -24,15 +26,7 @@ public class GameActivity extends AppCompatActivity {
 
     private final PuzzleDisplayer puzzleDisplayer = new PuzzleDisplayer(this);
 
-    /**
-     * Persistences
-     */
-    private PuzzlePersistence persistence;
-    private GameOptionsPersistence gameOptions;
-    private CountFilledFieldsPersistence countsPersistence;
-
     private final Toolbar.OnMenuItemClickListener toolbarMenuClickListener = new Toolbar.OnMenuItemClickListener() {
-
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             DialogHelper dialogHelper = new DialogHelper();
@@ -41,12 +35,14 @@ public class GameActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.toolbar_game_new_puzzle:
                     // start a new puzzle
-                    puzzleDisplayer.displayNewGame();
+                    gameManager.newGame(options.getNumberOfRows(), options.getNumberOfColumns());
+                    GameActivity.this.displayGame();
                     return true;
 
                 case R.id.toolbar_game_reset_puzzle:
                     // reset the current puzzle
-                    puzzleDisplayer.resetGame();
+                    gameManager.resetGame(options.getNumberOfRows(), options.getNumberOfColumns());
+                    GameActivity.this.displayGame();
                     return true;
 
                 case R.id.toolbar_game_zoom_in:
@@ -62,7 +58,8 @@ public class GameActivity extends AppCompatActivity {
                     dialogHelper.openFieldSizeDialog(getLayoutInflater(), new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialogInterface) {
-                            puzzleDisplayer.displayNewGame();
+                            gameManager.newGame(options.getNumberOfRows(), options.getNumberOfColumns());
+                            GameActivity.this.displayGame();
                         }
                     });
                     return true;
@@ -77,6 +74,25 @@ public class GameActivity extends AppCompatActivity {
             }
         }
     };
+
+    private final PuzzleSolvedObserver puzzleSolvedObserver = new PuzzleSolvedObserver() {
+        @Override
+        public void callback() {
+            // save won puzzle in statistics
+            statistics.saveNewScore();
+
+            // show the won dialog
+            new DialogHelper().openGameWonDialogFullscreen(getSupportFragmentManager());
+            gameManager.newGame(options.getNumberOfRows(), options.getNumberOfColumns());
+            displayGame();
+        }
+    };
+
+    private GameManager gameManager;
+
+    private GameOptionsPersistence options;
+    private StatisticsPersistence statistics;
+
 
     /**
      * Overrides {@link AppCompatActivity#onCreateOptionsMenu(Menu)}.
@@ -96,7 +112,7 @@ public class GameActivity extends AppCompatActivity {
     /**
      * Overrides {@link AppCompatActivity#onCreate(Bundle)}.
      * Sets the layout.
-     * Initializes {@link #persistence}, {@link #gameOptions} and {@link #countsPersistence}.
+     * Initializes {@link #options} adn {@link #statistics}.
      *
      * @param savedInstanceState saved information about the activity given by the system
      */
@@ -107,7 +123,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         // sets the toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_game_toolbar);
+        Toolbar toolbar = findViewById(R.id.activity_game_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,16 +133,19 @@ public class GameActivity extends AppCompatActivity {
         });
         toolbar.setOnMenuItemClickListener(toolbarMenuClickListener);
 
-        // load the last game
-        persistence = new PuzzlePersistence(this);
-        gameOptions = new GameOptionsPersistence(this);
-        countsPersistence = new CountFilledFieldsPersistence(this);
-        startGame();
+        options = new GameOptionsPersistence(this);
+        statistics = new StatisticsPersistence(this);
+
+        gameManager = new GameManager(this);
+        gameManager.addPuzzleSolvedObserver(puzzleSolvedObserver);
 
         // start the tutorial if it's the first puzzle
-        if (persistence.isFirstPuzzle()) {
+        if (gameManager.isFirstPuzzle()) {
             new DialogHelper().openTutorialDialogFullscreen(getSupportFragmentManager());
         }
+
+        gameManager.startGame(options.getNumberOfRows(), options.getNumberOfColumns());
+        this.displayGame();
     }
 
     /**
@@ -138,32 +157,16 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        saveGame();
+        gameManager.saveGame();
     }
 
     /**
      * Starts a new game or saved game if available.
      */
-    private void startGame() {
-        int[][] nonogram = persistence.loadLastNonogram();
-        int[][] currentField = persistence.loadLastUserField();
-        if (nonogram != null && nonogram.length == gameOptions.getNumberOfRows() && nonogram[0].length == gameOptions.getNumberOfColumns()) {
-            // start puzzle with loaded arrays if the size haven't changed
-            puzzleDisplayer.displayNewGame(nonogram, currentField, countsPersistence.loadCountsColumns(), countsPersistence.loadCountsRows());
-        } else {
-            // start new game if the size was changed
-            puzzleDisplayer.displayNewGame();
-        }
-    }
-
-    /**
-     * Saves the current game.
-     */
-    private void saveGame() {
-        persistence.saveNonogram(puzzleDisplayer.getNonogram());
-        persistence.saveCurrentField(puzzleDisplayer.getUsersCurrentField());
-        countsPersistence.saveCountFilledFields(puzzleDisplayer.getColumnCounts(), true);
-        countsPersistence.saveCountFilledFields(puzzleDisplayer.getRowCounts(), false);
+    private void displayGame() {
+        HorizontalScrollView view = findViewById(R.id.activity_game_scroll_horizontal);
+        view.removeAllViews();
+        view.addView(puzzleDisplayer.getGameView(gameManager.getCurrentUserField(), gameManager.getRowCount(), gameManager.getColumnCount(), options.getCellSize(), gameManager.getOnFieldClick()));
     }
 
     /**
@@ -172,9 +175,9 @@ public class GameActivity extends AppCompatActivity {
      * @param sizeDelta the delta for cell size
      */
     private void zoomGameField(int sizeDelta) {
-        saveGame();
-        gameOptions.setCellSize(gameOptions.getCellSize() + sizeDelta);
-        startGame();
+        gameManager.saveGame();
+        options.setCellSize(options.getCellSize() + sizeDelta);
+        this.displayGame();
     }
 
 }

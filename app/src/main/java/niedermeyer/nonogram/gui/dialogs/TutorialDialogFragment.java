@@ -116,10 +116,10 @@ public class TutorialDialogFragment extends DialogFragment {
      * @param layout the dialog layout
      */
     private void initLayoutElements(View layout) {
-        root = (RelativeLayout) layout.findViewById(R.id.tutorial_root);
-        instruction = (TextView) layout.findViewById(R.id.tutorial_instruction);
-        table = (TableLayout) layout.findViewById(R.id.tutorial_table);
-        skipButton = (Button) layout.findViewById(R.id.tutorial_btn_skip);
+        root = layout.findViewById(R.id.tutorial_root);
+        instruction = layout.findViewById(R.id.tutorial_instruction);
+        table = layout.findViewById(R.id.tutorial_table);
+        skipButton = layout.findViewById(R.id.tutorial_btn_skip);
     }
 
     /**

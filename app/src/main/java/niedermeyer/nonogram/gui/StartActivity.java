@@ -24,7 +24,7 @@ public class StartActivity extends AppCompatActivity {
      * Buttons in the start activity
      */
     private Button playButton;
-    private Button highscoreButton;
+    private Button statisticsButton;
     private Button tutorialButton;
     private Button optionsButton;
 
@@ -36,7 +36,7 @@ public class StartActivity extends AppCompatActivity {
          * Overrides the method {@link OnClickListener#onClick(View)}.
          * Makes an intent. It starts the {@link GameActivity}, {@link StatisticsActivity}, the tutorial through {@link DialogHelper#openTutorialDialogFullscreen(FragmentManager)} or {@link OptionsActivity} according to which button was clicked.
          *
-         * @param v the clicked button view, can be {@link StartActivity#playButton}, {@link StartActivity#highscoreButton}, {@link StartActivity#tutorialButton} or {@link StartActivity#optionsButton}
+         * @param v the clicked button view, can be {@link StartActivity#playButton}, {@link StartActivity#statisticsButton}, {@link StartActivity#tutorialButton} or {@link StartActivity#optionsButton}
          */
         @Override
         public void onClick(View v) {
@@ -45,7 +45,7 @@ public class StartActivity extends AppCompatActivity {
             if (v == playButton) {
                 i = new Intent(context, GameActivity.class);
                 startActivity(i);
-            } else if (v == highscoreButton) {
+            } else if (v == statisticsButton) {
                 i = new Intent(context, StatisticsActivity.class);
                 startActivity(i);
             } else if (v == tutorialButton) {
@@ -60,7 +60,7 @@ public class StartActivity extends AppCompatActivity {
     /**
      * Overrides the method {@link AppCompatActivity#onCreate(Bundle, PersistableBundle)}.
      * Sets the layout.
-     * Initializes the button {@link #playButton}, {@link #highscoreButton}, {@link #tutorialButton} and {@link #optionsButton} and sets the listener {@link #buttonClick} for all buttons.
+     * Initializes the button {@link #playButton}, {@link #statisticsButton}, {@link #tutorialButton} and {@link #optionsButton} and sets the listener {@link #buttonClick} for all buttons.
      * Initializes the toolbar.
      *
      * @param savedInstanceState saved information about the activity given by the system
@@ -73,8 +73,8 @@ public class StartActivity extends AppCompatActivity {
         playButton = findViewById(R.id.activity_start_btn_play);
         playButton.setOnClickListener(buttonClick);
 
-        highscoreButton = findViewById(R.id.activity_start_btn_statistics);
-        highscoreButton.setOnClickListener(buttonClick);
+        statisticsButton = findViewById(R.id.activity_start_btn_statistics);
+        statisticsButton.setOnClickListener(buttonClick);
 
         tutorialButton = findViewById(R.id.activity_start_btn_tutorial);
         tutorialButton.setOnClickListener(buttonClick);
