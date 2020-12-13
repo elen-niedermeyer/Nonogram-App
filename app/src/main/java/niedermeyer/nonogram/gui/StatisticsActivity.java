@@ -57,7 +57,7 @@ public class StatisticsActivity extends AppCompatActivity {
         StatisticsPersistence persistence = new StatisticsPersistence(this);
 
         // get the table layout
-        TableLayout table = (TableLayout) findViewById(R.id.activity_statistics_table);
+        TableLayout table = findViewById(R.id.activity_statistics_table);
 
         // iterate over the number of possible rows
         for (int rowCount = NonogramConstants.NONOGRAM_SIZE_MINIMUM; rowCount <= NonogramConstants.NONOGRAM_SIZE_MAXIMUM; rowCount++) {

@@ -10,16 +10,10 @@ import android.widget.HorizontalScrollView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.util.Arrays;
-
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.gui.dialogs.DialogHelper;
-import niedermeyer.nonogram.gui.puzzle.GameFieldDisplayer;
 import niedermeyer.nonogram.gui.puzzle.PuzzleDisplayer;
-import niedermeyer.nonogram.logics.NonogramConstants;
-import niedermeyer.nonogram.logics.NonogramGenerator;
 import niedermeyer.nonogram.persistence.GameOptionsPersistence;
-import niedermeyer.nonogram.persistence.PuzzlePersistence;
 import niedermeyer.nonogram.persistence.StatisticsPersistence;
 
 
@@ -32,18 +26,7 @@ public class GameActivity extends AppCompatActivity {
 
     private final PuzzleDisplayer puzzleDisplayer = new PuzzleDisplayer(this);
 
-    /**
-     * Persistences
-     */
-    private PuzzlePersistence persistence;
-    private GameOptionsPersistence gameOptions;
-    private StatisticsPersistence statistics;
-
-    private NonogramGenerator nonogramGenerator;
-    private int[][] currentUserField;
-
     private final Toolbar.OnMenuItemClickListener toolbarMenuClickListener = new Toolbar.OnMenuItemClickListener() {
-
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             DialogHelper dialogHelper = new DialogHelper();
@@ -52,15 +35,14 @@ public class GameActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.toolbar_game_new_puzzle:
                     // start a new puzzle
-                    nonogramGenerator.makeNewGame(gameOptions.getNumberOfRows(), gameOptions.getNumberOfColumns());
-                    setNewUserField();
-                    startGame();
+                    gameManager.newGame(options.getNumberOfRows(), options.getNumberOfColumns());
+                    GameActivity.this.displayGame();
                     return true;
 
                 case R.id.toolbar_game_reset_puzzle:
                     // reset the current puzzle
-                    setNewUserField();
-                    startGame();
+                    gameManager.resetGame(options.getNumberOfRows(), options.getNumberOfColumns());
+                    GameActivity.this.displayGame();
                     return true;
 
                 case R.id.toolbar_game_zoom_in:
@@ -76,9 +58,8 @@ public class GameActivity extends AppCompatActivity {
                     dialogHelper.openFieldSizeDialog(getLayoutInflater(), new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialogInterface) {
-                            nonogramGenerator.makeNewGame(gameOptions.getNumberOfRows(), gameOptions.getNumberOfColumns());
-                            currentUserField = new int[gameOptions.getNumberOfRows()][gameOptions.getNumberOfColumns()];
-                            startGame();
+                            gameManager.newGame(options.getNumberOfRows(), options.getNumberOfColumns());
+                            GameActivity.this.displayGame();
                         }
                     });
                     return true;
@@ -94,57 +75,24 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
-    /**
-     * Listener for the buttons on the puzzle.
-     */
-    private final View.OnClickListener onFieldClick = new View.OnClickListener() {
-        /**
-         * Overrides {@link View.OnClickListener#onClick(View)}.
-         * Changes the background of the clicked field in the puzzle:
-         * If the field was {@link NonogramConstants#FIELD_NO_DECISION} it becomes {@link NonogramConstants#FIELD_FILLED}.
-         * If it was {@link NonogramConstants#FIELD_FILLED} it becomes {@link NonogramConstants#FIELD_EMPTY}.
-         * If it was {@link NonogramConstants#FIELD_EMPTY} it becomes {@link NonogramConstants#FIELD_NO_DECISION}.
-         * <p>
-         * Looks if the nonogram is solved.
-         *
-         * @param v the clicked view, a field of the nonogram
-         */
+    private final PuzzleSolvedObserver puzzleSolvedObserver = new PuzzleSolvedObserver() {
         @Override
-        public void onClick(View v) {
-            // get index of view
-            final int id = v.getId();
-            final int rowIndex = id / 100;
-            final int columnIndex = id % 100;
+        public void callback() {
+            // save won puzzle in statistics
+            statistics.saveNewScore();
 
-            switch (currentUserField[rowIndex][columnIndex]) {
-                case NonogramConstants.FIELD_NO_DECISION:
-                    currentUserField[rowIndex][columnIndex] = NonogramConstants.FIELD_FILLED;
-                    break;
-                case NonogramConstants.FIELD_FILLED:
-                    currentUserField[rowIndex][columnIndex] = NonogramConstants.FIELD_EMPTY;
-                    break;
-                case NonogramConstants.FIELD_EMPTY:
-                    currentUserField[rowIndex][columnIndex] = NonogramConstants.FIELD_NO_DECISION;
-                    break;
-            }
-
-            v.setBackgroundResource(GameFieldDisplayer.getFieldBackgroundResource(currentUserField[rowIndex][columnIndex]));
-
-            // prove if the nonogram is solved now
-            if (isPuzzleSolved()) {
-                // save won puzzle in statistics
-                statistics.saveNewScore();
-
-                // show the won dialog
-                new DialogHelper().openGameWonDialogFullscreen(((AppCompatActivity) v.getContext()).getSupportFragmentManager());
-
-                // start new game
-                nonogramGenerator.makeNewGame(gameOptions.getNumberOfRows(), gameOptions.getNumberOfColumns());
-                setNewUserField();
-                startGame();
-            }
+            // show the won dialog
+            new DialogHelper().openGameWonDialogFullscreen(getSupportFragmentManager());
+            gameManager.newGame(options.getNumberOfRows(), options.getNumberOfColumns());
+            displayGame();
         }
     };
+
+    private GameManager gameManager;
+
+    private GameOptionsPersistence options;
+    private StatisticsPersistence statistics;
+
 
     /**
      * Overrides {@link AppCompatActivity#onCreateOptionsMenu(Menu)}.
@@ -164,7 +112,7 @@ public class GameActivity extends AppCompatActivity {
     /**
      * Overrides {@link AppCompatActivity#onCreate(Bundle)}.
      * Sets the layout.
-     * Initializes {@link #nonogramGenerator}, {@link #persistence} and {@link #gameOptions}
+     * Initializes {@link #options} adn {@link #statistics}.
      *
      * @param savedInstanceState saved information about the activity given by the system
      */
@@ -175,7 +123,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         // sets the toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_game_toolbar);
+        Toolbar toolbar = findViewById(R.id.activity_game_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,22 +133,19 @@ public class GameActivity extends AppCompatActivity {
         });
         toolbar.setOnMenuItemClickListener(toolbarMenuClickListener);
 
-        nonogramGenerator = new NonogramGenerator();
-
-        // load the last game
-        persistence = new PuzzlePersistence(this);
-        gameOptions = new GameOptionsPersistence(this);
+        options = new GameOptionsPersistence(this);
         statistics = new StatisticsPersistence(this);
 
-        final int[][] nonogram = persistence.loadLastNonogram();
-        nonogramGenerator.setNonogram(nonogram);
-        currentUserField = persistence.loadLastUserField();
-        startGame();
+        gameManager = new GameManager(this);
+        gameManager.addPuzzleSolvedObserver(puzzleSolvedObserver);
 
         // start the tutorial if it's the first puzzle
-        if (persistence.isFirstPuzzle()) {
+        if (gameManager.isFirstPuzzle()) {
             new DialogHelper().openTutorialDialogFullscreen(getSupportFragmentManager());
         }
+
+        gameManager.startGame(options.getNumberOfRows(), options.getNumberOfColumns());
+        this.displayGame();
     }
 
     /**
@@ -212,43 +157,16 @@ public class GameActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        saveGame();
+        gameManager.saveGame();
     }
 
     /**
      * Starts a new game or saved game if available.
      */
-    private void startGame() {
-        final int[][] nonogram = nonogramGenerator.getNonogram();
-        final int rowNumber = gameOptions.getNumberOfRows();
-        final int columnNumber = gameOptions.getNumberOfColumns();
-
-        if (nonogram == null ||
-                nonogram.length != rowNumber || nonogram[0].length != columnNumber ||
-                nonogram.length != currentUserField.length || nonogram[0].length != currentUserField[0].length) {
-            // start new game if the size was changed or is not identical with the one of the current field
-            nonogramGenerator.makeNewGame(rowNumber, columnNumber);
-            setNewUserField();
-        }
-
+    private void displayGame() {
         HorizontalScrollView view = findViewById(R.id.activity_game_scroll_horizontal);
         view.removeAllViews();
-        view.addView(puzzleDisplayer.getGameView(currentUserField, nonogramGenerator.getRowCount(), nonogramGenerator.getColumnCount(), gameOptions.getCellSize(), onFieldClick));
-    }
-
-    private void setNewUserField() {
-        currentUserField = new int[gameOptions.getNumberOfRows()][gameOptions.getNumberOfColumns()];
-        for (int[] array : currentUserField) {
-            Arrays.fill(array, NonogramConstants.FIELD_NO_DECISION);
-        }
-    }
-
-    /**
-     * Saves the current game.
-     */
-    private void saveGame() {
-        persistence.saveNonogram(nonogramGenerator.getNonogram());
-        persistence.saveCurrentField(currentUserField);
+        view.addView(puzzleDisplayer.getGameView(gameManager.getCurrentUserField(), gameManager.getRowCount(), gameManager.getColumnCount(), options.getCellSize(), gameManager.getOnFieldClick()));
     }
 
     /**
@@ -257,31 +175,9 @@ public class GameActivity extends AppCompatActivity {
      * @param sizeDelta the delta for cell size
      */
     private void zoomGameField(int sizeDelta) {
-        saveGame();
-        gameOptions.setCellSize(gameOptions.getCellSize() + sizeDelta);
-        startGame();
-    }
-
-    /**
-     * Proofs if the puzzle is solved by comparing the {@link #nonogramGenerator#getNonogram()} with the {@link #currentUserField}.
-     *
-     * @return a boolean, true if the puzzle is solved.
-     */
-    private boolean isPuzzleSolved() {
-        // make a copy of the field generated by the user
-        // therefore fields without a decision must be seen as empty
-        int[][] usersFieldCopy = new int[currentUserField.length][currentUserField[0].length];
-        for (int i = 0; i < currentUserField.length; i++) {
-            for (int j = 0; j < currentUserField[i].length; j++) {
-                if (currentUserField[i][j] == NonogramConstants.FIELD_NO_DECISION) {
-                    usersFieldCopy[i][j] = NonogramConstants.FIELD_EMPTY;
-                } else {
-                    usersFieldCopy[i][j] = currentUserField[i][j];
-                }
-            }
-        }
-
-        return (Arrays.deepEquals(usersFieldCopy, nonogramGenerator.getNonogram()));
+        gameManager.saveGame();
+        options.setCellSize(options.getCellSize() + sizeDelta);
+        this.displayGame();
     }
 
 }

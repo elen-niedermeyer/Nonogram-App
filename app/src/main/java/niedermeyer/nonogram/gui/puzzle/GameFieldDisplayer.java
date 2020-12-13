@@ -33,7 +33,7 @@ public class GameFieldDisplayer {
 
     public TableLayout getPuzzleView(int[][] pUserField, int pCellSize, View.OnClickListener pOnFieldClick) {
 
-        TableLayout table = (TableLayout) new TableLayout(context);
+        TableLayout table = new TableLayout(context);
 
         TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
 

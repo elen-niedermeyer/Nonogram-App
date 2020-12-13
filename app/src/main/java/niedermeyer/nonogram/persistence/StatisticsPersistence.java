@@ -1,6 +1,5 @@
 package niedermeyer.nonogram.persistence;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
