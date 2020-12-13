@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <dimen name="margin">16dp</dimen>
 
-    <!-- general -->
-
-    <!-- game field -->
-    <dimen name="default_game_cell_size">35dp</dimen>
 </resources>

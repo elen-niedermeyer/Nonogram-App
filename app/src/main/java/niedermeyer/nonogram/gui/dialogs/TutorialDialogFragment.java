@@ -44,8 +44,6 @@ public class TutorialDialogFragment extends DialogFragment {
 
     private final NonogramGenerator nonogramGenerator = new NonogramGenerator();
 
-    private LayoutInflater inflater;
-
     /**
      * layout elements
      */
@@ -93,8 +91,6 @@ public class TutorialDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.inflater = inflater;
-
         View layout = inflater.inflate(R.layout.tutorial, container, false);
         initLayoutElements(layout);
 
