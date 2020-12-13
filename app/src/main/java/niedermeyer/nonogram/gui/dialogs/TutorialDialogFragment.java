@@ -1,5 +1,6 @@
 package niedermeyer.nonogram.gui.dialogs;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +28,29 @@ public class TutorialDialogFragment extends DialogFragment {
             {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_FILLED}
     };
 
+    private final int[][] emptyUserField = new int[][]{
+            {NonogramConstants.FIELD_NO_DECISION, NonogramConstants.FIELD_NO_DECISION, NonogramConstants.FIELD_NO_DECISION, NonogramConstants.FIELD_NO_DECISION},
+            {NonogramConstants.FIELD_NO_DECISION, NonogramConstants.FIELD_NO_DECISION, NonogramConstants.FIELD_NO_DECISION, NonogramConstants.FIELD_NO_DECISION},
+            {NonogramConstants.FIELD_NO_DECISION, NonogramConstants.FIELD_NO_DECISION, NonogramConstants.FIELD_NO_DECISION, NonogramConstants.FIELD_NO_DECISION},
+            {NonogramConstants.FIELD_NO_DECISION, NonogramConstants.FIELD_NO_DECISION, NonogramConstants.FIELD_NO_DECISION, NonogramConstants.FIELD_NO_DECISION}
+    };
+
+    private final int[][] solvedUserField = new int[][]{
+            {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_EMPTY},
+            {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_NO_DECISION, NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED},
+            {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED},
+            {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_FILLED}
+    };
+
+    private final NonogramGenerator nonogramGenerator = new NonogramGenerator();
+
     private LayoutInflater inflater;
 
     /**
      * layout elements
      */
     private RelativeLayout root;
+    private TextView title;
     private TextView instruction;
     private RelativeLayout tableContainer;
     private Button skipButton;
@@ -41,6 +59,11 @@ public class TutorialDialogFragment extends DialogFragment {
      * Index for the arrays {@link #instructions}.
      */
     private int index = 0;
+
+    /**
+     * String array of instruction title texts
+     */
+    private String[] titles;
 
     /**
      * String array of instruction texts
@@ -57,7 +80,7 @@ public class TutorialDialogFragment extends DialogFragment {
             index++;
             if (index < instructions.length) {
                 // if it's not the end of the array, update views
-                updateViews();
+                updateViews(v.getContext());
             } else {
                 dismiss();
             }
@@ -75,37 +98,34 @@ public class TutorialDialogFragment extends DialogFragment {
         View layout = inflater.inflate(R.layout.tutorial, container, false);
         initLayoutElements(layout);
 
+        initTitleArray();
         initInstructionArray();
 
-        skipButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-
-        // add the on click listener
-        root.setOnClickListener(clickOnDisplay);
-
-
-        tableContainer.removeAllViews();
-        NonogramGenerator gen = new NonogramGenerator();
-        gen.setNonogram(nonogram);
-        tableContainer.addView(new PuzzleDisplayer(container.getContext()).getGameView(nonogram, gen.getRowCount(), gen.getColumnCount(), 100, null));
+        nonogramGenerator.setNonogram(nonogram);
 
         // init index
         index = 0;
-        updateViews();
+        updateViews(container.getContext());
 
         return layout;
     }
 
     /**
-     * Updates content of the views {@link #instruction} and {@link #tableContainer}.
+     * Updates content of the views {@link #title}, {@link #instruction} and {@link #tableContainer}.
      */
-    public void updateViews() {
+    public void updateViews(Context pContext) {
+        title.setText(titles[index]);
         instruction.setText(instructions[index]);
 
+        if (index == 0) {
+            tableContainer.removeAllViews();
+            tableContainer.addView(new PuzzleDisplayer(pContext).getGameView(emptyUserField, nonogramGenerator.getRowCount(), nonogramGenerator.getColumnCount(), 100, null));
+        } else if (index == 1) {
+            tableContainer.removeAllViews();
+            tableContainer.addView(new PuzzleDisplayer(pContext).getGameView(solvedUserField, nonogramGenerator.getRowCount(), nonogramGenerator.getColumnCount(), 100, null));
+        } else if (index == instructions.length - 1){
+            tableContainer.removeAllViews();
+        }
     }
 
     /**
@@ -115,9 +135,31 @@ public class TutorialDialogFragment extends DialogFragment {
      */
     private void initLayoutElements(View layout) {
         root = layout.findViewById(R.id.tutorial_root);
+        root.setOnClickListener(clickOnDisplay);
+
+        skipButton = layout.findViewById(R.id.tutorial_btn_skip);
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
+        title = layout.findViewById(R.id.tutorial_title);
         instruction = layout.findViewById(R.id.tutorial_instruction);
         tableContainer = layout.findViewById(R.id.tutorial_table_container);
-        skipButton = layout.findViewById(R.id.tutorial_btn_skip);
+    }
+
+    /**
+     * Initializes the array {@link #titles}.
+     */
+    private void initTitleArray() {
+        // load strings
+        titles = new String[]{getString(R.string.instruction_title_1),
+                getString(R.string.instruction_title_2),
+                getString(R.string.instruction_title_3),
+                getString(R.string.instruction_title_4),
+                getString(R.string.instruction_title_5)};
     }
 
     /**
@@ -129,8 +171,7 @@ public class TutorialDialogFragment extends DialogFragment {
                 getString(R.string.instruction_2),
                 getString(R.string.instruction_3),
                 getString(R.string.instruction_4),
-                getString(R.string.instruction_5),
-                getString(R.string.instruction_6)};
+                getString(R.string.instruction_5)};
     }
 
 }
