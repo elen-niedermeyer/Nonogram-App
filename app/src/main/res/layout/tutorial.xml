@@ -17,20 +17,36 @@
         android:layout_alignParentEnd="true"
         android:text="@string/skip_tutorial" />
 
-    <TableLayout
-        android:id="@+id/tutorial_table"
+    <TextView
+        android:id="@+id/tutorial_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_below="@id/tutorial_btn_skip"
+        android:layout_margin="@dimen/margin"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
     <TextView
         android:id="@+id/tutorial_instruction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/tutorial_table"
         android:layout_centerHorizontal="true"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+        android:layout_below="@id/tutorial_title"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+
+    <RelativeLayout
+        android:id="@+id/tutorial_table_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tutorial_space"
+        android:layout_centerHorizontal="true"
+        android:padding="@dimen/margin" />
+
+    <Space
+        android:id="@+id/tutorial_space"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_above="@id/tutorial_text_continue" />
 
     <TextView
         android:id="@+id/tutorial_text_continue"

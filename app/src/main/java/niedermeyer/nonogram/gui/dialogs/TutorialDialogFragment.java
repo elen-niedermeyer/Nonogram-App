@@ -6,17 +6,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 
 import niedermeyer.nonogram.R;
+import niedermeyer.nonogram.gui.puzzle.PuzzleDisplayer;
+import niedermeyer.nonogram.logics.NonogramConstants;
+import niedermeyer.nonogram.logics.NonogramGenerator;
 
 /**
  * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class TutorialDialogFragment extends DialogFragment {
+
+    private final int[][] nonogram = new int[][]{
+            {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_EMPTY},
+            {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED},
+            {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED},
+            {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_FILLED}
+    };
 
     private LayoutInflater inflater;
 
@@ -25,11 +34,11 @@ public class TutorialDialogFragment extends DialogFragment {
      */
     private RelativeLayout root;
     private TextView instruction;
-    private TableLayout table;
+    private RelativeLayout tableContainer;
     private Button skipButton;
 
     /**
-     * Index for the arrays {@link #instructions} and {@link #tablesLayoutIds}.
+     * Index for the arrays {@link #instructions}.
      */
     private int index = 0;
 
@@ -37,11 +46,6 @@ public class TutorialDialogFragment extends DialogFragment {
      * String array of instruction texts
      */
     private String[] instructions;
-
-    /**
-     * Array of table layouts supporting the instructions
-     */
-    private int[] tablesLayoutIds;
 
     /**
      * Listener for clicks. Shows the next step.
@@ -72,12 +76,6 @@ public class TutorialDialogFragment extends DialogFragment {
         initLayoutElements(layout);
 
         initInstructionArray();
-        initTableArray();
-        if (instructions.length != tablesLayoutIds.length) {
-            // validation failed
-            // this would cause an error, so close the dialog
-            this.dismiss();
-        }
 
         skipButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +88,11 @@ public class TutorialDialogFragment extends DialogFragment {
         root.setOnClickListener(clickOnDisplay);
 
 
+        tableContainer.removeAllViews();
+        NonogramGenerator gen = new NonogramGenerator();
+        gen.setNonogram(nonogram);
+        tableContainer.addView(new PuzzleDisplayer(container.getContext()).getGameView(nonogram, gen.getRowCount(), gen.getColumnCount(), 100, null));
+
         // init index
         index = 0;
         updateViews();
@@ -98,27 +101,22 @@ public class TutorialDialogFragment extends DialogFragment {
     }
 
     /**
-     * Updates content of the views {@link #instruction} and {@link #table}.
+     * Updates content of the views {@link #instruction} and {@link #tableContainer}.
      */
     public void updateViews() {
         instruction.setText(instructions[index]);
 
-        table.removeAllViews();
-        int layoutId = tablesLayoutIds[index];
-        if (layoutId > 0) {
-            inflater.inflate(tablesLayoutIds[index], table);
-        }
     }
 
     /**
-     * Initializes the view elements {@link #root}, {@link #instruction}, {@link #table} and {@link #skipButton}.
+     * Initializes the view elements {@link #root}, {@link #instruction}, {@link #tableContainer} and {@link #skipButton}.
      *
      * @param layout the dialog layout
      */
     private void initLayoutElements(View layout) {
         root = layout.findViewById(R.id.tutorial_root);
         instruction = layout.findViewById(R.id.tutorial_instruction);
-        table = layout.findViewById(R.id.tutorial_table);
+        tableContainer = layout.findViewById(R.id.tutorial_table_container);
         skipButton = layout.findViewById(R.id.tutorial_btn_skip);
     }
 
@@ -133,21 +131,6 @@ public class TutorialDialogFragment extends DialogFragment {
                 getString(R.string.instruction_4),
                 getString(R.string.instruction_5),
                 getString(R.string.instruction_6)};
-    }
-
-    /**
-     * Initializes the array {@link #tablesLayoutIds}.
-     */
-    private void initTableArray() {
-        // load table layouts
-        tablesLayoutIds = new int[]{
-                R.layout.tutorial_table_1,
-                R.layout.tutorial_table_2,
-                R.layout.tutorial_table_3,
-                R.layout.tutorial_table_4,
-                R.layout.tutorial_table_5,
-                -1 // no table at the last screen
-        };
     }
 
 }
