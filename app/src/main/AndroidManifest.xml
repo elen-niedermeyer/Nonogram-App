@@ -21,6 +21,7 @@
             android:parentActivityName=".gui.StartActivity" />
         <activity android:name=".gui.OptionsActivity" />
         <activity android:name=".gui.StatisticsActivity" />
+        <activity android:name=".gui.AboutActivity"/>
     </application>
 
 </manifest>

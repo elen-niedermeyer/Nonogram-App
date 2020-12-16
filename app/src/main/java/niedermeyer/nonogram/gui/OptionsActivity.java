@@ -1,6 +1,7 @@
 package niedermeyer.nonogram.gui;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.View;
@@ -54,6 +55,14 @@ public class OptionsActivity extends AppCompatActivity {
                         fieldSizeButton.setText(String.format(Locale.getDefault(), "%1$d %2$s %3$d", gameOptions.getNumberOfRows(), getString(R.string.size_separator), gameOptions.getNumberOfColumns()));
                     }
                 });
+            }
+        });
+
+        final Button aboutButton = findViewById(R.id.activity_options_btn_about);
+        aboutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(view.getContext(), AboutActivity.class));
             }
         });
     }
