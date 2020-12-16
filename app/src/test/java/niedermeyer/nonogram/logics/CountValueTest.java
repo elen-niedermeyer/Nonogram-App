@@ -1,54 +1,53 @@
 package niedermeyer.nonogram.logics;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-
-/**
- * @author Elen Niedermeyer, last modified 2017-02-08
- */
 public class CountValueTest {
 
-    /**
-     * Test for {@link CountValue#equals(Object)}.
-     *
-     * @throws Exception if the test failed
-     */
     @Test
-    public void equals() throws Exception {
-        CountValue countValueOne = new CountValue(2, true);
-        CountValue countValueTwo = new CountValue(2, false);
-        CountValue countValueThree = new CountValue(1, true);
-        CountValue countValueFour = new CountValue(1, false);
-
-        // compare all to the first field count
-        assertEquals(true, countValueOne.equals(countValueOne));
-        assertEquals(false, countValueOne.equals(countValueTwo));
-        assertEquals(false, countValueOne.equals(countValueThree));
-        assertEquals(false, countValueOne.equals(countValueFour));
-
-        // compare all to the second field count
-        assertEquals(false, countValueTwo.equals(countValueOne));
-        assertEquals(true, countValueTwo.equals(countValueTwo));
-        assertEquals(false, countValueTwo.equals(countValueThree));
-        assertEquals(false, countValueTwo.equals(countValueFour));
-
-        // compare all to the third field count
-        assertEquals(false, countValueThree.equals(countValueOne));
-        assertEquals(false, countValueThree.equals(countValueTwo));
-        assertEquals(true, countValueThree.equals(countValueThree));
-        assertEquals(false, countValueThree.equals(countValueFour));
-
-        // compare all to the fourth field count
-        assertEquals(false, countValueFour.equals(countValueOne));
-        assertEquals(false, countValueFour.equals(countValueTwo));
-        assertEquals(false, countValueFour.equals(countValueThree));
-        assertEquals(true, countValueFour.equals(countValueFour));
-
-        // compare to null
-        assertEquals(false, countValueOne.equals(null));
-        // compare to any object
-        assertEquals(false, countValueOne.equals(new Object()));
+    public void testGetValue() {
+        CountValue currentValue = new CountValue(2);
+        Assert.assertEquals(2, currentValue.getValue());
     }
 
+    @Test
+    public void testIsCrossedOut() {
+        CountValue currentValue = new CountValue(2);
+        Assert.assertFalse(currentValue.isCrossedOut());
+
+        currentValue = new CountValue(2, false);
+        Assert.assertFalse(currentValue.isCrossedOut());
+
+        currentValue = new CountValue(2, true);
+        Assert.assertTrue(currentValue.isCrossedOut());
+    }
+
+    @Test
+    public void testSetCrossedOut() {
+        CountValue currentValue = new CountValue(2);
+
+        currentValue.setCrossedOut(false);
+        Assert.assertFalse(currentValue.isCrossedOut());
+
+        currentValue.setCrossedOut(false);
+        Assert.assertFalse(currentValue.isCrossedOut());
+    }
+
+    @Test
+    public void testEquals() {
+        CountValue currentValue = new CountValue(2);
+        Assert.assertNotEquals(currentValue, 3);
+        CountValue otherValue = new CountValue(2);
+        Assert.assertEquals(currentValue, otherValue);
+
+        otherValue.setCrossedOut(true);
+        Assert.assertNotEquals(currentValue, otherValue);
+
+        currentValue.setCrossedOut(true);
+        Assert.assertEquals(currentValue, otherValue);
+
+        otherValue = new CountValue(3);
+        Assert.assertNotEquals(currentValue, otherValue);
+    }
 }

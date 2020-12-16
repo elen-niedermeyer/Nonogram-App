@@ -134,7 +134,7 @@ public class NonogramGenerator {
                     newRowCount.addValueToList(rowCount, groupElements);
                 }
 
-                if (newRowCount.existsList(rowCount)) {
+                if (!newRowCount.existsList(rowCount)) {
                     // if the list is empty, there are no filled fields
                     // add 0
                     newRowCount.addValueToList(rowCount, 0);
@@ -176,7 +176,7 @@ public class NonogramGenerator {
                 newColumnCount.addValueToList(columnCount, res);
             }
 
-            if (newColumnCount.existsList(columnCount)) {
+            if (!newColumnCount.existsList(columnCount)) {
                 // if the list is empty, there are no proved fields
                 // add 0 to the list
                 newColumnCount.addValueToList(columnCount, 0);

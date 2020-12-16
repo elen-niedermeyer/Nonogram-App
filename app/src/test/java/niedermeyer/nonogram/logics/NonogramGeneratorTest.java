@@ -1,69 +1,74 @@
 package niedermeyer.nonogram.logics;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
-import static junit.framework.Assert.assertEquals;
-
-/**
- * @author Elen Niedermeyer, last modified 2018-02-08
- */
 public class NonogramGeneratorTest {
 
     private int[][] nonogram;
+    private NonogramGenerator gen;
 
     @Before
-    public void initializeNonogram() {
+    public void setUp() throws Exception {
         nonogram = new int[][]{
-                {NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_PROVED},
-                {NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_PROVED, NonogramConstants.FIELD_PROVED},
-                {NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_PROVED},
-                {NonogramConstants.FIELD_PROVED, NonogramConstants.FIELD_PROVED, NonogramConstants.FIELD_PROVED},
-                {NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_PROVED}
+                {NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_EMPTY},
+                {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_FILLED},
+                {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_EMPTY},
+                {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_FILLED}
         };
+
+        gen = new NonogramGenerator();
+        gen.setNonogram(nonogram);
     }
 
     @Test
-    public void getCountsColumns() throws Exception {
-        NonogramGenerator generator = new NonogramGenerator();
-        generator.setNonogram(nonogram);
-        FilledFieldsCount columnCounts = generator.getCountsColumns();
-        ArrayList<ArrayList<CountValue>> actualCounts = columnCounts.getCountsList();
-
-        ArrayList<ArrayList<CountValue>> expectedCounts = new ArrayList<>();
-        // add first column
-        expectedCounts.add(new ArrayList<>(Collections.singletonList(new CountValue(1, false))));
-        // add second column
-        expectedCounts.add(new ArrayList<>(Arrays.asList(new CountValue(1, false), new CountValue(1, false))));
-        // add third column
-        expectedCounts.add(new ArrayList<>(Collections.singletonList(new CountValue(5, false))));
-
-        // compare sizes
-        assertEquals("Column counts do not have the same size", expectedCounts.size(), actualCounts.size());
-        for (int i = 0; i < actualCounts.size(); i++) {
-            assertEquals("Inner list of column counts do not have the same size", expectedCounts.get(i).size(), actualCounts.get(i).size());
-        }
-
-        // compare values
-        for (int i = 0; i < actualCounts.size(); i++) {
-            ArrayList<CountValue> actualInnerList = actualCounts.get(i);
-            ArrayList<CountValue> expectedInnerList = expectedCounts.get(i);
-            for (int j = 0; j < actualInnerList.size(); j++) {
-                assertEquals("Column counts values are not equals.", expectedInnerList.get(j), actualInnerList.get(j));
-            }
-        }
+    public void testGetNonogram() {
+        NonogramGenerator gen = new NonogramGenerator();
+        gen.setNonogram(nonogram);
+        Assert.assertArrayEquals(nonogram, gen.getNonogram());
     }
 
     @Test
-    public void getCountsRows() throws Exception {
+    public void testSetNonogram() {
+        int[][] nonogram2 = new int[][]{
+                {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED},
+                {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_EMPTY}
+        };
+        gen.setNonogram(nonogram2);
+        Assert.assertArrayEquals(nonogram2, gen.getNonogram());
     }
 
     @Test
-    public void makeNewGame() throws Exception {
+    public void testGetRowCount() {
+        GroupCount rowCount = new GroupCount();
+        rowCount.addValueToList(0, 0);
+        rowCount.addValueToList(1, 1);
+        rowCount.addValueToList(1, 1);
+        rowCount.addValueToList(2, 1);
+        rowCount.addValueToList(3, 1);
+        rowCount.addValueToList(3, 1);
+
+        Assert.assertEquals(rowCount, gen.getRowCount());
     }
 
+    @Test
+    public void testGetColumnCount() {
+        GroupCount columnCount = new GroupCount();
+        columnCount.addValueToList(0, 3);
+        columnCount.addValueToList(1, 0);
+        columnCount.addValueToList(2, 1);
+        columnCount.addValueToList(2, 1);
+
+        Assert.assertEquals(columnCount, gen.getColumnCount());
+    }
+
+    @Test
+    public void makeNewGame() {
+        gen.makeNewGame(5, 6);
+
+        Assert.assertNotEquals(nonogram, gen.getNonogram());
+        Assert.assertEquals(5, gen.getNonogram().length);
+        Assert.assertEquals(6, gen.getNonogram()[0].length);
+    }
 }

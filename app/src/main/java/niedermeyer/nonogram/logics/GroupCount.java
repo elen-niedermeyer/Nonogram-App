@@ -113,9 +113,9 @@ public class GroupCount {
     public boolean existsList(int pOuterIndex) {
         try {
             counts.get(pOuterIndex);
-            return false;
-        } catch (IndexOutOfBoundsException e) {
             return true;
+        } catch (IndexOutOfBoundsException e) {
+            return false;
         }
     }
 
