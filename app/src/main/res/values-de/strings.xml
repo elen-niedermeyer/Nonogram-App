@@ -13,7 +13,7 @@
     <string name="zoom_out">Verkleinern</string>
     <string name="rows">Zeilen</string>
     <string name="columns">Spalten</string>
-    <string name="about">Über die Entwicklerin</string>
+    <string name="about">Über die App</string>
     <string name="reset_game">Neustarten</string>
     <string name="number_of_games">Gelöste Rätsel</string>
     <string name="won">Du hast das Rätsel gelöst</string>
@@ -30,4 +30,6 @@
     <string name="next">Weiter</string>
     <string name="previous">Zurück</string>
     <string name="close">Schließen</string>
+    <string name="about_content">Hallo! Schön, dass du die Nonogramm-App benutzt.\nIch bin Elen aus Berlin und ich hoffe, du hast Spaß beim Lösen der Nonogramme in dieser App.\n\nWenn du Verbesserungsvorschläge hast, eröffne gerne ein Issue auf GitHub.</string>
+    <string name="github_issues">GitHub Issues</string>
 </resources>

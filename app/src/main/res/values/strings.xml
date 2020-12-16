@@ -10,6 +10,7 @@
     <string name="statistics">Statistics</string>
     <string name="tutorial">How to play</string>
     <string name="options">Options</string>
+    <string name="about">About Nonogram app</string>
 
     <!-- menu items -->
     <string name="new_game">New puzzle</string>
@@ -20,7 +21,6 @@
     <string name="rows">Rows</string>
     <string name="columns">Columns</string>
     <string name="size_separator" translatable="false">x</string>
-    <string name="about">About the developer</string>
 
     <!-- tutorial -->
     <string name="instruction_title_1">Nonograms are Japanese logic puzzles</string>
@@ -37,6 +37,11 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="close">Close</string>
+
+    <!-- about -->
+    <string name="about_content">Hi, it\'s awesome that you use the Nonogram app.\nI\'m Elen from Berlin and I hope you have fun while solving nonograms in this app.\n\nIf you have any suggestions about improvements, open an issue on GitHub.</string>
+    <string name="github_issues">GitHub Issues</string>
+    <string name="github_link" translatable="false">https://github.com/elen-niedermeyer/Nonogram-App/issues</string>
 
     <!-- statistics activity -->
     <string name="number_of_games">Solved puzzles</string>
