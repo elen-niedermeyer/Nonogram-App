@@ -4,15 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+
 import niedermeyer.nonogram.R;
+import niedermeyer.nonogram.gui.dialogs.DialogHelper;
 
 /**
- * @author Elen Niedermeyer, last modified 2017-09-21
+ * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class StartActivity extends AppCompatActivity {
 
@@ -20,41 +24,44 @@ public class StartActivity extends AppCompatActivity {
      * Buttons in the start activity
      */
     private Button playButton;
-    private Button highscoreButton;
-    private Button howToPlayButton;
+    private Button statisticsButton;
+    private Button tutorialButton;
     private Button optionsButton;
 
     /**
      * Listener for clicks on the buttons.
      */
-    private OnClickListener buttonClick = new OnClickListener() {
+    private final OnClickListener buttonClick = new OnClickListener() {
         /**
          * Overrides the method {@link OnClickListener#onClick(View)}.
-         * Makes an intent. It starts the {@link NonogramActivity}, {@link StatisticsActivity}, {@link InstructionActivity} or {@link OptionsActivity} according to which button was clicked.
+         * Makes an intent. It starts the {@link GameActivity}, {@link StatisticsActivity}, the tutorial through {@link DialogHelper#openTutorialDialogFullscreen(FragmentManager)} or {@link OptionsActivity} according to which button was clicked.
          *
-         * @param v the clicked button view, can be {@link StartActivity#playButton}, {@link StartActivity#highscoreButton}, {@link StartActivity#howToPlayButton} or {@link StartActivity#optionsButton}
+         * @param v the clicked button view, can be {@link StartActivity#playButton}, {@link StartActivity#statisticsButton}, {@link StartActivity#tutorialButton} or {@link StartActivity#optionsButton}
          */
         @Override
         public void onClick(View v) {
-            Intent i = null;
+            Intent i;
             Context context = v.getContext();
             if (v == playButton) {
-                i = new Intent(context, NonogramActivity.class);
-            } else if (v == highscoreButton) {
+                i = new Intent(context, GameActivity.class);
+                startActivity(i);
+            } else if (v == statisticsButton) {
                 i = new Intent(context, StatisticsActivity.class);
-            } else if (v == howToPlayButton) {
-                i = new Intent(context, InstructionActivity.class);
+                startActivity(i);
+            } else if (v == tutorialButton) {
+                new DialogHelper().openTutorialDialogFullscreen(getSupportFragmentManager());
             } else if (v == optionsButton) {
                 i = new Intent(context, OptionsActivity.class);
+                startActivity(i);
             }
-            startActivity(i);
         }
     };
 
     /**
      * Overrides the method {@link AppCompatActivity#onCreate(Bundle, PersistableBundle)}.
      * Sets the layout.
-     * Initializes the button {@link #playButton}, {@link #highscoreButton}, {@link #howToPlayButton} and {@link #optionsButton} and sets the listener {@link #buttonClick} for all buttons.
+     * Initializes the button {@link #playButton}, {@link #statisticsButton}, {@link #tutorialButton} and {@link #optionsButton} and sets the listener {@link #buttonClick} for all buttons.
+     * Initializes the toolbar.
      *
      * @param savedInstanceState saved information about the activity given by the system
      */
@@ -63,16 +70,26 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        playButton = (Button) findViewById(R.id.activity_start_buttons_play);
+        playButton = findViewById(R.id.activity_start_btn_play);
         playButton.setOnClickListener(buttonClick);
 
-        highscoreButton = (Button) findViewById(R.id.activity_start_buttons_highscore);
-        highscoreButton.setOnClickListener(buttonClick);
+        statisticsButton = findViewById(R.id.activity_start_btn_statistics);
+        statisticsButton.setOnClickListener(buttonClick);
 
-        howToPlayButton = (Button) findViewById(R.id.activity_start_buttons_howto);
-        howToPlayButton.setOnClickListener(buttonClick);
+        tutorialButton = findViewById(R.id.activity_start_btn_tutorial);
+        tutorialButton.setOnClickListener(buttonClick);
 
-        optionsButton = (Button) findViewById(R.id.activity_start_buttons_options);
+        optionsButton = findViewById(R.id.activity_start_btn_options);
         optionsButton.setOnClickListener(buttonClick);
+
+        // sets the toolbar
+        Toolbar toolbar = findViewById(R.id.activity_start_toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }

@@ -1,15 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/menu_number_picker_root"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/number_picker_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <NumberPicker
-        android:id="@+id/menu_number_picker"
+    <TextView
+        android:id="@+id/number_picker_separator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:scaleX="1.2"
-        android:scaleY="1.2"/>
+        android:layout_alignTop="@id/number_picker_rows"
+        android:layout_alignBottom="@id/number_picker_rows"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical"
+        android:text="@string/size_separator"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
-</FrameLayout>
+    <NumberPicker
+        android:id="@+id/number_picker_rows"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/number_picker_rows_text"
+        android:layout_alignEnd="@id/number_picker_separator" />
+
+    <TextView
+        android:id="@+id/number_picker_rows_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/number_picker_rows"
+        android:layout_alignParentTop="true"
+        android:gravity="start"
+        android:text="@string/rows"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+    <NumberPicker
+        android:id="@+id/number_picker_columns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/number_picker_columns_text"
+        android:layout_alignStart="@id/number_picker_separator" />
+
+    <TextView
+        android:id="@+id/number_picker_columns_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/number_picker_columns"
+        android:layout_alignParentTop="true"
+        android:gravity="start"
+        android:text="@string/columns"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+
+</RelativeLayout>

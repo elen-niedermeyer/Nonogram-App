@@ -1,60 +1,68 @@
 <resources>
     <string name="app_name">Nonogram</string>
-    <string name="toolbar_title">Nonogram %1$d x %2$d</string>
 
-    <string name="empty"></string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
     <!-- activities -->
+    <string name="game_activity">Puzzle</string>
     <string name="play">Play</string>
     <string name="statistics">Statistics</string>
-    <string name="howto">How to play</string>
+    <string name="tutorial">How to play</string>
     <string name="options">Options</string>
+    <string name="about">About Nonogram app</string>
 
     <!-- menu items -->
-    <string name="new_game">New game</string>
-    <string name="reset_game">Reset game</string>
-    <string name="number_of_rows">Number of rows</string>
-    <string name="number_of_columns">Number of columns</string>
-    <!-- menu items text -->
-    <string name="number_of_rows_text">Number of rows: %1$d</string>
-    <string name="number_of_columns_text">Number of columns: %1$d</string>
-    <!-- menu headings -->
-    <string name="field_size_heading">Game field size</string>
-    <string name="about_developer">About the developer</string>
+    <string name="new_game">New puzzle</string>
+    <string name="reset_game">Reset puzzle</string>
+    <string name="field_size">Puzzle size</string>
+    <string name="zoom_in">Zoom in</string>
+    <string name="zoom_out">Zoom out</string>
+    <string name="rows">Rows</string>
+    <string name="columns">Columns</string>
+    <string name="size_separator" translatable="false">x</string>
 
-    <!-- how to play activity -->
-    <string name="instruction_1">Nonograms are Japanese logic puzzles.\nYou\'ve got a puzzle like this.\n All fields are empty.</string>
-    <string name="instruction_2">The numbers define groups of boxes in each row and column. These groups must be filled.</string>
-    <string name="instruction_3">Mark filled fields black (clicking once) and empty fields with a cross (clicking twice) or leave it out.</string>
-    <string name="instruction_4">Two numbers means two groups in a row or column. There must be at least one empty field between two groups.\nThe groups are in the order of the numbers.</string>
-    <string name="instruction_5">Identify all the filled boxes.\n\nThe nonograms are computer generated. It\'s possible that there\'s an ambiguous solution.</string>
-    <string name="instruction_6">Choose the size of your puzzle in the menu.</string>
+    <!-- tutorial -->
+    <string name="instruction_title_1">Nonograms are Japanese logic puzzles</string>
+    <string name="instruction_title_2" translatable="false">""</string>
+    <string name="instruction_title_3" translatable="false">""</string>
+    <string name="instruction_title_4" translatable="false">""</string>
+    <string name="instruction_title_5">Now it\'s on you!</string>
+    <string name="instruction_1">You\'ve got a puzzle like this: All boxes are empty.</string>
+    <string name="instruction_2">You want to fill the boxes like this: Filled fields are black, empty fields are crossed or white.</string>
+    <string name="instruction_3">The numbers on the left of the field define groups of filled boxes in the respective row. The numbers are repeated at the right for better puzzling.\n\nThe same appears for groups in columns with the numbers on the top and bottom of the field.</string>
+    <string name="instruction_4">Multiple numbers mean multiple groups in a row or column. There must be at least one empty field between two groups.\nThe groups are in the order of the numbers.</string>
+    <string name="instruction_5">Mark the boxes black by clicking once, crossed by clicking twice and again white by clicking three times on a box.\n\n\nClick on the numbers to cross them when you found a group. That can help you to get a better overview.\n\n\nAdapt the puzzle size in the options.\n\n\nSince the nonograms are computer-generated, it\s possible that they are ambiguous especially for small puzzles.</string>
     <string name="skip_tutorial">Skip tutorial</string>
-    <string name="click_here_continue">Tap to continue</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="close">Close</string>
 
-    <!-- game activitiy count views -->
-    <string name="tag_row_count">row_%1$d_%2$d</string>
-    <string name="tag_colum_count">column_%1$d_%2$d</string>
+    <!-- about -->
+    <string name="about_content">Hi, it\'s awesome that you use the Nonogram app.\nI\'m Elen from Berlin and I hope you have fun while solving nonograms in this app.\n\nIf you have any suggestions about improvements, open an issue on GitHub.</string>
+    <string name="github_issues">GitHub Issues</string>
+    <string name="github_link" translatable="false">https://github.com/elen-niedermeyer/Nonogram-App/issues</string>
 
     <!-- statistics activity -->
-    <string name="heading_size">Game size</string>
     <string name="number_of_games">Solved puzzles</string>
-    <string name="puzzle_size_row_column">%1$d x %2$d</string>
 
-    <!-- won animation -->
+    <!-- won dialog -->
     <string name="won">You solved the puzzle</string>
-    <string name="click_here_new_game">Tab to start a new puzzle</string>
+    <string name="won_continue">Tab to start a new puzzle</string>
+
+    <!-- game activity count views -->
+    <string name="tag_row_count" translatable="false">row_%1$d_%2$d</string>
+    <string name="tag_column_count" translatable="false">column_%1$d_%2$d</string>
 
     <!-- preferences -->
-    <string name="prefs_group_puzzle_size">game_size</string>
-    <string name="prefs_group_statistics">statistics</string>
-    <string name="prefs_rows">number_of_rows</string>
-    <string name="prefs_columns">number_of_columns</string>
-    <string name="prefs_first_game">first_game</string>
-    <string name="prefs_statistic">statistics_%1$d_%2$d</string>
-    <string name="string_devider">_</string>
-    <string name="row">row</string>
-    <string name="column">column</string>
+    <string name="prefs_game_options" translatable="false">game_size</string>
+    <string name="prefs_group_statistics" translatable="false">statistics</string>
+    <string name="prefs_rows" translatable="false">number_of_rows</string>
+    <string name="prefs_columns" translatable="false">number_of_columns</string>
+    <string name="prefs_cell_size" translatable="false">cell_size</string>
+    <string name="prefs_first_game" translatable="false">first_game</string>
+    <string name="prefs_statistic" translatable="false">statistics_%1$d_%2$d</string>
+    <string name="string_divider" translatable="false">_</string>
+    <string name="row" translatable="false">row</string>
+    <string name="column" translatable="false">column</string>
 </resources>

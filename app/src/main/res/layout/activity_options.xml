@@ -1,63 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root_view_options"
+    android:id="@+id/activity_options_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color"
-    android:orientation="vertical"
     tools:context="niedermeyer.nonogram.gui.OptionsActivity">
 
-    <!-- Game field size -->
-    <TextView
-        android:id="@+id/activity_options_heading_field_size"
-        style="@style/Heading"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/field_size_heading" />
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TableLayout
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:divider="?attr/colorPrimaryVariant"
+            android:showDividers="middle"
+            android:stretchColumns="*">
+
+            <!-- Game field size -->
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/activity_options_field_size"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/field_size"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+                <Button
+                    android:id="@+id/activity_options_btn_field_size"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end" />
+            </TableRow>
+
+            <!-- About the developer -->
+            <TableRow>
+
+                <TextView />
+
+                <Button
+                    android:id="@+id/activity_options_btn_about"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/about" />
+            </TableRow>
+
+        </TableLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TableRow>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/activity_options_toolbar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/top_app_bar"
+            app:navigationIcon="@drawable/ic_arrow_back_24dp"
+            app:title="@string/options" />
 
-            <TextView
-                style="@style/Text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/number_of_rows" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-            <Button
-                android:id="@+id/activity_options_btn_rows"
-                style="@style/ButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                style="@style/Text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/number_of_columns" />
-
-            <Button
-                android:id="@+id/activity_options_btn_columns"
-                style="@style/ButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </TableRow>
-    </TableLayout>
-
-    <View style="@style/Divider" />
-
-    <Button
-        style="@style/ButtonStyleHeading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/about_developer" />
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

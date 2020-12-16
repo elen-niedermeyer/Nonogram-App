@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Nonogram</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="game_activity">Rätsel</string>
+    <string name="play">Spielen</string>
+    <string name="statistics">Statistik</string>
+    <string name="options">Optionen</string>
+    <string name="tutorial">Anleitung</string>
+    <string name="new_game">Neues Rätsel</string>
+    <string name="zoom_in">Vergrößern</string>
+    <string name="zoom_out">Verkleinern</string>
+    <string name="rows">Zeilen</string>
+    <string name="columns">Spalten</string>
+    <string name="about">Über die App</string>
+    <string name="reset_game">Neustarten</string>
+    <string name="number_of_games">Gelöste Rätsel</string>
+    <string name="won">Du hast das Rätsel gelöst</string>
+    <string name="won_continue">Tippe, um ein neues Rätsel zu starten</string>
+    <string name="instruction_1">Du hast ein Rätsel wie dieses: Alle Felder sind leet.</string>
+    <string name="instruction_2">Dein Ziel ist es die Felder auszufüllen: Gefüllte Felder sind schwarz, leere Felder mit einem Kreuz markiert oder weiß.</string>
+    <string name="instruction_3">Die Nummern links vom Spielfeld definieren Gruppen von gefüllten Felder für die jeweilige Reihe. Die Nummern sind am rechten Rand wiederholt.\n\Das selbe gilt für Gruppen von gefüllten Feldern in den Spalten mit den Zahlen oben und unten vom Spielfeld</string>
+    <string name="instruction_4">Mehrere Zahlen definieren mehrere Gruppen in einer Zeile oder Spalte. Zwischen den Gruppen muss mindestens ein leeres Feld sein.\nDie Gruppen sind in der gleichen Reihenfolge wie die Zahlen.</string>
+    <string name="instruction_5">Markiere Felder schwarz, indem du einmal tippst, mit einem Kreuz, indem du zweimal tippst und wieder weiß, indem du dreimal auf das Feld tippst.\n\n\nTippe auf die Zahlen um sie durchzustreichen, wenn du eine Gruppe gefunden hast. Das kann dir helfen, den Überblick zu behalten.\n\n\nÄndere die Puzzlegröße in den Optionen.\n\n\nDa die Nonogramme computergeneriert sind, können sie mehrdeutig sein. Insbesondere bei kleinen Rätselgrößen.</string>
+    <string name="skip_tutorial">Anleitung überspringen</string>
+    <string name="field_size">Rätselgröße</string>
+    <string name="instruction_title_1">"Nonogramme sind japanische Logikrätsel. "</string>
+    <string name="instruction_title_5">Jetzt bist du dran!</string>
+    <string name="next">Weiter</string>
+    <string name="previous">Zurück</string>
+    <string name="close">Schließen</string>
+    <string name="about_content">Hallo! Schön, dass du die Nonogramm-App benutzt.\nIch bin Elen aus Berlin und ich hoffe, du hast Spaß beim Lösen der Nonogramme in dieser App.\n\nWenn du Verbesserungsvorschläge hast, eröffne gerne ein Issue auf GitHub.</string>
+    <string name="github_issues">GitHub Issues</string>
+</resources>

@@ -1,6 +1,5 @@
 package niedermeyer.nonogram.persistence;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -11,10 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.gui.NonogramActivity;
+import niedermeyer.nonogram.gui.GameActivity;
 
 /**
- * @author Elen Niedermeyer, last updated 2017-10-08
+ * @author Elen Niedermeyer, last modified 2020-12-11
  */
 public class PuzzlePersistence {
 
@@ -25,17 +24,17 @@ public class PuzzlePersistence {
     private static final String CURRENT_FIELD_FILE_NAME = "current_field";
 
     /**
-     * Context activity
+     * Context
      */
-    private Activity activity;
+    private final Context context;
 
     /**
-     * Constructor. Initializes {@link #activity}.
+     * Constructor. Initializes {@link #context}.
      *
-     * @param pActivity the context activity
+     * @param pContext the context
      */
-    public PuzzlePersistence(Activity pActivity) {
-        activity = pActivity;
+    public PuzzlePersistence(Context pContext) {
+        context = pContext;
     }
 
     /**
@@ -45,14 +44,14 @@ public class PuzzlePersistence {
      */
     public void saveNonogram(int[][] pNonogram) {
         // make file object
-        File nonogramFile = new File(activity.getFilesDir(), NONOGRAM_FILE_NAME);
+        File nonogramFile = new File(context.getFilesDir(), NONOGRAM_FILE_NAME);
         // look if the file exists
         if (!nonogramFile.exists()) {
             // create a new file if it doesn't exist
             try {
                 nonogramFile.createNewFile();
             } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+                Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
             }
         }
 
@@ -66,13 +65,13 @@ public class PuzzlePersistence {
      */
     public void saveCurrentField(int[][] pCurrentField) {
         // look if the file exists
-        File currentFieldFile = new File(activity.getFilesDir(), CURRENT_FIELD_FILE_NAME);
+        File currentFieldFile = new File(context.getFilesDir(), CURRENT_FIELD_FILE_NAME);
         if (!currentFieldFile.exists()) {
             // create a new file if it doesn't exist
             try {
                 currentFieldFile.createNewFile();
             } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+                Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
             }
         }
 
@@ -85,7 +84,7 @@ public class PuzzlePersistence {
      * @return an array representing a nonogram or null if reading the array failed.
      */
     public int[][] loadLastNonogram() {
-        File nonogramFile = new File(activity.getFilesDir(), NONOGRAM_FILE_NAME);
+        File nonogramFile = new File(context.getFilesDir(), NONOGRAM_FILE_NAME);
         if (nonogramFile.exists()) {
             // loads the nonogram if the file exists
             return (readArrayObject(NONOGRAM_FILE_NAME));
@@ -100,7 +99,7 @@ public class PuzzlePersistence {
      * @return an array representing the user's field or null if reading the array failed
      */
     public int[][] loadLastUserField() {
-        File currentFieldFile = new File(activity.getFilesDir(), CURRENT_FIELD_FILE_NAME);
+        File currentFieldFile = new File(context.getFilesDir(), CURRENT_FIELD_FILE_NAME);
         if (currentFieldFile.exists()) {
             // loads the field if the file exists
             return (readArrayObject(CURRENT_FIELD_FILE_NAME));
@@ -115,13 +114,13 @@ public class PuzzlePersistence {
      * @return true, if it's the first puzzle, false otherwise
      */
     public boolean isFirstPuzzle() {
-        SharedPreferences prefs = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.prefs_first_game), Context.MODE_PRIVATE);
         // read the preference, true is the default value
-        boolean isFirstGame = prefs.getBoolean(activity.getString(R.string.prefs_first_game), true);
+        boolean isFirstGame = prefs.getBoolean(context.getString(R.string.prefs_first_game), true);
         if (isFirstGame) {
             // set the preference to false
             SharedPreferences.Editor edit = prefs.edit();
-            edit.putBoolean(activity.getString(R.string.prefs_first_game), false);
+            edit.putBoolean(context.getString(R.string.prefs_first_game), false);
             edit.apply();
         }
 
@@ -138,16 +137,16 @@ public class PuzzlePersistence {
         ObjectOutputStream out = null;
         try {
             // write the object
-            out = new ObjectOutputStream(activity.openFileOutput(pFileName, Context.MODE_PRIVATE));
+            out = new ObjectOutputStream(context.openFileOutput(pFileName, Context.MODE_PRIVATE));
             out.writeObject(pObject);
         } catch (Exception e) {
-            Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+            Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
         } finally {
             // close the stream
             try {
                 out.close();
             } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+                Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
             }
         }
     }
@@ -163,16 +162,16 @@ public class PuzzlePersistence {
         ObjectInputStream in = null;
         try {
             // read the object
-            in = new ObjectInputStream(activity.openFileInput(pFileName));
+            in = new ObjectInputStream(context.openFileInput(pFileName));
             readArray = (int[][]) in.readObject();
         } catch (Exception e) {
-            Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+            Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
         } finally {
             // close the stream
             try {
                 in.close();
             } catch (Exception e) {
-                Logger.getLogger(NonogramActivity.class.getName()).log(Level.WARNING, null, e);
+                Logger.getLogger(GameActivity.class.getName()).log(Level.WARNING, null, e);
             }
         }
 
