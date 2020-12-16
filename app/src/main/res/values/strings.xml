@@ -32,9 +32,11 @@
     <string name="instruction_2">You want to fill the boxes like this: Filled fields are black, empty fields are crossed or white.</string>
     <string name="instruction_3">The numbers on the left of the field define groups of filled boxes in the respective row. The numbers are repeated at the right for better puzzling.\n\nThe same appears for groups in columns with the numbers on the top and bottom of the field.</string>
     <string name="instruction_4">Multiple numbers mean multiple groups in a row or column. There must be at least one empty field between two groups.\nThe groups are in the order of the numbers.</string>
-    <string name="instruction_5">Mark the boxes black by clicking once, crossed by clicking twice and again white by clicking three times on a box.\n\n\nAdapt the puzzle size in the options.\n\n\nSince the nonograms are computer-generated, it\s possible that they are ambiguous especially for small puzzles.</string>
+    <string name="instruction_5">Mark the boxes black by clicking once, crossed by clicking twice and again white by clicking three times on a box.\n\n\nClick on the numbers to cross them when you found a group. That can help you to get a better overview.\n\n\nAdapt the puzzle size in the options.\n\n\nSince the nonograms are computer-generated, it\s possible that they are ambiguous especially for small puzzles.</string>
     <string name="skip_tutorial">Skip tutorial</string>
-    <string name="click_here_continue">Tap to continue</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="close">Close</string>
 
     <!-- statistics activity -->
     <string name="number_of_games">Solved puzzles</string>

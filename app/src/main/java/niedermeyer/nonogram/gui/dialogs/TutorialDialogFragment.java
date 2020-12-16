@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
@@ -47,11 +48,11 @@ public class TutorialDialogFragment extends DialogFragment {
     /**
      * layout elements
      */
-    private RelativeLayout root;
     private TextView title;
     private TextView instruction;
     private RelativeLayout tableContainer;
-    private Button skipButton;
+    private Button nextButton;
+    private Button previousButton;
 
     /**
      * Index for the arrays {@link #instructions}.
@@ -71,12 +72,29 @@ public class TutorialDialogFragment extends DialogFragment {
     /**
      * Listener for clicks. Shows the next step.
      */
-    private final View.OnClickListener clickOnDisplay = new View.OnClickListener() {
+    private final View.OnClickListener clickNext = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             // increase index
             index++;
             if (index < instructions.length) {
+                // if it's not the end of the array, update views
+                updateViews(v.getContext());
+            } else {
+                dismiss();
+            }
+        }
+    };
+
+    /**
+     * Listener for clicks. Shows the previous step.
+     */
+    private final View.OnClickListener clickPrevious = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // increase index
+            index--;
+            if (index >= 0) {
                 // if it's not the end of the array, update views
                 updateViews(v.getContext());
             } else {
@@ -115,35 +133,56 @@ public class TutorialDialogFragment extends DialogFragment {
 
         if (index == 0) {
             tableContainer.removeAllViews();
-            tableContainer.addView(new PuzzleDisplayer(pContext).getGameView(emptyUserField, nonogramGenerator.getRowCount(), nonogramGenerator.getColumnCount(), 100, null));
+            TableLayout table = new PuzzleDisplayer(pContext).getGameView(emptyUserField, nonogramGenerator.getRowCount(), nonogramGenerator.getColumnCount(), 100, null);
+            tableContainer.addView(table);
+
+            previousButton.setVisibility(View.INVISIBLE);
+
         } else if (index == 1) {
+            // set table when going forward
             tableContainer.removeAllViews();
             tableContainer.addView(new PuzzleDisplayer(pContext).getGameView(solvedUserField, nonogramGenerator.getRowCount(), nonogramGenerator.getColumnCount(), 100, null));
-        } else if (index == instructions.length - 1){
+
+            // set previous button for following views
+            previousButton.setVisibility(View.VISIBLE);
+
+        } else if (index == instructions.length - 2) {
+            // set table when going backwards
             tableContainer.removeAllViews();
+            tableContainer.addView(new PuzzleDisplayer(pContext).getGameView(solvedUserField, nonogramGenerator.getRowCount(), nonogramGenerator.getColumnCount(), 100, null));
+
+            // set button text when going backwards
+            nextButton.setText(R.string.next);
+
+        } else if (index == instructions.length - 1) {
+            tableContainer.removeAllViews();
+
+            nextButton.setText(R.string.close);
         }
     }
 
     /**
-     * Initializes the view elements {@link #root}, {@link #instruction}, {@link #tableContainer} and {@link #skipButton}.
+     * Initializes the view elements {@link #title}, {@link #instruction}, {@link #tableContainer}, {@link #nextButton} and {@link #previousButton}.
+     * Sets {@link android.view.View.OnClickListener} to the buttons.
      *
      * @param layout the dialog layout
      */
     private void initLayoutElements(View layout) {
-        root = layout.findViewById(R.id.tutorial_root);
-        root.setOnClickListener(clickOnDisplay);
+        title = layout.findViewById(R.id.tutorial_title);
+        instruction = layout.findViewById(R.id.tutorial_instruction);
+        tableContainer = layout.findViewById(R.id.tutorial_table_container);
 
-        skipButton = layout.findViewById(R.id.tutorial_btn_skip);
-        skipButton.setOnClickListener(new View.OnClickListener() {
+        nextButton = layout.findViewById(R.id.tutorial_btn_next);
+        nextButton.setOnClickListener(clickNext);
+        previousButton = layout.findViewById(R.id.tutorial_btn_previous);
+        previousButton.setOnClickListener(clickPrevious);
+
+        layout.findViewById(R.id.tutorial_btn_skip).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-
-        title = layout.findViewById(R.id.tutorial_title);
-        instruction = layout.findViewById(R.id.tutorial_instruction);
-        tableContainer = layout.findViewById(R.id.tutorial_table_container);
     }
 
     /**
