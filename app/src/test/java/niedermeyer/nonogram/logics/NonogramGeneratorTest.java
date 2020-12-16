@@ -10,7 +10,7 @@ public class NonogramGeneratorTest {
     private NonogramGenerator gen;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         nonogram = new int[][]{
                 {NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_EMPTY},
                 {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_FILLED},
