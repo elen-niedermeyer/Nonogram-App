@@ -22,15 +22,21 @@
     <string name="size_separator" translatable="false">x</string>
     <string name="about">About the developer</string>
 
-    <!-- how to play activity -->
-    <string name="instruction_1">Nonograms are Japanese logic puzzles.\nYou\'ve got a puzzle like this. All fields are empty.</string>
-    <string name="instruction_2">The numbers define groups of boxes in each row and column. These groups must be filled.</string>
-    <string name="instruction_3">Mark filled fields black (clicking once) and empty fields with a cross (clicking twice) or leave it out.</string>
-    <string name="instruction_4">Two numbers means two groups in a row or column. There must be at least one empty field between two groups.\nThe groups are in the order of the numbers.</string>
-    <string name="instruction_5">Identify all the filled boxes.\n\nThe nonograms are computer generated. It\'s possible that there\'s an ambiguous solution.</string>
-    <string name="instruction_6">Choose the size of your puzzle in the menu.</string>
+    <!-- tutorial -->
+    <string name="instruction_title_1">Nonograms are Japanese logic puzzles</string>
+    <string name="instruction_title_2" translatable="false">""</string>
+    <string name="instruction_title_3" translatable="false">""</string>
+    <string name="instruction_title_4" translatable="false">""</string>
+    <string name="instruction_title_5">Now it\'s on you!</string>
+    <string name="instruction_1">You\'ve got a puzzle like this: All boxes are empty.</string>
+    <string name="instruction_2">You want to fill the boxes like this: Filled fields are black, empty fields are crossed or white.</string>
+    <string name="instruction_3">The numbers on the left of the field define groups of filled boxes in the respective row. The numbers are repeated at the right for better puzzling.\n\nThe same appears for groups in columns with the numbers on the top and bottom of the field.</string>
+    <string name="instruction_4">Multiple numbers mean multiple groups in a row or column. There must be at least one empty field between two groups.\nThe groups are in the order of the numbers.</string>
+    <string name="instruction_5">Mark the boxes black by clicking once, crossed by clicking twice and again white by clicking three times on a box.\n\n\nClick on the numbers to cross them when you found a group. That can help you to get a better overview.\n\n\nAdapt the puzzle size in the options.\n\n\nSince the nonograms are computer-generated, it\s possible that they are ambiguous especially for small puzzles.</string>
     <string name="skip_tutorial">Skip tutorial</string>
-    <string name="click_here_continue">Tap to continue</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="close">Close</string>
 
     <!-- statistics activity -->
     <string name="number_of_games">Solved puzzles</string>
