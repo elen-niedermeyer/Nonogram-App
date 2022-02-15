@@ -39,8 +39,7 @@ public class PuzzleDisplayer {
         @Override
         public void onClick(View v) {
             // parse the tag
-            GroupCountCell countCell = (GroupCountCell) v;
-            String tag = (String) countCell.getContentDescription();
+            String tag = (String) v.getContentDescription();
             String[] tagParsed = tag.split(context.getString(R.string.string_divider));
             String rowOrColumn = tagParsed[0];
             int outerIndex = Integer.parseInt(tagParsed[1]);
@@ -52,10 +51,14 @@ public class PuzzleDisplayer {
             // toggle the counts background
             if (rowOrColumn.equals(context.getString(R.string.row))) {
                 rowCount.toggleCrossedOut(outerIndex, innerIndex);
-                countCell.toggleBackground(rowCount.isValueCrossedOut(outerIndex, innerIndex));
+                for (View view : views) {
+                    ((GroupCountCell) view).toggleBackground(rowCount.isValueCrossedOut(outerIndex, innerIndex));
+                }
             } else if (rowOrColumn.equals(context.getString(R.string.column))) {
                 columnCount.toggleCrossedOut(outerIndex, innerIndex);
-                countCell.toggleBackground(columnCount.isValueCrossedOut(outerIndex, innerIndex));
+                for (View view : views) {
+                    ((GroupCountCell) view).toggleBackground(columnCount.isValueCrossedOut(outerIndex, innerIndex));
+                }
             }
         }
     };

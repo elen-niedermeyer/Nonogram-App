@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import niedermeyer.nonogram.gui.observer.PuzzleSolvedObserver;
-import niedermeyer.nonogram.gui.puzzle.GameFieldCell;
 import niedermeyer.nonogram.logics.GroupCount;
 import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.logics.NonogramGenerator;
