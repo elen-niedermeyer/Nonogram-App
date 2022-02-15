@@ -1,16 +1,13 @@
 package niedermeyer.nonogram.gui.puzzle;
 
 import android.content.Context;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.logics.CountValue;
@@ -18,11 +15,10 @@ import niedermeyer.nonogram.logics.GroupCount;
 import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 
 /**
- * @author Elen Niedermeyer, last modified 2020-12-11
+ * @author Elen Niedermeyer, last modified 2022-02-15
  */
 public class GroupCountDisplayer {
 
-    private static final float TEXT_SIZE_FACTOR = 0.7f;
     private static final float TEXT_MARGIN_FACTOR = 0.5f;
 
     private final Context context;
@@ -49,18 +45,10 @@ public class GroupCountDisplayer {
 
         ArrayList<CountValue> counts = pRowCount.getList(pIndex);
 
-        // add an text view for each count of the row
+        // add an view for each count of the row
         for (int i = 0; i < counts.size(); i++) {
-            // make a new text view
-            TextView countView = getTextView(counts.get(i), pOnCountClick);
-            countView.setContentDescription(String.format(context.getString(R.string.tag_row_count), pIndex, i));
-            countView.setPadding((int) ((new GameOptionsPersistence(context).getCellSize() * TEXT_MARGIN_FACTOR) / 2), 0, (int) ((new GameOptionsPersistence(context).getCellSize() * TEXT_MARGIN_FACTOR) / 2), 0);
-
-            // load the crossed out background if necessary
-            if (counts.get(i).isCrossedOut()) {
-                countView.setBackgroundResource(R.drawable.puzzle_count_crossed_out);
-            }
-
+            // make a new view
+            GroupCountCell countView = new GroupCountCell(context, counts.get(i), String.format(context.getString(R.string.tag_row_count), pIndex, i), (int) ((new GameOptionsPersistence(context).getCellSize() * TEXT_MARGIN_FACTOR) / 2), pOnCountClick);
             // add the view to the new layout
             layout.addView(countView);
         }
@@ -99,9 +87,7 @@ public class GroupCountDisplayer {
 
         // add the value in this row for each column
         for (int i = 0; i < counts.size(); i++) {
-            TextView countView = getTextView(counts.get(i), pOnCountClick);
-            countView.setContentDescription(String.format(context.getString(R.string.tag_column_count), pIndex, i));
-
+            GroupCountCell countView = new GroupCountCell(context, counts.get(i), String.format(context.getString(R.string.tag_column_count), pIndex, i), pOnCountClick);
             // add the view to the new layout
             layout.addView(countView);
         }
@@ -109,40 +95,4 @@ public class GroupCountDisplayer {
         return layout;
     }
 
-    private TextView getTextView(CountValue pCountValue, View.OnClickListener pOnCountClick) {
-        // make a new text view
-        TextView countView = new TextView(context);
-        countView.setText(String.format(Locale.getDefault(), "%d", pCountValue.getValue()));
-        countView.setTextSize(TypedValue.COMPLEX_UNIT_PX, new GameOptionsPersistence(context).getCellSize() * TEXT_SIZE_FACTOR);
-        countView.setClickable(true);
-        countView.setOnClickListener(pOnCountClick);
-        countView.setGravity(Gravity.CENTER_HORIZONTAL);
-
-        // load the crossed out background if necessary
-        if (pCountValue.isCrossedOut()) {
-            countView.setBackgroundResource(R.drawable.puzzle_count_crossed_out);
-        }
-        return countView;
-    }
-
-
-    /**
-     * Toggles the background of the given view. It would be stroked, if it wasn't before and the other way around.
-     *
-     * @param pCounts           the {@link GroupCount} object that contains the count
-     * @param pView             the view to toggle the background
-     * @param pOuterIndexOfView the outer index of the view
-     * @param pInnerIndexOfView the inner index of the view
-     */
-    public void toggleCount(GroupCount pCounts, View pView, int pOuterIndexOfView, int pInnerIndexOfView) {
-        // if the clicked view was a row count
-        // toggle the background, stroke or not
-        if (pCounts.isValueCrossedOut(pOuterIndexOfView, pInnerIndexOfView)) {
-            // set the background to nothing if it is stroke
-            pView.setBackgroundResource(0);
-        } else {
-            // set the strike resource
-            pView.setBackgroundResource(R.drawable.puzzle_count_crossed_out);
-        }
-    }
 }

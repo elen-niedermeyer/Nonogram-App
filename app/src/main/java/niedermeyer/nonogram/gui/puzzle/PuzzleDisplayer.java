@@ -16,6 +16,9 @@ import niedermeyer.nonogram.logics.GroupCount;
 
 import static android.view.View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION;
 
+/**
+ * @author Elen Niedermeyer, last modified 2022-02-15
+ */
 public class PuzzleDisplayer {
 
     private final Context context;
@@ -36,7 +39,8 @@ public class PuzzleDisplayer {
         @Override
         public void onClick(View v) {
             // parse the tag
-            String tag = (String) v.getContentDescription();
+            GroupCountCell countCell = (GroupCountCell) v;
+            String tag = (String) countCell.getContentDescription();
             String[] tagParsed = tag.split(context.getString(R.string.string_divider));
             String rowOrColumn = tagParsed[0];
             int outerIndex = Integer.parseInt(tagParsed[1]);
@@ -47,15 +51,11 @@ public class PuzzleDisplayer {
 
             // toggle the counts background
             if (rowOrColumn.equals(context.getString(R.string.row))) {
-                for (View view : views) {
-                    groupCountDisplayer.toggleCount(rowCount, view, outerIndex, innerIndex);
-                }
                 rowCount.toggleCrossedOut(outerIndex, innerIndex);
+                countCell.toggleBackground(rowCount.isValueCrossedOut(outerIndex, innerIndex));
             } else if (rowOrColumn.equals(context.getString(R.string.column))) {
-                for (View view : views) {
-                    groupCountDisplayer.toggleCount(columnCount, view, outerIndex, innerIndex);
-                }
                 columnCount.toggleCrossedOut(outerIndex, innerIndex);
+                countCell.toggleBackground(columnCount.isValueCrossedOut(outerIndex, innerIndex));
             }
         }
     };

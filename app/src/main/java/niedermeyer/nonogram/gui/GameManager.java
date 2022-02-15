@@ -6,12 +6,15 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import niedermeyer.nonogram.gui.puzzle.GameFieldDisplayer;
+import niedermeyer.nonogram.gui.puzzle.GameFieldCell;
 import niedermeyer.nonogram.logics.GroupCount;
 import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.logics.NonogramGenerator;
 import niedermeyer.nonogram.persistence.PuzzlePersistence;
 
+/**
+ * @author Elen Niedermeyer, last modified 2022-02-15
+ */
 public class GameManager {
 
     private final NonogramGenerator nonogramGenerator = new NonogramGenerator();
@@ -34,7 +37,8 @@ public class GameManager {
         @Override
         public void onClick(View v) {
             // get index of view
-            final int id = v.getId();
+            GameFieldCell cellView = (GameFieldCell) v;
+            final int id = cellView.getId();
             final int rowIndex = id / 100;
             final int columnIndex = id % 100;
 
@@ -50,7 +54,7 @@ public class GameManager {
                     break;
             }
 
-            v.setBackgroundResource(GameFieldDisplayer.getFieldBackgroundResource(currentUserField[rowIndex][columnIndex]));
+            cellView.updateBackground(currentUserField[rowIndex][columnIndex]);
 
             // prove if the nonogram is solved now
             if (isPuzzleSolved()) {
