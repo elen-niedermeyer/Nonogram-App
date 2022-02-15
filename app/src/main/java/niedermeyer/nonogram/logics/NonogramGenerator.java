@@ -3,7 +3,7 @@ package niedermeyer.nonogram.logics;
 import java.util.Random;
 
 /**
- * @author Elen Niedermeyer, last modified 2020-12-12
+ * @author Elen Niedermeyer, last modified 2022-02-15
  */
 public class NonogramGenerator {
 
@@ -50,6 +50,10 @@ public class NonogramGenerator {
         return rowCount;
     }
 
+    public void setRowCount(GroupCount rowCount) {
+        this.rowCount = rowCount;
+    }
+
     /**
      * Getter for {@link #columnCount}.
      * Sets {@link #columnCount} if it's not initialized yet and returns it.
@@ -61,6 +65,10 @@ public class NonogramGenerator {
             columnCount = createColumnCount();
         }
         return columnCount;
+    }
+
+    public void setColumnCount(GroupCount columnCount) {
+        this.columnCount = columnCount;
     }
 
     /**
@@ -111,35 +119,35 @@ public class NonogramGenerator {
         GroupCount newRowCount = new GroupCount();
 
         // iterate over the rows of the nonogram
-            for (int rowCount = 0; rowCount < nonogram.length; rowCount++) {
-                int groupElements = 0;
-                // iterate over each value in the row
-                for (int value : nonogram[rowCount]) {
-                    if (value == NonogramConstants.FIELD_FILLED) {
-                        // here's a group of filled fields
-                        // add 1 for each field to the counter
-                        groupElements += 1;
-                    }
-                    if (value == NonogramConstants.FIELD_EMPTY && groupElements != 0) {
-                        // here's the end of one group
-                        // add the number and resets the counter
-                        newRowCount.addValueToList(rowCount, groupElements);
-                        groupElements = 0;
-                    }
+        for (int rowCount = 0; rowCount < nonogram.length; rowCount++) {
+            int groupElements = 0;
+            // iterate over each value in the row
+            for (int value : nonogram[rowCount]) {
+                if (value == NonogramConstants.FIELD_FILLED) {
+                    // here's a group of filled fields
+                    // add 1 for each field to the counter
+                    groupElements += 1;
                 }
-                // end of the for loop for a row
-
-                if (groupElements != 0) {
-                    // add the last counter if there is one
+                if (value == NonogramConstants.FIELD_EMPTY && groupElements != 0) {
+                    // here's the end of one group
+                    // add the number and resets the counter
                     newRowCount.addValueToList(rowCount, groupElements);
-                }
-
-                if (!newRowCount.existsList(rowCount)) {
-                    // if the list is empty, there are no filled fields
-                    // add 0
-                    newRowCount.addValueToList(rowCount, 0);
+                    groupElements = 0;
                 }
             }
+            // end of the for loop for a row
+
+            if (groupElements != 0) {
+                // add the last counter if there is one
+                newRowCount.addValueToList(rowCount, groupElements);
+            }
+
+            if (!newRowCount.existsList(rowCount)) {
+                // if the list is empty, there are no filled fields
+                // add 0
+                newRowCount.addValueToList(rowCount, 0);
+            }
+        }
         return newRowCount;
     }
 

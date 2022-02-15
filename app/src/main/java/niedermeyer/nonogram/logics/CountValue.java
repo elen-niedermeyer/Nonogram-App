@@ -1,9 +1,11 @@
 package niedermeyer.nonogram.logics;
 
+import java.io.Serializable;
+
 /**
- * @author Elen Niedermeyer, last modified 2020-12-12
+ * @author Elen Niedermeyer, last modified 2022-02-15
  */
-public class CountValue {
+public class CountValue implements Serializable {
 
     private final int value;
     private boolean isCrossedOut;

@@ -1,4 +1,4 @@
-package niedermeyer.nonogram.persistence;
+package niedermeyer.nonogram.persistence.puzzle;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,9 +13,9 @@ import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.gui.activity.GameActivity;
 
 /**
- * @author Elen Niedermeyer, last modified 2020-12-11
+ * @author Elen Niedermeyer, last modified 2022-02-15
  */
-public class PuzzlePersistence {
+public class NonogramFieldPersistence {
 
     /**
      * File names
@@ -33,7 +33,7 @@ public class PuzzlePersistence {
      *
      * @param pContext the context
      */
-    public PuzzlePersistence(Context pContext) {
+    public NonogramFieldPersistence(Context pContext) {
         context = pContext;
     }
 

@@ -10,7 +10,8 @@ import niedermeyer.nonogram.gui.observer.PuzzleSolvedObserver;
 import niedermeyer.nonogram.logics.GroupCount;
 import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.logics.NonogramGenerator;
-import niedermeyer.nonogram.persistence.PuzzlePersistence;
+import niedermeyer.nonogram.persistence.puzzle.NonogramCountPersistence;
+import niedermeyer.nonogram.persistence.puzzle.NonogramFieldPersistence;
 
 /**
  * @author Elen Niedermeyer, last modified 2022-02-15
@@ -65,7 +66,9 @@ public class GameManager {
         }
     };
 
-    private final PuzzlePersistence persistence;
+    private final NonogramFieldPersistence fieldPersistence;
+
+    private final NonogramCountPersistence countPersistence;
 
     private final ArrayList<PuzzleSolvedObserver> puzzleSolvedObservers = new ArrayList<>();
 
@@ -73,11 +76,16 @@ public class GameManager {
 
 
     public GameManager(Context pContext) {
-        persistence = new PuzzlePersistence(pContext);
+        fieldPersistence = new NonogramFieldPersistence(pContext);
+        countPersistence = new NonogramCountPersistence(pContext);
 
-        final int[][] nonogram = persistence.loadLastNonogram();
+        final int[][] nonogram = fieldPersistence.loadLastNonogram();
         nonogramGenerator.setNonogram(nonogram);
-        currentUserField = persistence.loadLastUserField();
+        final GroupCount rowCount = new GroupCount(countPersistence.loadRowCount());
+        nonogramGenerator.setRowCount(rowCount);
+        final GroupCount columnCount = new GroupCount(countPersistence.loadColumnCount());
+        nonogramGenerator.setColumnCount(columnCount);
+        currentUserField = fieldPersistence.loadLastUserField();
     }
 
 
@@ -98,7 +106,7 @@ public class GameManager {
     }
 
     public boolean isFirstPuzzle() {
-        return persistence.isFirstPuzzle();
+        return fieldPersistence.isFirstPuzzle();
     }
 
     public void addPuzzleSolvedObserver(PuzzleSolvedObserver pObserver) {
@@ -129,8 +137,10 @@ public class GameManager {
      * Saves the current game.
      */
     public void saveGame() {
-        persistence.saveNonogram(nonogramGenerator.getNonogram());
-        persistence.saveCurrentField(currentUserField);
+        fieldPersistence.saveNonogram(nonogramGenerator.getNonogram());
+        fieldPersistence.saveCurrentField(currentUserField);
+        countPersistence.saveGroupCount(getRowCount().getCounts(), true);
+        countPersistence.saveGroupCount(getColumnCount().getCounts(), false);
     }
 
     private void setNewUserField(int pRows, int pColumns) {

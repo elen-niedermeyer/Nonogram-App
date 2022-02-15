@@ -3,7 +3,7 @@ package niedermeyer.nonogram.logics;
 import java.util.ArrayList;
 
 /**
- * @author Elen Niedermeyer, last modified 2020-12-12
+ * @author Elen Niedermeyer, last modified 2022-02-15
  */
 public class GroupCount {
 
@@ -18,6 +18,10 @@ public class GroupCount {
      */
     public GroupCount() {
         counts = new ArrayList<>();
+    }
+
+    public GroupCount(ArrayList<ArrayList<CountValue>> counts) {
+        this.counts = counts;
     }
 
     /**
