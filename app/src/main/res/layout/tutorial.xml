@@ -43,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/tutorial_space"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin"
         android:padding="@dimen/margin" />
 
     <LinearLayout

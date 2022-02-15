@@ -18,7 +18,7 @@ import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.logics.NonogramGenerator;
 
 /**
- * @author Elen Niedermeyer, last modified 2020-12-11
+ * @author Elen Niedermeyer, last modified 2022-02-15
  */
 public class TutorialDialogFragment extends DialogFragment {
 
@@ -89,17 +89,14 @@ public class TutorialDialogFragment extends DialogFragment {
     /**
      * Listener for clicks. Shows the previous step.
      */
-    private final View.OnClickListener clickPrevious = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            // increase index
-            index--;
-            if (index >= 0) {
-                // if it's not the end of the array, update views
-                updateViews(v.getContext());
-            } else {
-                dismiss();
-            }
+    private final View.OnClickListener clickPrevious = v -> {
+        // increase index
+        index--;
+        if (index >= 0) {
+            // if it's not the end of the array, update views
+            updateViews(v.getContext());
+        } else {
+            dismiss();
         }
     };
 
@@ -177,12 +174,7 @@ public class TutorialDialogFragment extends DialogFragment {
         previousButton = layout.findViewById(R.id.tutorial_btn_previous);
         previousButton.setOnClickListener(clickPrevious);
 
-        layout.findViewById(R.id.tutorial_btn_skip).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        layout.findViewById(R.id.tutorial_btn_skip).setOnClickListener(v -> dismiss());
     }
 
     /**

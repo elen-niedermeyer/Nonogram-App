@@ -3,7 +3,6 @@ package niedermeyer.nonogram.gui;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -18,7 +17,7 @@ import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.persistence.StatisticsPersistence;
 
 /**
- * @author Elen Niedermeyer, last modified 2020-10-15
+ * @author Elen Niedermeyer, last modified 2022-02-14
  */
 public class StatisticsActivity extends AppCompatActivity {
 
@@ -37,12 +36,7 @@ public class StatisticsActivity extends AppCompatActivity {
         // sets the toolbar
         Toolbar toolbar = findViewById(R.id.activity_statistics_toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         // add rows to the table given in the layout
         addRows();

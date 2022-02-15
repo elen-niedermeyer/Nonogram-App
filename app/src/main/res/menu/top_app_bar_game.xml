@@ -6,13 +6,13 @@
 
     <item
         android:id="@+id/toolbar_game_new_puzzle"
-        android:icon="@drawable/ic_add_24dp"
+        android:icon="@drawable/ic_add_circle_outline_24dp"
         android:title="@string/new_game"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/toolbar_game_reset_puzzle"
-        android:icon="@drawable/ic_renew_24dp"
+        android:icon="@drawable/ic_replay_24dp"
         android:title="@string/reset_game"
         app:showAsAction="ifRoom" />
 
