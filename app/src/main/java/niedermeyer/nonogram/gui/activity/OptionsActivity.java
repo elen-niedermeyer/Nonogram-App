@@ -1,4 +1,4 @@
-package niedermeyer.nonogram.gui;
+package niedermeyer.nonogram.gui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.Locale;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.gui.dialogs.DialogHelper;
+import niedermeyer.nonogram.gui.dialog.DialogHelper;
 import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 
 /**

@@ -1,4 +1,4 @@
-package niedermeyer.nonogram.gui;
+package niedermeyer.nonogram.gui.activity;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;

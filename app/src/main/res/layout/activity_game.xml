@@ -5,7 +5,7 @@
     android:id="@+id/activity_game_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="niedermeyer.nonogram.gui.GameActivity">
+    tools:context="niedermeyer.nonogram.gui.activity.GameActivity">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/activity_game_scroll_vertical"

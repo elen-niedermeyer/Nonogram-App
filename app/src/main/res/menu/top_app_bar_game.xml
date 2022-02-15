@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".gui.GameActivity">
+    tools:context=".gui.activity.GameActivity">
 
     <item
         android:id="@+id/toolbar_game_new_puzzle"

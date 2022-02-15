@@ -1,4 +1,4 @@
-package niedermeyer.nonogram.gui;
+package niedermeyer.nonogram.gui.activity;
 
 import android.content.Intent;
 import android.net.Uri;

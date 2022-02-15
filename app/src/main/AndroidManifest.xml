@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".gui.StartActivity"
+        <activity android:name=".gui.activity.StartActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,11 +18,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".gui.GameActivity"
-            android:parentActivityName=".gui.StartActivity" />
-        <activity android:name=".gui.OptionsActivity" />
-        <activity android:name=".gui.StatisticsActivity" />
-        <activity android:name=".gui.AboutActivity"/>
+            android:name=".gui.activity.GameActivity"
+            android:parentActivityName=".gui.activity.StartActivity" />
+        <activity android:name=".gui.activity.OptionsActivity" />
+        <activity android:name=".gui.activity.StatisticsActivity" />
+        <activity android:name=".gui.activity.AboutActivity"/>
     </application>
 
 </manifest>

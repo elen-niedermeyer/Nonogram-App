@@ -1,4 +1,4 @@
-package niedermeyer.nonogram.gui;
+package niedermeyer.nonogram.gui.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.gui.dialogs.DialogHelper;
+import niedermeyer.nonogram.gui.puzzle.GameManager;
+import niedermeyer.nonogram.gui.observer.PuzzleSolvedObserver;
+import niedermeyer.nonogram.gui.dialog.DialogHelper;
 import niedermeyer.nonogram.gui.puzzle.PuzzleDisplayer;
 import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 import niedermeyer.nonogram.persistence.StatisticsPersistence;

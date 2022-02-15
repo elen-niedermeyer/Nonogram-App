@@ -5,7 +5,7 @@
     android:id="@+id/activity_options_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="niedermeyer.nonogram.gui.OptionsActivity">
+    tools:context="niedermeyer.nonogram.gui.activity.OptionsActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

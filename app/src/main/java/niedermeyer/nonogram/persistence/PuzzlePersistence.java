@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.gui.GameActivity;
+import niedermeyer.nonogram.gui.activity.GameActivity;
 
 /**
  * @author Elen Niedermeyer, last modified 2020-12-11

@@ -1,4 +1,4 @@
-package niedermeyer.nonogram.gui;
+package niedermeyer.nonogram.gui.puzzle;
 
 import android.content.Context;
 import android.view.View;
@@ -6,6 +6,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import niedermeyer.nonogram.gui.observer.PuzzleSolvedObserver;
 import niedermeyer.nonogram.gui.puzzle.GameFieldCell;
 import niedermeyer.nonogram.logics.GroupCount;
 import niedermeyer.nonogram.logics.NonogramConstants;

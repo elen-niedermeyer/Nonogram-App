@@ -5,7 +5,7 @@
     android:id="@+id/activity_start_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="niedermeyer.nonogram.gui.StartActivity">
+    tools:context="niedermeyer.nonogram.gui.activity.StartActivity">
 
     <LinearLayout
         android:id="@+id/activity_start_buttons"

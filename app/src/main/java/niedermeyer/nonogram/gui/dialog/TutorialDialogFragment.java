@@ -1,4 +1,4 @@
-package niedermeyer.nonogram.gui.dialogs;
+package niedermeyer.nonogram.gui.dialog;
 
 import android.content.Context;
 import android.os.Bundle;
