@@ -33,26 +33,32 @@ public class StatisticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
+        // add rows to the table given in the layout
+        boolean isEmpty = addRows();
+        if (isEmpty) {
+            setContentView(R.layout.activity_statistics_empty);
+        }
+
         // sets the toolbar
         Toolbar toolbar = findViewById(R.id.activity_statistics_toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
-
-        // add rows to the table given in the layout
-        addRows();
     }
 
     /**
      * Gets for each possible size the number of solved puzzles.
      * Loads the data from an instance if {@link StatisticsPersistence}.
      * Makes a row in the table layout if a puzzle of the size was solved.
+     *
+     * @return
      */
-    private void addRows() {
+    private boolean addRows() {
         StatisticsPersistence persistence = new StatisticsPersistence(this);
 
         // get the table layout
         TableLayout table = findViewById(R.id.activity_statistics_table);
 
+        boolean isEmpty = true;
         // iterate over the number of possible rows
         for (int rowCount = NonogramConstants.NONOGRAM_SIZE_MINIMUM; rowCount <= NonogramConstants.NONOGRAM_SIZE_MAXIMUM; rowCount++) {
             // iterate over the columns, only column numbers that are equals or greater then the row's number
@@ -61,7 +67,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 int numberOfSavedPuzzles = persistence.getCountOfSSolvedPuzzles(rowCount, columnCount);
                 // add a column if the user solved a puzzle of the given size
                 if (numberOfSavedPuzzles > 0) {
-
+                    isEmpty = false;
                     // make a new row
                     TableRow row = new TableRow(this);
 
@@ -85,5 +91,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 }
             }
         }
+
+        return isEmpty;
     }
 }

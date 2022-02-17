@@ -16,6 +16,7 @@
     <string name="about">Über die App</string>
     <string name="reset_game">Neustarten</string>
     <string name="number_of_games">Gelöste Rätsel</string>
+    <string name="statistics_empty">Du kannst hier sehen, wie viele Rätsel du schon gelöst hast. Aber du hast bisher noch keine gelöst…</string>
     <string name="won">Du hast das Rätsel gelöst</string>
     <string name="won_continue">Tippe, um ein neues Rätsel zu starten</string>
     <string name="instruction_1">Du hast ein Rätsel wie dieses: Alle Felder sind leet.</string>

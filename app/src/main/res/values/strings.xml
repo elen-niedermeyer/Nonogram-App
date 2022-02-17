@@ -45,6 +45,7 @@
 
     <!-- statistics activity -->
     <string name="number_of_games">Solved puzzles</string>
+    <string name="statistics_empty">You can see here how many puzzle you have solved. But you haven\'t solved any puzzles yet…</string>
 
     <!-- won dialog -->
     <string name="won">You solved the puzzle</string>
