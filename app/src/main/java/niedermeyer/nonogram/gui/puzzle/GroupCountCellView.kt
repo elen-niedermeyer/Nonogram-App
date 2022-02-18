@@ -1,56 +1,40 @@
-package niedermeyer.nonogram.gui.puzzle;
+package niedermeyer.nonogram.gui.puzzle
 
-import android.content.Context;
-import android.util.TypedValue;
-import android.view.Gravity;
+import android.content.Context
+import androidx.appcompat.widget.AppCompatTextView
+import android.util.TypedValue
+import niedermeyer.nonogram.persistence.GameOptionsPersistence
+import android.view.Gravity
+import niedermeyer.nonogram.R
+import niedermeyer.nonogram.logics.GroupCountCell
+import java.util.*
 
-import java.util.Locale;
+class GroupCountCellView(
+    context: Context,
+    countValue: GroupCountCell,
+    description: String,
+    onClick: OnClickListener,
+    paddingLeftRight: Int? = null,
+) : AppCompatTextView(context) {
 
-import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.persistence.GameOptionsPersistence;
+    private val textSizeFactor = 0.7f
 
-/**
- * @author Elen Niedermeyer, last modified 2022-02-15
- */
-public class GroupCountCell extends androidx.appcompat.widget.AppCompatTextView {
-
-    private static final float TEXT_SIZE_FACTOR = 0.7f;
-
-    public GroupCountCell(Context context) {
-        super(context);
-    }
-
-    public GroupCountCell(Context context, niedermeyer.nonogram.logics.GroupCountCell countValue, String description, OnClickListener onClick) {
-        super(context);
+    init {
         // make a new text view
-        this.setText(String.format(Locale.getDefault(), "%d", countValue.getValue()));
-        this.setTextSize(TypedValue.COMPLEX_UNIT_PX, new GameOptionsPersistence(context).getCellSize() * TEXT_SIZE_FACTOR);
-        this.setContentDescription(description);
-        this.setClickable(true);
-        this.setOnClickListener(onClick);
-        this.setGravity(Gravity.CENTER_HORIZONTAL);
+        this.text = String.format(Locale.getDefault(), "%d", countValue.value)
+        this.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX,
+            GameOptionsPersistence(context).cellSize * textSizeFactor
+        )
+        this.contentDescription = description
+        this.isClickable = true
+        setOnClickListener(onClick)
+        this.gravity = Gravity.CENTER_HORIZONTAL
+        if (paddingLeftRight != null) setPadding(paddingLeftRight, 0, paddingLeftRight, 0)
 
         // load the crossed out background if necessary
-        if (countValue.isCrossedOut()) {
-            this.setBackgroundResource(R.drawable.puzzle_count_crossed_out);
-        }
-    }
-
-    public GroupCountCell(Context context, niedermeyer.nonogram.logics.GroupCountCell countValue, String description, int paddingLeftRight, OnClickListener onClick) {
-        super(context);
-        // make a new text view
-        this.setText(String.format(Locale.getDefault(), "%d", countValue.getValue()));
-        this.setTextSize(TypedValue.COMPLEX_UNIT_PX, new GameOptionsPersistence(context).getCellSize() * TEXT_SIZE_FACTOR);
-        this.setContentDescription(description);
-        this.setClickable(true);
-        this.setOnClickListener(onClick);
-        this.setGravity(Gravity.CENTER_HORIZONTAL);
-
-        this.setPadding(paddingLeftRight, 0, paddingLeftRight, 0);
-
-        // load the crossed out background if necessary
-        if (countValue.isCrossedOut()) {
-            this.setBackgroundResource(R.drawable.puzzle_count_crossed_out);
+        if (countValue.isCrossedOut) {
+            setBackgroundResource(R.drawable.puzzle_count_crossed_out)
         }
     }
 
@@ -59,14 +43,14 @@ public class GroupCountCell extends androidx.appcompat.widget.AppCompatTextView 
      *
      * @param isCrossedOut
      */
-    public void toggleBackground(boolean isCrossedOut) {
+    fun toggleBackground(isCrossedOut: Boolean) {
         // toggle the background, stroke or not
         if (!isCrossedOut) {
             // set the background to nothing if it is stroke
-            this.setBackgroundResource(0);
+            setBackgroundResource(0)
         } else {
             // set the strike resource
-            this.setBackgroundResource(R.drawable.puzzle_count_crossed_out);
+            setBackgroundResource(R.drawable.puzzle_count_crossed_out)
         }
     }
 

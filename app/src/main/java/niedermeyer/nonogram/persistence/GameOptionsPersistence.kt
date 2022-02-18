@@ -1,96 +1,84 @@
-package niedermeyer.nonogram.persistence;
+package niedermeyer.nonogram.persistence
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Context
+import niedermeyer.nonogram.R
 
-import niedermeyer.nonogram.R;
+class GameOptionsPersistence(private val context: Context) {
 
-/**
- * @author Elen Niedermeyer, last modified 2017-10-08
- */
-public class GameOptionsPersistence {
-
-    /**
-     * Number of rows and columns if the preferences couldn't be loaded
-     */
-    private static final int FIELD_SIZE_DEFAULT = 5;
-    private static final int CELL_SIZE_DEFAULT = 100;
-
-    /**
-     * Static variables
-     */
-    private static int numberOfRows = 0;
-    private static int numberOfColumns = 0;
-    private static int cellSize = 0;
-
-    private final Context context;
-
-    /**
-     * Constructor, sets {@link #context}. Initializes {@link #numberOfRows} and {@link #numberOfColumns} if they aren't initialized yet.
-     *
-     * @param pContext the context activity
-     */
-    public GameOptionsPersistence(Context pContext) {
-        context = pContext;
-
-        init();
-    }
-
-    public int getNumberOfRows() {
-        if (numberOfRows > 0) {
-            return numberOfRows;
+    var numberOfRows: Int
+        get() = if (Companion.numberOfRows > 0) {
+            Companion.numberOfRows
         } else {
-            return FIELD_SIZE_DEFAULT;
+            FIELD_SIZE_DEFAULT
         }
-    }
+        set(numberOfRows) {
+            Companion.numberOfRows = numberOfRows
+            val prefs = context.getSharedPreferences(
+                context.getString(R.string.prefs_game_options),
+                Context.MODE_PRIVATE
+            )
+            val prefsEdit = prefs.edit()
+            prefsEdit.putInt(context.getString(R.string.prefs_rows), numberOfRows)
+            prefsEdit.apply()
+        }
 
-    public void setNumberOfRows(int numberOfRows) {
-        GameOptionsPersistence.numberOfRows = numberOfRows;
-        SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.prefs_game_options), Context.MODE_PRIVATE);
-        SharedPreferences.Editor prefsEdit = prefs.edit();
-        prefsEdit.putInt(context.getString(R.string.prefs_rows), numberOfRows);
-        prefsEdit.apply();
-    }
-
-    public int getNumberOfColumns() {
-        if (numberOfColumns > 0) {
-            return numberOfColumns;
+    var numberOfColumns: Int
+        get() = if (Companion.numberOfColumns > 0) {
+            Companion.numberOfColumns
         } else {
-            return FIELD_SIZE_DEFAULT;
+            FIELD_SIZE_DEFAULT
         }
-    }
+        set(numberOfColumns) {
+            Companion.numberOfColumns = numberOfColumns
+            val prefs = context.getSharedPreferences(
+                context.getString(R.string.prefs_game_options),
+                Context.MODE_PRIVATE
+            )
+            val prefsEdit = prefs.edit()
+            prefsEdit.putInt(context.getString(R.string.prefs_columns), numberOfColumns)
+            prefsEdit.apply()
+        }
 
-    public void setNumberOfColumns(int numberOfColumns) {
-        GameOptionsPersistence.numberOfColumns = numberOfColumns;
-        SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.prefs_game_options), Context.MODE_PRIVATE);
-        SharedPreferences.Editor prefsEdit = prefs.edit();
-        prefsEdit.putInt(context.getString(R.string.prefs_columns), numberOfColumns);
-        prefsEdit.apply();
-    }
-
-    public int getCellSize() {
-        if (cellSize > 0) {
-            return cellSize;
+    var cellSize: Int
+        get() = if (Companion.cellSize > 0) {
+            Companion.cellSize
         } else {
-            return CELL_SIZE_DEFAULT;
+            CELL_SIZE_DEFAULT
         }
+        set(cellSize) {
+            Companion.cellSize = cellSize
+            val prefs = context.getSharedPreferences(
+                context.getString(R.string.prefs_game_options),
+                Context.MODE_PRIVATE
+            )
+            val prefsEdit = prefs.edit()
+            prefsEdit.putInt(context.getString(R.string.prefs_cell_size), cellSize)
+            prefsEdit.apply()
+        }
+
+    init {
+        val prefs = context.getSharedPreferences(
+            context.getString(R.string.prefs_game_options),
+            Context.MODE_PRIVATE
+        )
+        Companion.numberOfRows =
+            prefs.getInt(context.getString(R.string.prefs_rows), FIELD_SIZE_DEFAULT)
+        Companion.numberOfColumns =
+            prefs.getInt(context.getString(R.string.prefs_columns), FIELD_SIZE_DEFAULT)
+        Companion.cellSize =
+            prefs.getInt(context.getString(R.string.prefs_cell_size), CELL_SIZE_DEFAULT)
     }
 
-    public void setCellSize(int cellSize) {
-        GameOptionsPersistence.cellSize = cellSize;
-        SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.prefs_game_options), Context.MODE_PRIVATE);
-        SharedPreferences.Editor prefsEdit = prefs.edit();
-        prefsEdit.putInt(context.getString(R.string.prefs_cell_size), cellSize);
-        prefsEdit.apply();
+    companion object {
+        // Number of rows and columns if the preferences couldn't be loaded
+        private const val FIELD_SIZE_DEFAULT = 5
+        private const val CELL_SIZE_DEFAULT = 100
+
+        // Static variables
+        private var numberOfRows = 0
+        private var numberOfColumns = 0
+        private var cellSize = 0
     }
 
-    /**
-     * Loads shared preferences.
-     */
-    private void init() {
-        SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.prefs_game_options), Context.MODE_PRIVATE);
-        numberOfRows = prefs.getInt(context.getString(R.string.prefs_rows), FIELD_SIZE_DEFAULT);
-        numberOfColumns = prefs.getInt(context.getString(R.string.prefs_columns), FIELD_SIZE_DEFAULT);
-        cellSize = prefs.getInt(context.getString(R.string.prefs_cell_size), CELL_SIZE_DEFAULT);
-    }
+
 }

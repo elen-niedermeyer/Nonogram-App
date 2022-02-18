@@ -1,17 +1,19 @@
-package niedermeyer.nonogram.gui.puzzle;
+package niedermeyer.nonogram.gui.puzzle
 
-import android.content.Context;
-import android.view.Gravity;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.content.Context
+import android.widget.TableLayout
+import android.view.Gravity
+import android.widget.TableRow
 
-public class GameFieldRow extends TableRow {
+class GameFieldRowView(context: Context?) : TableRow(context) {
 
-    public GameFieldRow(Context context) {
-        super(context);
-        TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-        this.setLayoutParams(rowParams);
-        this.setGravity(Gravity.CENTER);
+    init {
+        val rowParams = TableLayout.LayoutParams(
+            TableLayout.LayoutParams.WRAP_CONTENT,
+            TableLayout.LayoutParams.WRAP_CONTENT
+        )
+        this.layoutParams = rowParams
+        this.gravity = Gravity.CENTER
     }
 
 }

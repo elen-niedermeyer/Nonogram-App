@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.gui.puzzle.GameController;
+import niedermeyer.nonogram.gui.puzzle.PuzzleController;
 import niedermeyer.nonogram.gui.observer.PuzzleSolvedObserver;
 import niedermeyer.nonogram.gui.dialog.DialogHelper;
 import niedermeyer.nonogram.gui.puzzle.PuzzleDisplayer;
@@ -81,7 +81,7 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
-    private GameController gameManager;
+    private PuzzleController gameManager;
 
     private GameOptionsPersistence options;
     private StatisticsPersistence statistics;
@@ -107,7 +107,7 @@ public class GameActivity extends AppCompatActivity {
         // initialize class members
         options = new GameOptionsPersistence(this);
         statistics = new StatisticsPersistence(this);
-        gameManager = new GameController(this);
+        gameManager = new PuzzleController(this);
         gameManager.addPuzzleSolvedObserver(puzzleSolvedObserver);
 
         // start the tutorial if it is the first puzzle

@@ -1,98 +1,87 @@
-package niedermeyer.nonogram.gui.puzzle;
+package niedermeyer.nonogram.gui.puzzle
 
-import android.content.Context;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.content.Context
+import niedermeyer.nonogram.logics.GroupCounts
+import android.widget.LinearLayout
+import niedermeyer.nonogram.R
+import niedermeyer.nonogram.persistence.GameOptionsPersistence
+import android.widget.TableLayout
+import android.view.Gravity
+import android.view.View
+import android.widget.TableRow
 
-import java.util.ArrayList;
+class GroupCountDisplayer(private val context: Context) {
 
-import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.logics.GroupCountCell;
-import niedermeyer.nonogram.logics.GroupCount;
-import niedermeyer.nonogram.persistence.GameOptionsPersistence;
+    private val textPaddingFactor = 0.5f
 
-/**
- * @author Elen Niedermeyer, last modified 2022-02-15
- */
-public class GroupCountDisplayer {
-
-    private static final float TEXT_MARGIN_FACTOR = 0.5f;
-
-    private final Context context;
-
-    /**
-     * Constructor. Initializes {@link #context}.
-     *
-     * @param pContext the context activity
-     */
-    public GroupCountDisplayer(Context pContext) {
-        context = pContext;
-    }
-
-    /**
-     * Makes a view with counts at the given index.
-     *
-     * @param pRowCount the row count
-     * @param pIndex    index of the row
-     * @return the modified table
-     */
-    public LinearLayout getRowCountView(GroupCount pRowCount, int pIndex, View.OnClickListener pOnCountClick) {
-        LinearLayout layout = new LinearLayout(context);
-        layout.setOrientation(LinearLayout.HORIZONTAL);
-
-        ArrayList<GroupCountCell> counts = pRowCount.getList(pIndex);
+    fun getRowCountView(
+        rowCount: GroupCounts,
+        index: Int,
+        pOnCountClick: View.OnClickListener?
+    ): LinearLayout {
+        val layout = LinearLayout(context)
+        layout.orientation = LinearLayout.HORIZONTAL
+        val counts = rowCount.get(index)
 
         // add an view for each count of the row
-        for (int i = 0; i < counts.size(); i++) {
+        for (i in counts.indices) {
             // make a new view
-            niedermeyer.nonogram.gui.puzzle.GroupCountCell countView = new niedermeyer.nonogram.gui.puzzle.GroupCountCell(context, counts.get(i), String.format(context.getString(R.string.tag_row_count), pIndex, i), (int) ((new GameOptionsPersistence(context).getCellSize() * TEXT_MARGIN_FACTOR) / 2), pOnCountClick);
+            val countView = GroupCountCellView(
+                context,
+                counts[i],
+                String.format(context.getString(R.string.tag_row_count), index, i),
+                pOnCountClick!!,
+                (GameOptionsPersistence(context).cellSize * textPaddingFactor / 2).toInt()
+            )
             // add the view to the new layout
-            layout.addView(countView);
+            layout.addView(countView)
         }
-
-        return layout;
+        return layout
     }
 
-    public TableRow getColumnCountRow(GroupCount pColumnCount, View.OnClickListener pOnCountClick) {
-        TableRow tableRow = new TableRow(context);
-        TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-        tableRow.setLayoutParams(rowParams);
+    fun getColumnCountRow(
+        pColumnCount: GroupCounts,
+        pOnCountClick: View.OnClickListener?
+    ): TableRow {
+        val tableRow = TableRow(context)
+        val rowParams = TableLayout.LayoutParams(
+            TableLayout.LayoutParams.WRAP_CONTENT,
+            TableLayout.LayoutParams.WRAP_CONTENT
+        )
+        tableRow.layoutParams = rowParams
 
         // add an empty text view at the start, here are the row counts
-        tableRow.addView(new LinearLayout(context));
-
-        for (int columnIndex = 0; columnIndex < pColumnCount.getCounts().size(); columnIndex++) {
-            tableRow.addView(getColumnCountView(pColumnCount, columnIndex, pOnCountClick));
+        tableRow.addView(LinearLayout(context))
+        for (columnIndex in pColumnCount.counts.indices) {
+            tableRow.addView(getColumnCountView(pColumnCount, columnIndex, pOnCountClick))
         }
-        return tableRow;
+        return tableRow
     }
 
-    /**
-     * Makes row with counts for the columns.
-     *
-     * @param pColumnCount the column count
-     * @param pIndex
-     * @return the modified table
-     */
-    public LinearLayout getColumnCountView(GroupCount pColumnCount, int pIndex, View.OnClickListener pOnCountClick) {
+    private fun getColumnCountView(
+        columnCount: GroupCounts,
+        index: Int,
+        pOnCountClick: View.OnClickListener?
+    ): LinearLayout {
         // make a new layout
-        LinearLayout layout = new LinearLayout(context);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setGravity(Gravity.BOTTOM);
-
-        ArrayList<GroupCountCell> counts = pColumnCount.getList(pIndex);
+        val layout = LinearLayout(context)
+        layout.orientation = LinearLayout.VERTICAL
+        layout.gravity = Gravity.BOTTOM
+        val counts = columnCount.get(index)
 
         // add the value in this row for each column
-        for (int i = 0; i < counts.size(); i++) {
-            niedermeyer.nonogram.gui.puzzle.GroupCountCell countView = new niedermeyer.nonogram.gui.puzzle.GroupCountCell(context, counts.get(i), String.format(context.getString(R.string.tag_column_count), pIndex, i), pOnCountClick);
+        for (i in counts.indices) {
+            val countView = GroupCountCellView(
+                context,
+                counts[i],
+                String.format(context.getString(R.string.tag_column_count), index, i),
+                pOnCountClick!!,
+                null
+            )
             // add the view to the new layout
-            layout.addView(countView);
+            layout.addView(countView)
         }
-
-        return layout;
+        return layout
     }
 
 }

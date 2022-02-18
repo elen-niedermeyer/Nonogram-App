@@ -6,7 +6,7 @@ import android.widget.TableRow
 import niedermeyer.nonogram.logics.NonogramConstants
 import niedermeyer.nonogram.R
 
-class GameFieldCell(
+class GameFieldCellView(
     context: Context,
     val viewId: Int,
     cellSize: Int,

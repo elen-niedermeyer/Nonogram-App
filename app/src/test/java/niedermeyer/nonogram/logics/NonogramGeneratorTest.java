@@ -41,7 +41,7 @@ public class NonogramGeneratorTest {
 
     @Test
     public void testGetRowCount() {
-        GroupCount rowCount = new GroupCount();
+        GroupCounts rowCount = new GroupCounts();
         rowCount.addValueToList(0, 0);
         rowCount.addValueToList(1, 1);
         rowCount.addValueToList(1, 1);
@@ -54,7 +54,7 @@ public class NonogramGeneratorTest {
 
     @Test
     public void testGetColumnCount() {
-        GroupCount columnCount = new GroupCount();
+        GroupCounts columnCount = new GroupCounts();
         columnCount.addValueToList(0, 3);
         columnCount.addValueToList(1, 0);
         columnCount.addValueToList(2, 1);

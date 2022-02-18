@@ -8,12 +8,12 @@ import niedermeyer.nonogram.persistence.puzzle.PuzzlePersistence
 import niedermeyer.nonogram.logics.Nonogram
 import java.util.ArrayList
 
-class GameController(context: Context) {
+class PuzzleController(context: Context) {
     val isFirstPuzzle: Boolean
         get() = puzzlePersistence.isFirstPuzzle
 
     val onFieldClick = View.OnClickListener { v ->
-        val cellView = v as GameFieldCell
+        val cellView = v as GameFieldCellView
         val id = cellView.viewId
 
         val cell = nonogram!!.cells[id]

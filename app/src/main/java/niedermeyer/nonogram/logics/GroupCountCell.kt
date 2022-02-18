@@ -17,4 +17,8 @@ class GroupCountCell(val value: Int, var isCrossedOut: Boolean = false) : Serial
         return result
     }
 
+    fun toggleCrossedOut() {
+        isCrossedOut = !isCrossedOut
+    }
+
 }

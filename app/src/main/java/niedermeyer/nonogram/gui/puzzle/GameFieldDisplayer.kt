@@ -3,11 +3,12 @@ package niedermeyer.nonogram.gui.puzzle
 import android.content.Context
 import android.view.View
 import android.widget.TableLayout
+import niedermeyer.nonogram.logics.GameFieldCell
 
 class GameFieldDisplayer(private val context: Context) {
 
     fun getPuzzleView(
-        cells: List<niedermeyer.nonogram.logics.GameFieldCell?>,
+        cells: List<GameFieldCell>,
         rowNumber: Int,
         cellSize: Int,
         onCellClick: View.OnClickListener
@@ -15,22 +16,20 @@ class GameFieldDisplayer(private val context: Context) {
         val table = TableLayout(context)
 
         // new row
-        var rowView = GameFieldRow(context)
+        var rowView = GameFieldRowView(context)
         for (i in cells.indices) {
-            val newCell = cells[i]?.let {
-                GameFieldCell(
-                    context,
-                    i,
-                    cellSize,
-                    it.userValue,
-                    onCellClick
-                )
-            }
+            val newCell = GameFieldCellView(
+                context,
+                i,
+                cellSize,
+                cells[i].userValue,
+                onCellClick
+            )
             rowView.addView(newCell)
 
             if ((i + 1) % rowNumber == 0) {
                 table.addView(rowView)
-                rowView = GameFieldRow(context)
+                rowView = GameFieldRowView(context)
             }
         }
 
