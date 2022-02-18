@@ -14,7 +14,6 @@ import androidx.fragment.app.DialogFragment;
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.gui.puzzle.PuzzleDisplayer;
 import niedermeyer.nonogram.logics.NonogramConstants;
-import niedermeyer.nonogram.logics.NonogramGenerator;
 
 public class TutorialDialogFragment extends DialogFragment {
 
@@ -37,7 +36,7 @@ public class TutorialDialogFragment extends DialogFragment {
             {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_FILLED}
     };
 
-    private final NonogramGenerator nonogramGenerator = new NonogramGenerator();
+    //private final NonogramGenerator nonogramGenerator = new NonogramGenerator();
 
     // layout elements
     private TextView title;
@@ -93,7 +92,7 @@ public class TutorialDialogFragment extends DialogFragment {
         initInstructionArray();
 
         // init nonogram
-        nonogramGenerator.setNonogram(nonogram);
+        //nonogramGenerator.setNonogram(nonogram);
 
         // set content
         index = 0;
@@ -112,21 +111,21 @@ public class TutorialDialogFragment extends DialogFragment {
         if (index == 0) {
             // init table
             tableContainer.removeAllViews();
-            tableContainer.addView(new PuzzleDisplayer(pContext).getGameView(emptyUserField, nonogramGenerator.getRowCount(), nonogramGenerator.getColumnCount(), 100, null));
+            //tableContainer.addView(new PuzzleDisplayer(pContext).getGameView(emptyUserField, nonogramGenerator.getRowCount(), nonogramGenerator.getColumnCount(), 100, null));
             // hide previous button in first view
             previousButton.setVisibility(View.INVISIBLE);
 
         } else if (index == 1) {
             // set table when going forward
             tableContainer.removeAllViews();
-            tableContainer.addView(new PuzzleDisplayer(pContext).getGameView(solvedUserField, nonogramGenerator.getRowCount(), nonogramGenerator.getColumnCount(), 100, null));
+            //tableContainer.addView(new PuzzleDisplayer(pContext).getGameView(solvedUserField, nonogramGenerator.getRowCount(), nonogramGenerator.getColumnCount(), 100, null));
             // set previous button for following views
             previousButton.setVisibility(View.VISIBLE);
 
         } else if (index == instructions.length - 2) {
             // set table when going backwards
             tableContainer.removeAllViews();
-            tableContainer.addView(new PuzzleDisplayer(pContext).getGameView(solvedUserField, nonogramGenerator.getRowCount(), nonogramGenerator.getColumnCount(), 100, null));
+            //tableContainer.addView(new PuzzleDisplayer(pContext).getGameView(solvedUserField, nonogramGenerator.getRowCount(), nonogramGenerator.getColumnCount(), 100, null));
             // set button text when going backwards
             nextButton.setText(R.string.next);
 

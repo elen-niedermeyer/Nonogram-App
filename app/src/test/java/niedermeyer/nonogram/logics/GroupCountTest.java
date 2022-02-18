@@ -11,12 +11,12 @@ public class GroupCountTest {
     @Test
     public void testGetCounts() {
         GroupCount currentCount = new GroupCount();
-        ArrayList<ArrayList<CountValue>> expectedCount = new ArrayList<>();
+        ArrayList<ArrayList<GroupCountCell>> expectedCount = new ArrayList<>();
         Assert.assertEquals(expectedCount, currentCount.getCounts());
 
         currentCount.addValueToList(0, 2);
-        ArrayList<CountValue> list = new ArrayList<CountValue>();
-        list.add(new CountValue(2));
+        ArrayList<GroupCountCell> list = new ArrayList<GroupCountCell>();
+        list.add(new GroupCountCell(2, false));
         expectedCount.add(list);
         Assert.assertEquals(expectedCount, currentCount.getCounts());
     }
@@ -26,8 +26,8 @@ public class GroupCountTest {
         GroupCount currentCount = new GroupCount();
         currentCount.addValueToList(0, 2);
 
-        ArrayList<CountValue> expectedList = new ArrayList<CountValue>();
-        expectedList.add(new CountValue(2));
+        ArrayList<GroupCountCell> expectedList = new ArrayList<GroupCountCell>();
+        expectedList.add(new GroupCountCell(2, false));
         Assert.assertEquals(expectedList, currentCount.getList(0));
     }
 
@@ -105,7 +105,7 @@ public class GroupCountTest {
         GroupCount currentCount = new GroupCount();
 
         currentCount.addValueToList(0, 1);
-        ArrayList<CountValue> currentList = currentCount.getList(0);
+        ArrayList<GroupCountCell> currentList = currentCount.getList(0);
         Assert.assertEquals(1, currentList.size());
         Assert.assertEquals(1, currentList.get(currentList.size() - 1).getValue());
 
@@ -174,7 +174,7 @@ public class GroupCountTest {
     @Test
     public void testEquals() {
         GroupCount currentCount = new GroupCount();
-        Assert.assertNotEquals(currentCount, new ArrayList<CountValue>());
+        Assert.assertNotEquals(currentCount, new ArrayList<GroupCountCell>());
         GroupCount otherCount = new GroupCount();
         Assert.assertEquals(currentCount, otherCount);
 

@@ -13,12 +13,10 @@ import java.util.ArrayList;
 
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.logics.GroupCount;
+import niedermeyer.nonogram.logics.Nonogram;
 
 import static android.view.View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION;
 
-/**
- * @author Elen Niedermeyer, last modified 2022-02-15
- */
 public class PuzzleDisplayer {
 
     private final Context context;
@@ -68,31 +66,32 @@ public class PuzzleDisplayer {
         groupCountDisplayer = new GroupCountDisplayer(context);
     }
 
-    public TableLayout getGameView(int[][] pCurrentUserField, GroupCount pRowCount, GroupCount pColumnCount, int pCellSize, View.OnClickListener onFieldClick) {
-        rowCount = pRowCount;
-        columnCount = pColumnCount;
+    public TableLayout getGameView(Nonogram nonogram, int cellSize, View.OnClickListener onFieldClick) {
+        rowCount = nonogram.getRowCounts();
+        columnCount = nonogram.getColumnCounts();
 
         final GameFieldDisplayer fieldDisplayer = new GameFieldDisplayer(context);
-        TableLayout table = fieldDisplayer.getPuzzleView(pCurrentUserField, pCellSize, onFieldClick);
+        TableLayout table = fieldDisplayer.getPuzzleView(nonogram.getCells(), nonogram.getRowNumber(), cellSize, onFieldClick);
 
-        for (int i = 0; i < pCurrentUserField.length; i++) {
+        // add row counts
+        for (int i = 0; i < nonogram.getRowNumber(); i++) {
             TableRow row = (TableRow) table.getChildAt(i);
             // add row count at the left
-            LinearLayout rowCount = groupCountDisplayer.getRowCountView(pRowCount, i, onCountClick);
+            LinearLayout rowCount = groupCountDisplayer.getRowCountView(nonogram.getRowCounts(), i, onCountClick);
             rowCount.setGravity(Gravity.END);
             row.addView(rowCount, 0);
             // add row count at the right
-            rowCount = groupCountDisplayer.getRowCountView(pRowCount, i, onCountClick);
+            rowCount = groupCountDisplayer.getRowCountView(nonogram.getRowCounts(), i, onCountClick);
             rowCount.setGravity(Gravity.START);
             row.addView(rowCount);
         }
 
         // add column count at the top
-        TableRow columnCount = groupCountDisplayer.getColumnCountRow(pColumnCount, onCountClick);
+        TableRow columnCount = groupCountDisplayer.getColumnCountRow(nonogram.getColumnCounts(), onCountClick);
         columnCount.setGravity(Gravity.BOTTOM);
         table.addView(columnCount, 0);
         // add column count at the bottom
-        columnCount = groupCountDisplayer.getColumnCountRow(pColumnCount, onCountClick);
+        columnCount = groupCountDisplayer.getColumnCountRow(nonogram.getColumnCounts(), onCountClick);
         columnCount.setGravity(Gravity.TOP);
         table.addView(columnCount);
 

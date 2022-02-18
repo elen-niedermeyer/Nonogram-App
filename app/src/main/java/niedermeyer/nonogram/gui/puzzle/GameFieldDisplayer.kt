@@ -1,36 +1,40 @@
-package niedermeyer.nonogram.gui.puzzle;
+package niedermeyer.nonogram.gui.puzzle
 
-import android.content.Context;
-import android.view.View;
-import android.widget.TableLayout;
+import android.content.Context
+import android.view.View
+import android.widget.TableLayout
 
-public class GameFieldDisplayer {
+class GameFieldDisplayer(private val context: Context) {
 
-    private final Context context;
+    fun getPuzzleView(
+        cells: List<niedermeyer.nonogram.logics.GameFieldCell?>,
+        rowNumber: Int,
+        cellSize: Int,
+        onCellClick: View.OnClickListener
+    ): TableLayout {
+        val table = TableLayout(context)
 
-    public GameFieldDisplayer(Context pContext) {
-        context = pContext;
-    }
-
-    public TableLayout getPuzzleView(int[][] pUserField, int pCellSize, View.OnClickListener pOnFieldClick) {
-        TableLayout table = new TableLayout(context);
-
-        // add rows of nonogram
-        for (int rowIndex = 0; rowIndex < pUserField.length; rowIndex++) {
-            // new row
-            GameFieldRow rowView = new GameFieldRow(context);
-
-            // add a view for each cell in this row
-            for (int columnIndex = 0; columnIndex < pUserField[rowIndex].length; columnIndex++) {
-                // set id such that row_index = id/100 and column_index = id%100
-                GameFieldCell newCell = new GameFieldCell(context, (rowIndex * 100) + columnIndex, pCellSize, pUserField[rowIndex][columnIndex], pOnFieldClick);
-                rowView.addView(newCell);
+        // new row
+        var rowView = GameFieldRow(context)
+        for (i in cells.indices) {
+            val newCell = cells[i]?.let {
+                GameFieldCell(
+                    context,
+                    i,
+                    cellSize,
+                    it.userValue,
+                    onCellClick
+                )
             }
+            rowView.addView(newCell)
 
-            table.addView(rowView);
+            if ((i + 1) % rowNumber == 0) {
+                table.addView(rowView)
+                rowView = GameFieldRow(context)
+            }
         }
 
-        return table;
+        return table
     }
 
 }

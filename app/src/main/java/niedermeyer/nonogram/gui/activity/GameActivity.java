@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.gui.puzzle.GameManager;
+import niedermeyer.nonogram.gui.puzzle.GameController;
 import niedermeyer.nonogram.gui.observer.PuzzleSolvedObserver;
 import niedermeyer.nonogram.gui.dialog.DialogHelper;
 import niedermeyer.nonogram.gui.puzzle.PuzzleDisplayer;
@@ -37,7 +37,7 @@ public class GameActivity extends AppCompatActivity {
 
             } else if (id == R.id.toolbar_game_reset_puzzle) {
                 // reset the current puzzle
-                gameManager.resetGame(options.getNumberOfRows(), options.getNumberOfColumns());
+                gameManager.resetGame();
                 GameActivity.this.displayGame();
                 return true;
 
@@ -81,7 +81,7 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
-    private GameManager gameManager;
+    private GameController gameManager;
 
     private GameOptionsPersistence options;
     private StatisticsPersistence statistics;
@@ -107,7 +107,7 @@ public class GameActivity extends AppCompatActivity {
         // initialize class members
         options = new GameOptionsPersistence(this);
         statistics = new StatisticsPersistence(this);
-        gameManager = new GameManager(this);
+        gameManager = new GameController(this);
         gameManager.addPuzzleSolvedObserver(puzzleSolvedObserver);
 
         // start the tutorial if it is the first puzzle
@@ -133,7 +133,7 @@ public class GameActivity extends AppCompatActivity {
     private void displayGame() {
         HorizontalScrollView view = findViewById(R.id.activity_game_scroll_horizontal);
         view.removeAllViews();
-        view.addView(puzzleDisplayer.getGameView(gameManager.getCurrentUserField(), gameManager.getRowCount(), gameManager.getColumnCount(), options.getCellSize(), gameManager.getOnFieldClick()));
+        view.addView(puzzleDisplayer.getGameView(gameManager.getNonogram(), options.getCellSize(), gameManager.getOnFieldClick()));
     }
 
     /**

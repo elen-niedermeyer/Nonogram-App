@@ -10,7 +10,7 @@ import android.widget.TableRow;
 import java.util.ArrayList;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.logics.CountValue;
+import niedermeyer.nonogram.logics.GroupCountCell;
 import niedermeyer.nonogram.logics.GroupCount;
 import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 
@@ -43,12 +43,12 @@ public class GroupCountDisplayer {
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.HORIZONTAL);
 
-        ArrayList<CountValue> counts = pRowCount.getList(pIndex);
+        ArrayList<GroupCountCell> counts = pRowCount.getList(pIndex);
 
         // add an view for each count of the row
         for (int i = 0; i < counts.size(); i++) {
             // make a new view
-            GroupCountCell countView = new GroupCountCell(context, counts.get(i), String.format(context.getString(R.string.tag_row_count), pIndex, i), (int) ((new GameOptionsPersistence(context).getCellSize() * TEXT_MARGIN_FACTOR) / 2), pOnCountClick);
+            niedermeyer.nonogram.gui.puzzle.GroupCountCell countView = new niedermeyer.nonogram.gui.puzzle.GroupCountCell(context, counts.get(i), String.format(context.getString(R.string.tag_row_count), pIndex, i), (int) ((new GameOptionsPersistence(context).getCellSize() * TEXT_MARGIN_FACTOR) / 2), pOnCountClick);
             // add the view to the new layout
             layout.addView(countView);
         }
@@ -83,11 +83,11 @@ public class GroupCountDisplayer {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setGravity(Gravity.BOTTOM);
 
-        ArrayList<CountValue> counts = pColumnCount.getList(pIndex);
+        ArrayList<GroupCountCell> counts = pColumnCount.getList(pIndex);
 
         // add the value in this row for each column
         for (int i = 0; i < counts.size(); i++) {
-            GroupCountCell countView = new GroupCountCell(context, counts.get(i), String.format(context.getString(R.string.tag_column_count), pIndex, i), pOnCountClick);
+            niedermeyer.nonogram.gui.puzzle.GroupCountCell countView = new niedermeyer.nonogram.gui.puzzle.GroupCountCell(context, counts.get(i), String.format(context.getString(R.string.tag_column_count), pIndex, i), pOnCountClick);
             // add the view to the new layout
             layout.addView(countView);
         }

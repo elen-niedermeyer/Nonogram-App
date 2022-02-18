@@ -7,7 +7,6 @@ import android.view.Gravity;
 import java.util.Locale;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.logics.CountValue;
 import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 
 /**
@@ -21,7 +20,7 @@ public class GroupCountCell extends androidx.appcompat.widget.AppCompatTextView 
         super(context);
     }
 
-    public GroupCountCell(Context context, CountValue countValue, String description, OnClickListener onClick) {
+    public GroupCountCell(Context context, niedermeyer.nonogram.logics.GroupCountCell countValue, String description, OnClickListener onClick) {
         super(context);
         // make a new text view
         this.setText(String.format(Locale.getDefault(), "%d", countValue.getValue()));
@@ -37,7 +36,7 @@ public class GroupCountCell extends androidx.appcompat.widget.AppCompatTextView 
         }
     }
 
-    public GroupCountCell(Context context, CountValue countValue, String description, int paddingLeftRight, OnClickListener onClick) {
+    public GroupCountCell(Context context, niedermeyer.nonogram.logics.GroupCountCell countValue, String description, int paddingLeftRight, OnClickListener onClick) {
         super(context);
         // make a new text view
         this.setText(String.format(Locale.getDefault(), "%d", countValue.getValue()));

@@ -3,29 +3,29 @@ package niedermeyer.nonogram.logics;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class CountValueTest {
+public class GroupCountCellTest {
 
     @Test
     public void testGetValue() {
-        CountValue currentValue = new CountValue(2);
+        GroupCountCell currentValue = new GroupCountCell(2, false);
         Assert.assertEquals(2, currentValue.getValue());
     }
 
     @Test
     public void testIsCrossedOut() {
-        CountValue currentValue = new CountValue(2);
+        GroupCountCell currentValue = new GroupCountCell(2, false);
         Assert.assertFalse(currentValue.isCrossedOut());
 
-        currentValue = new CountValue(2, false);
+        currentValue = new GroupCountCell(2, false);
         Assert.assertFalse(currentValue.isCrossedOut());
 
-        currentValue = new CountValue(2, true);
+        currentValue = new GroupCountCell(2, true);
         Assert.assertTrue(currentValue.isCrossedOut());
     }
 
     @Test
     public void testSetCrossedOut() {
-        CountValue currentValue = new CountValue(2);
+        GroupCountCell currentValue = new GroupCountCell(2, false);
 
         currentValue.setCrossedOut(false);
         Assert.assertFalse(currentValue.isCrossedOut());
@@ -36,9 +36,9 @@ public class CountValueTest {
 
     @Test
     public void testEquals() {
-        CountValue currentValue = new CountValue(2);
+        GroupCountCell currentValue = new GroupCountCell(2, false);
         Assert.assertNotEquals(currentValue, 3);
-        CountValue otherValue = new CountValue(2);
+        GroupCountCell otherValue = new GroupCountCell(2, false);
         Assert.assertEquals(currentValue, otherValue);
 
         otherValue.setCrossedOut(true);
@@ -47,7 +47,7 @@ public class CountValueTest {
         currentValue.setCrossedOut(true);
         Assert.assertEquals(currentValue, otherValue);
 
-        otherValue = new CountValue(3);
+        otherValue = new GroupCountCell(3, false);
         Assert.assertNotEquals(currentValue, otherValue);
     }
 }

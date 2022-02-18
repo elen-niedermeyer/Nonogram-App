@@ -1,16 +1,17 @@
 package niedermeyer.nonogram.logics;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * @author Elen Niedermeyer, last modified 2022-02-15
  */
-public class GroupCount {
+public class GroupCount implements Serializable {
 
     /**
      * The counts list.
      */
-    private final ArrayList<ArrayList<CountValue>> counts;
+    private final ArrayList<ArrayList<GroupCountCell>> counts;
 
     /**
      * Constructor.
@@ -20,7 +21,7 @@ public class GroupCount {
         counts = new ArrayList<>();
     }
 
-    public GroupCount(ArrayList<ArrayList<CountValue>> counts) {
+    public GroupCount(ArrayList<ArrayList<GroupCountCell>> counts) {
         this.counts = counts;
     }
 
@@ -29,7 +30,7 @@ public class GroupCount {
      *
      * @return {@link #counts}
      */
-    public ArrayList<ArrayList<CountValue>> getCounts() {
+    public ArrayList<ArrayList<GroupCountCell>> getCounts() {
         return counts;
     }
 
@@ -39,13 +40,13 @@ public class GroupCount {
      * @param pOuterIndex the index of the list in {@link #counts}
      * @return the list of counts of the given index.
      */
-    public ArrayList<CountValue> getList(int pOuterIndex) {
+    public ArrayList<GroupCountCell> getList(int pOuterIndex) {
         return counts.get(pOuterIndex);
     }
 
     /**
      * Getter for the count value with the given indices.
-     * Gives {@link CountValue#getValue()}.
+     * Gives {@link GroupCountCell#getValue()}.
      *
      * @param pOuterIndex the index of the value in {@link #counts}
      * @param pInnerIndex the index of the value in a child of {@link #counts}
@@ -56,7 +57,7 @@ public class GroupCount {
     }
 
     /**
-     * Getter for the {@link CountValue#isCrossedOut()}.
+     * Getter for the {@link GroupCountCell#isCrossedOut()}.
      *
      * @param pOuterIndex the index of the count in {@link #counts}
      * @param pInnerIndex the index of the count in a child of {@link #counts}
@@ -75,13 +76,13 @@ public class GroupCount {
     public void addValueToList(int pOuterIndex, int pValue) {
         try {
             // add the given count to the list
-            ArrayList<CountValue> currentList = counts.get(pOuterIndex);
-            currentList.add(new CountValue(pValue));
+            ArrayList<GroupCountCell> currentList = counts.get(pOuterIndex);
+            currentList.add(new GroupCountCell(pValue, false));
         } catch (IndexOutOfBoundsException e) {
             // make a new list for this index
             // add the given count to the new list
-            ArrayList<CountValue> newList = new ArrayList<>();
-            newList.add(new CountValue(pValue));
+            ArrayList<GroupCountCell> newList = new ArrayList<>();
+            newList.add(new GroupCountCell(pValue, false));
             counts.add(newList);
         }
     }
@@ -93,8 +94,8 @@ public class GroupCount {
      */
     public boolean isEmpty() {
         // check if there is at least one field filled
-        for (ArrayList<CountValue> currentList : counts) {
-            for (CountValue currentValue : currentList) {
+        for (ArrayList<GroupCountCell> currentList : counts) {
+            for (GroupCountCell currentValue : currentList) {
                 if (currentValue.getValue() != 0) {
                     // there's an value != 0
                     // return false
@@ -124,13 +125,13 @@ public class GroupCount {
     }
 
     /**
-     * Toggles the {@link CountValue#isCrossedOut()} attribute for the value with the given index.
+     * Toggles the {@link GroupCountCell#isCrossedOut()} attribute for the value with the given index.
      *
      * @param pOuterIndex the outer index of the value
      * @param pInnerIndex the inner index of the value
      */
     public void toggleCrossedOut(int pOuterIndex, int pInnerIndex) {
-        CountValue countValue = counts.get(pOuterIndex).get(pInnerIndex);
+        GroupCountCell countValue = counts.get(pOuterIndex).get(pInnerIndex);
 
         // toggle crossed out
         countValue.setCrossedOut(!countValue.isCrossedOut());
