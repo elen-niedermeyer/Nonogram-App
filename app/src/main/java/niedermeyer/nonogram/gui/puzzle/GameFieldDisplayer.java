@@ -4,9 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TableLayout;
 
-/**
- * @author Elen Niedermeyer, last modified 2022-02-15
- */
 public class GameFieldDisplayer {
 
     private final Context context;

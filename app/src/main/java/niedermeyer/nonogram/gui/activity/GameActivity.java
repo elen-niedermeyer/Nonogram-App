@@ -1,10 +1,8 @@
 package niedermeyer.nonogram.gui.activity;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.HorizontalScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,10 +16,6 @@ import niedermeyer.nonogram.gui.puzzle.PuzzleDisplayer;
 import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 import niedermeyer.nonogram.persistence.StatisticsPersistence;
 
-
-/**
- * @author Elen Niedermeyer, last modified 2020-12-11
- */
 public class GameActivity extends AppCompatActivity {
 
     private static final int ZOOM_STEP = 10;
@@ -33,46 +27,43 @@ public class GameActivity extends AppCompatActivity {
         public boolean onMenuItemClick(MenuItem item) {
             DialogHelper dialogHelper = new DialogHelper();
 
-            // switch on the item id
-            switch (item.getItemId()) {
-                case R.id.toolbar_game_new_puzzle:
-                    // start a new puzzle
+            int id = item.getItemId();
+            // choose correct action
+            if (id == R.id.toolbar_game_new_puzzle) {
+                // start a new puzzle
+                gameManager.newGame(options.getNumberOfRows(), options.getNumberOfColumns());
+                GameActivity.this.displayGame();
+                return true;
+
+            } else if (id == R.id.toolbar_game_reset_puzzle) {
+                // reset the current puzzle
+                gameManager.resetGame(options.getNumberOfRows(), options.getNumberOfColumns());
+                GameActivity.this.displayGame();
+                return true;
+
+            } else if (id == R.id.toolbar_game_zoom_in) {
+                zoomGameField(ZOOM_STEP);
+                return true;
+
+            } else if (id == R.id.toolbar_game_zoom_out) {
+                zoomGameField(-ZOOM_STEP);
+                return true;
+
+            } else if (id == R.id.toolbar_game_puzzle_size) {
+                // create the field size dialog
+                dialogHelper.openFieldSizeDialog(getLayoutInflater(), dialogInterface -> {
                     gameManager.newGame(options.getNumberOfRows(), options.getNumberOfColumns());
                     GameActivity.this.displayGame();
-                    return true;
+                });
+                return true;
 
-                case R.id.toolbar_game_reset_puzzle:
-                    // reset the current puzzle
-                    gameManager.resetGame(options.getNumberOfRows(), options.getNumberOfColumns());
-                    GameActivity.this.displayGame();
-                    return true;
+            } else if (id == R.id.toolbar_game_tutorial) {
+                // open the tutorial
+                dialogHelper.openTutorialDialogFullscreen(getSupportFragmentManager());
+                return true;
 
-                case R.id.toolbar_game_zoom_in:
-                    zoomGameField(ZOOM_STEP);
-                    return true;
-
-                case R.id.toolbar_game_zoom_out:
-                    zoomGameField(-ZOOM_STEP);
-                    return true;
-
-                case R.id.toolbar_game_puzzle_size:
-                    // make the field size dialog
-                    dialogHelper.openFieldSizeDialog(getLayoutInflater(), new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            gameManager.newGame(options.getNumberOfRows(), options.getNumberOfColumns());
-                            GameActivity.this.displayGame();
-                        }
-                    });
-                    return true;
-
-                case R.id.toolbar_game_tutorial:
-                    // open the tutorial
-                    dialogHelper.openTutorialDialogFullscreen(getSupportFragmentManager());
-                    return true;
-
-                default:
-                    return false;
+            } else {
+                return false;
             }
         }
     };
@@ -95,66 +86,40 @@ public class GameActivity extends AppCompatActivity {
     private GameOptionsPersistence options;
     private StatisticsPersistence statistics;
 
-
-    /**
-     * Overrides {@link AppCompatActivity#onCreateOptionsMenu(Menu)}.
-     * Inflates the overflow menu.
-     *
-     * @param menu the menu to initialize
-     * @return true, if the menu was created
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-
         getMenuInflater().inflate(R.menu.top_app_bar_game, menu);
         return true;
     }
 
-    /**
-     * Overrides {@link AppCompatActivity#onCreate(Bundle)}.
-     * Sets the layout.
-     * Initializes {@link #options} adn {@link #statistics}.
-     *
-     * @param savedInstanceState saved information about the activity given by the system
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_game);
 
-        // sets the toolbar
+        // set the toolbar
         Toolbar toolbar = findViewById(R.id.activity_game_toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
         toolbar.setOnMenuItemClickListener(toolbarMenuClickListener);
 
+        // initialize class members
         options = new GameOptionsPersistence(this);
         statistics = new StatisticsPersistence(this);
-
         gameManager = new GameManager(this);
         gameManager.addPuzzleSolvedObserver(puzzleSolvedObserver);
 
-        // start the tutorial if it's the first puzzle
+        // start the tutorial if it is the first puzzle
         if (gameManager.isFirstPuzzle()) {
             new DialogHelper().openTutorialDialogFullscreen(getSupportFragmentManager());
         }
 
+        // start the game
         gameManager.startGame(options.getNumberOfRows(), options.getNumberOfColumns());
         this.displayGame();
     }
 
-    /**
-     * Overrides {@link AppCompatActivity#onPause()}.
-     * Saves the puzzle size and the arrays.
-     * Saves the counts.
-     */
     @Override
     protected void onPause() {
         super.onPause();

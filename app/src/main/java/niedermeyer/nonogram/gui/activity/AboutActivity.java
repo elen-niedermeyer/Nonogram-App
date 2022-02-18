@@ -16,27 +16,19 @@ public class AboutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_about);
 
-        // sets the toolbar
+        // set the toolbar
         Toolbar toolbar = findViewById(R.id.activity_about_toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
+        // set clickable github url
         final Button githubButton = findViewById(R.id.activity_about_btn_github);
-        githubButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Uri uri = Uri.parse(getString(R.string.github_link));
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
+        githubButton.setOnClickListener(view -> {
+            Uri uri = Uri.parse(getString(R.string.github_link));
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         });
     }
 }

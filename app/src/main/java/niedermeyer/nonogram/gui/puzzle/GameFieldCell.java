@@ -7,18 +7,12 @@ import android.widget.TableRow;
 import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.logics.NonogramConstants;
 
-/**
- * @author Elen Niedermeyer, last modified 2022-02-15
- */
 public class GameFieldCell extends View {
 
     public GameFieldCell(Context context) {
         super(context);
     }
 
-    /**
-     * Creates a cell in the game field.
-     */
     public GameFieldCell(Context context, int viewId, int cellSize, int value, OnClickListener onClick) {
         super(context);
         this.setId(viewId);

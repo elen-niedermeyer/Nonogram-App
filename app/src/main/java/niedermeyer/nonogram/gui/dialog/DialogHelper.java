@@ -7,9 +7,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-/**
- * @author Elen Niedermeyer, last modified 2020-10-15
- */
 public class DialogHelper {
 
     public void openFieldSizeDialog(LayoutInflater layoutInflater, DialogInterface.OnDismissListener onDismissListener) {

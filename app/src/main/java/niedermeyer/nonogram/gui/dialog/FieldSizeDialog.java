@@ -1,6 +1,5 @@
 package niedermeyer.nonogram.gui.dialog;
 
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.NumberPicker;
@@ -13,9 +12,6 @@ import niedermeyer.nonogram.R;
 import niedermeyer.nonogram.logics.NonogramConstants;
 import niedermeyer.nonogram.persistence.GameOptionsPersistence;
 
-/**
- * @author Elen Niedermeyer, last modified 2020-10-15
- */
 public class FieldSizeDialog {
 
     /**
@@ -31,25 +27,22 @@ public class FieldSizeDialog {
         final View layout = layoutInflater.inflate(R.layout.dialog_number_picker, null);
 
         final NumberPicker pickerRows = layout.findViewById(R.id.number_picker_rows);
-        setMinMax(pickerRows);
+        setMinMax(pickerRows); // call by reference
         pickerRows.setValue(persistence.getNumberOfRows());
 
         final NumberPicker pickerColumns = layout.findViewById(R.id.number_picker_columns);
-        setMinMax(pickerColumns);
+        setMinMax(pickerColumns); // call by reference
         pickerColumns.setValue(persistence.getNumberOfColumns());
 
         // make and return the dialog
         return new MaterialAlertDialogBuilder(layout.getContext())
                 .setView(layout)
                 .setTitle(R.string.field_size)
-                // save the new value if the positive button was clicked
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface pDialog, int which) {
-                        persistence.setNumberOfRows(pickerRows.getValue());
-                        persistence.setNumberOfColumns(pickerColumns.getValue());
-                        pDialog.dismiss();
-                    }
+                .setPositiveButton(R.string.ok, (pDialog, which) -> {
+                    // save the new value if the positive button was clicked
+                    persistence.setNumberOfRows(pickerRows.getValue());
+                    persistence.setNumberOfColumns(pickerColumns.getValue());
+                    pDialog.dismiss();
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .create();

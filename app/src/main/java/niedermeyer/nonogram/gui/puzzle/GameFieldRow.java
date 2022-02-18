@@ -5,9 +5,6 @@ import android.view.Gravity;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-/**
- * @author Elen Niedermeyer, last modified 2022-02-15
- */
 public class GameFieldRow extends TableRow {
 
     public GameFieldRow(Context context) {
