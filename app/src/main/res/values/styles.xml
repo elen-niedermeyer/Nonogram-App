@@ -4,9 +4,10 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">#1976d2</item>
         <item name="colorPrimaryVariant">#63a4ff</item>
-        <item name="colorPrimaryDark">#004ba0</item>
-        <item name="colorSecondary">#ffa726</item>
-        <item name="colorSecondaryVariant">#ffd95b</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">#ffa73e</item>
+        <item name="colorOnSecondary">@color/black</item>
     </style>
 
 </resources>

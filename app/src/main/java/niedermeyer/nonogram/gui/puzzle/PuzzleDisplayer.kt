@@ -33,13 +33,13 @@ class PuzzleDisplayer(private val context: Context) {
             val cell = rowCount!!.get(outerIndex, innerIndex)
             cell.toggleCrossedOut()
             for (view in views) {
-                (view as GroupCountCellView).toggleBackground(cell.isCrossedOut)
+                (view as GroupCountCellView).setCustomTextColor(cell.isCrossedOut)
             }
         } else if (rowOrColumn == context.getString(R.string.column)) {
             val cell = columnCount!!.get(outerIndex, innerIndex)
             cell.toggleCrossedOut()
             for (view in views) {
-                (view as GroupCountCellView).toggleBackground(cell.isCrossedOut)
+                (view as GroupCountCellView).setCustomTextColor(cell.isCrossedOut)
             }
         }
     }

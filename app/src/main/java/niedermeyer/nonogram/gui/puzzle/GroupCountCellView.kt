@@ -1,12 +1,13 @@
 package niedermeyer.nonogram.gui.puzzle
 
 import android.content.Context
-import androidx.appcompat.widget.AppCompatTextView
+import android.os.Build
 import android.util.TypedValue
-import niedermeyer.nonogram.persistence.GameOptionsPersistence
 import android.view.Gravity
+import androidx.appcompat.widget.AppCompatTextView
 import niedermeyer.nonogram.R
 import niedermeyer.nonogram.logics.GroupCountCell
+import niedermeyer.nonogram.persistence.GameOptionsPersistence
 import java.util.*
 
 class GroupCountCellView(
@@ -32,25 +33,22 @@ class GroupCountCellView(
         this.gravity = Gravity.CENTER_HORIZONTAL
         if (paddingLeftRight != null) setPadding(paddingLeftRight, 0, paddingLeftRight, 0)
 
-        // load the crossed out background if necessary
-        if (countValue.isCrossedOut) {
-            setBackgroundResource(R.drawable.puzzle_count_crossed_out)
-        }
+        setCustomTextColor(countValue.isCrossedOut)
     }
 
     /**
-     * Toggles the background of the given view. It would be stroked, if it wasn't before and the other way around.
+     * Toggles the text color of the given view. It would be gray, if it wasn't before and the other way around.
      *
      * @param isCrossedOut
      */
-    fun toggleBackground(isCrossedOut: Boolean) {
-        // toggle the background, stroke or not
-        if (!isCrossedOut) {
-            // set the background to nothing if it is stroke
-            setBackgroundResource(0)
+    fun setCustomTextColor(isCrossedOut: Boolean) {
+        // toggle the text color, default or gray
+        val colorId = if (isCrossedOut) R.color.gray else R.color.secondary
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            setTextColor(context.getColor(colorId))
         } else {
-            // set the strike resource
-            setBackgroundResource(R.drawable.puzzle_count_crossed_out)
+            setTextColor(context.resources.getColor(colorId))
         }
     }
 
