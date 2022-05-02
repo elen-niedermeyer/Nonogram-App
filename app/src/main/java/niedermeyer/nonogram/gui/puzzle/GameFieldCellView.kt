@@ -2,9 +2,9 @@ package niedermeyer.nonogram.gui.puzzle
 
 import android.content.Context
 import android.view.View
-import android.widget.TableRow
-import niedermeyer.nonogram.logics.NonogramConstants
+import android.widget.LinearLayout
 import niedermeyer.nonogram.R
+import niedermeyer.nonogram.logics.NonogramConstants
 
 class GameFieldCellView(
     context: Context,
@@ -15,7 +15,7 @@ class GameFieldCellView(
 ) : View(context) {
 
     init {
-        this.layoutParams = TableRow.LayoutParams(cellSize, cellSize)
+        this.layoutParams = LinearLayout.LayoutParams(cellSize, cellSize)
         setBackgroundResource(getFieldBackgroundResource(value))
         setOnClickListener(onClick)
     }

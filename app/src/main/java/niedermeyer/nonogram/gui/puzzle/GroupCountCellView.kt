@@ -15,7 +15,6 @@ class GroupCountCellView(
     countValue: GroupCountCell,
     description: String,
     onClick: OnClickListener,
-    paddingLeftRight: Int? = null,
 ) : AppCompatTextView(context) {
 
     private val textSizeFactor = 0.7f
@@ -23,6 +22,8 @@ class GroupCountCellView(
     init {
         // make a new text view
         this.text = String.format(Locale.getDefault(), "%d", countValue.value)
+        this.width = GameOptionsPersistence(context).cellSize
+        this.height = GameOptionsPersistence(context).cellSize
         this.setTextSize(
             TypedValue.COMPLEX_UNIT_PX,
             GameOptionsPersistence(context).cellSize * textSizeFactor
@@ -31,7 +32,6 @@ class GroupCountCellView(
         this.isClickable = true
         setOnClickListener(onClick)
         this.gravity = Gravity.CENTER_HORIZONTAL
-        if (paddingLeftRight != null) setPadding(paddingLeftRight, 0, paddingLeftRight, 0)
 
         setCustomTextColor(countValue.isCrossedOut)
     }

@@ -1,15 +1,13 @@
 package niedermeyer.nonogram.gui.puzzle
 
 import android.content.Context
-import niedermeyer.nonogram.logics.GroupCounts
-import niedermeyer.nonogram.R
-import androidx.appcompat.app.AppCompatActivity
-import niedermeyer.nonogram.logics.Nonogram
-import android.widget.TableLayout
 import android.view.Gravity
 import android.view.View
-import android.widget.TableRow
-import java.util.ArrayList
+import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
+import niedermeyer.nonogram.R
+import niedermeyer.nonogram.logics.GroupCounts
+import niedermeyer.nonogram.logics.Nonogram
 
 class PuzzleDisplayer(private val context: Context) {
 
@@ -48,11 +46,11 @@ class PuzzleDisplayer(private val context: Context) {
         nonogram: Nonogram,
         cellSize: Int,
         onFieldClick: View.OnClickListener
-    ): TableLayout {
+    ): LinearLayout {
         rowCount = nonogram.rowCounts
         columnCount = nonogram.columnCounts
         val fieldDisplayer = GameFieldDisplayer(context)
-        val table = fieldDisplayer.getPuzzleView(
+        val gameFieldView = fieldDisplayer.getPuzzleView(
             nonogram.cells,
             nonogram.rowNumber,
             cellSize,
@@ -61,29 +59,30 @@ class PuzzleDisplayer(private val context: Context) {
         val groupCountDisplayer = GroupCountDisplayer(context)
         // add row counts
         for (i in 0 until nonogram.rowNumber) {
-            val row = table.getChildAt(i) as TableRow
+            val row = gameFieldView.getChildAt(i) as LinearLayout
             // add row count at the left
-            var rowCount =
+            var rowCountView =
                 groupCountDisplayer.getRowCountView(nonogram.rowCounts!!, i, onCountClick)
-            rowCount.gravity = Gravity.END
-            row.addView(rowCount, 0)
+            rowCountView.gravity = Gravity.END
+            row.addView(rowCountView, 0)
             // add row count at the right
-            rowCount = groupCountDisplayer.getRowCountView(nonogram.rowCounts!!, i, onCountClick)
-            rowCount.gravity = Gravity.START
-            row.addView(rowCount)
+            rowCountView =
+                groupCountDisplayer.getRowCountView(nonogram.rowCounts!!, i, onCountClick)
+            rowCountView.gravity = Gravity.START
+            row.addView(rowCountView)
         }
 
         // add column count at the top
         var columnCount =
             groupCountDisplayer.getColumnCountRow(nonogram.columnCounts!!, onCountClick)
         columnCount.gravity = Gravity.BOTTOM
-        table.addView(columnCount, 0)
+        gameFieldView.addView(columnCount, 0)
         // add column count at the bottom
         columnCount = groupCountDisplayer.getColumnCountRow(nonogram.columnCounts!!, onCountClick)
         columnCount.gravity = Gravity.TOP
-        table.addView(columnCount)
+        gameFieldView.addView(columnCount)
 
-        return table
+        return gameFieldView
     }
 
 }

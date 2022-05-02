@@ -1,18 +1,13 @@
 package niedermeyer.nonogram.gui.puzzle
 
 import android.content.Context
-import niedermeyer.nonogram.logics.GroupCounts
-import android.widget.LinearLayout
-import niedermeyer.nonogram.R
-import niedermeyer.nonogram.persistence.GameOptionsPersistence
-import android.widget.TableLayout
 import android.view.Gravity
 import android.view.View
-import android.widget.TableRow
+import android.widget.LinearLayout
+import niedermeyer.nonogram.R
+import niedermeyer.nonogram.logics.GroupCounts
 
 class GroupCountDisplayer(private val context: Context) {
-
-    private val textPaddingFactor = 0.5f
 
     fun getRowCountView(
         rowCount: GroupCounts,
@@ -31,7 +26,6 @@ class GroupCountDisplayer(private val context: Context) {
                 counts[i],
                 String.format(context.getString(R.string.tag_row_count), index, i),
                 pOnCountClick!!,
-                (GameOptionsPersistence(context).cellSize * textPaddingFactor / 2).toInt()
             )
             // add the view to the new layout
             layout.addView(countView)
@@ -42,20 +36,18 @@ class GroupCountDisplayer(private val context: Context) {
     fun getColumnCountRow(
         pColumnCount: GroupCounts,
         pOnCountClick: View.OnClickListener?
-    ): TableRow {
-        val tableRow = TableRow(context)
-        val rowParams = TableLayout.LayoutParams(
-            TableLayout.LayoutParams.WRAP_CONTENT,
-            TableLayout.LayoutParams.WRAP_CONTENT
+    ): LinearLayout {
+        val row = LinearLayout(context)
+        val rowParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
         )
-        tableRow.layoutParams = rowParams
+        row.layoutParams = rowParams
 
-        // add an empty text view at the start, here are the row counts
-        tableRow.addView(LinearLayout(context))
         for (columnIndex in pColumnCount.counts.indices) {
-            tableRow.addView(getColumnCountView(pColumnCount, columnIndex, pOnCountClick))
+            row.addView(getColumnCountView(pColumnCount, columnIndex, pOnCountClick))
         }
-        return tableRow
+        return row
     }
 
     private fun getColumnCountView(
@@ -75,8 +67,7 @@ class GroupCountDisplayer(private val context: Context) {
                 context,
                 counts[i],
                 String.format(context.getString(R.string.tag_column_count), index, i),
-                pOnCountClick!!,
-                null
+                pOnCountClick!!
             )
             // add the view to the new layout
             layout.addView(countView)

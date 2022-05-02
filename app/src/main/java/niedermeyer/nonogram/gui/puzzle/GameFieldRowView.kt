@@ -1,19 +1,19 @@
 package niedermeyer.nonogram.gui.puzzle
 
 import android.content.Context
-import android.widget.TableLayout
 import android.view.Gravity
-import android.widget.TableRow
+import android.widget.LinearLayout
 
-class GameFieldRowView(context: Context?) : TableRow(context) {
+class GameFieldRowView(context: Context?) : LinearLayout(context) {
 
     init {
-        val rowParams = TableLayout.LayoutParams(
-            TableLayout.LayoutParams.WRAP_CONTENT,
-            TableLayout.LayoutParams.WRAP_CONTENT
+        val rowParams = LayoutParams(
+            LayoutParams.WRAP_CONTENT,
+            LayoutParams.WRAP_CONTENT
         )
         this.layoutParams = rowParams
         this.gravity = Gravity.CENTER
+        this.orientation = LinearLayout.HORIZONTAL
     }
 
 }

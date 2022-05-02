@@ -1,8 +1,9 @@
 package niedermeyer.nonogram.gui.puzzle
 
 import android.content.Context
+import android.view.Gravity
 import android.view.View
-import android.widget.TableLayout
+import android.widget.LinearLayout
 import niedermeyer.nonogram.logics.GameFieldCell
 
 class GameFieldDisplayer(private val context: Context) {
@@ -12,8 +13,10 @@ class GameFieldDisplayer(private val context: Context) {
         rowNumber: Int,
         cellSize: Int,
         onCellClick: View.OnClickListener
-    ): TableLayout {
-        val table = TableLayout(context)
+    ): LinearLayout {
+        val gameFieldView = LinearLayout(context)
+        gameFieldView.orientation = LinearLayout.VERTICAL
+        gameFieldView.gravity = Gravity.CENTER
 
         // new row
         var rowView = GameFieldRowView(context)
@@ -28,12 +31,12 @@ class GameFieldDisplayer(private val context: Context) {
             rowView.addView(newCell)
 
             if ((i + 1) % rowNumber == 0) {
-                table.addView(rowView)
+                gameFieldView.addView(rowView)
                 rowView = GameFieldRowView(context)
             }
         }
 
-        return table
+        return gameFieldView
     }
 
 }
