@@ -2,21 +2,20 @@ package niedermeyer.nonogram.gui.puzzle
 
 import android.content.Context
 import android.view.Gravity
-import android.view.View
 import android.widget.LinearLayout
 import niedermeyer.nonogram.logics.GameFieldCell
 
-class GameFieldDisplayer(private val context: Context) {
+class GameFieldView(
+    context: Context,
+    cells: List<GameFieldCell>,
+    columnNumber: Int,
+    cellSize: Int,
+    onCellClick: OnClickListener
+) : LinearLayout(context) {
 
-    fun getPuzzleView(
-        cells: List<GameFieldCell>,
-        rowNumber: Int,
-        cellSize: Int,
-        onCellClick: View.OnClickListener
-    ): LinearLayout {
-        val gameFieldView = LinearLayout(context)
-        gameFieldView.orientation = LinearLayout.VERTICAL
-        gameFieldView.gravity = Gravity.CENTER
+    init {
+        this.orientation = VERTICAL
+        this.gravity = Gravity.CENTER
 
         // new row
         var rowView = GameFieldRowView(context)
@@ -30,13 +29,11 @@ class GameFieldDisplayer(private val context: Context) {
             )
             rowView.addView(newCell)
 
-            if ((i + 1) % rowNumber == 0) {
-                gameFieldView.addView(rowView)
+            if ((i + 1) % columnNumber == 0) {
+                this.addView(rowView)
                 rowView = GameFieldRowView(context)
             }
         }
-
-        return gameFieldView
     }
 
 }

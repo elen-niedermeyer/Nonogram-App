@@ -7,21 +7,16 @@
     android:layout_height="match_parent"
     tools:context="niedermeyer.nonogram.gui.activity.GameActivity">
 
-    <androidx.core.widget.NestedScrollView
+    <niedermeyer.nonogram.gui.activity.GameActivityView
         android:id="@+id/activity_game_scroll_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:name="niedermeyer.nonogram.gui.activity.GameActivityView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:orientation="vertical">
 
-        <HorizontalScrollView
-            android:id="@+id/activity_game_scroll_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-        </HorizontalScrollView>
-    </androidx.core.widget.NestedScrollView>
+    </niedermeyer.nonogram.gui.activity.GameActivityView>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -37,6 +32,7 @@
             app:title="@string/game_activity" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

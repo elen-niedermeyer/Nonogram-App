@@ -7,12 +7,12 @@ import android.view.Gravity
 import androidx.appcompat.widget.AppCompatTextView
 import niedermeyer.nonogram.R
 import niedermeyer.nonogram.logics.GroupCountCell
-import niedermeyer.nonogram.persistence.GameOptionsPersistence
 import java.util.*
 
 class GroupCountCellView(
     context: Context,
     countValue: GroupCountCell,
+    cellSize: Int,
     description: String,
     onClick: OnClickListener,
 ) : AppCompatTextView(context) {
@@ -22,11 +22,11 @@ class GroupCountCellView(
     init {
         // make a new text view
         this.text = String.format(Locale.getDefault(), "%d", countValue.value)
-        this.width = GameOptionsPersistence(context).cellSize
-        this.height = GameOptionsPersistence(context).cellSize
+        this.width = cellSize
+        this.height = cellSize
         this.setTextSize(
             TypedValue.COMPLEX_UNIT_PX,
-            GameOptionsPersistence(context).cellSize * textSizeFactor
+            cellSize * textSizeFactor
         )
         this.contentDescription = description
         this.isClickable = true

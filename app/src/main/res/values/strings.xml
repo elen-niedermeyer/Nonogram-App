@@ -16,8 +16,6 @@
     <string name="new_game">New puzzle</string>
     <string name="reset_game">Reset puzzle</string>
     <string name="field_size">Puzzle size</string>
-    <string name="zoom_in">Zoom in</string>
-    <string name="zoom_out">Zoom out</string>
     <string name="rows">Rows</string>
     <string name="columns">Columns</string>
     <string name="size_separator" translatable="false">x</string>

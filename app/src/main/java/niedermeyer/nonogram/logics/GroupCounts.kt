@@ -1,8 +1,6 @@
 package niedermeyer.nonogram.logics
 
 import java.io.Serializable
-import java.lang.IndexOutOfBoundsException
-import java.util.ArrayList
 
 abstract class GroupCounts : Serializable {
 
@@ -25,6 +23,17 @@ abstract class GroupCounts : Serializable {
             // returns true here
             // there are only zeros in the count
             return true
+        }
+
+    val maxLength: Int
+        get() {
+            var length = 0
+            for (c in counts) {
+                if (c.size > length) {
+                    length = c.size
+                }
+            }
+            return length
         }
 
     override fun equals(other: Any?): Boolean {

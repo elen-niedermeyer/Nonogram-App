@@ -19,7 +19,7 @@ class RowGroupCounts(nonogram: Nonogram) : GroupCounts() {
                 newGroupCount = 0
             }
 
-            if ((i + 1) % nonogram.rowNumber == 0) {
+            if ((i + 1) % nonogram.columnNumber == 0) {
                 // row completed
                 if (newGroupCount != 0) {
                     // add the last counter if there is one

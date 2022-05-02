@@ -17,18 +17,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/toolbar_game_zoom_in"
-        android:icon="@drawable/ic_zoom_in_24dp"
-        android:title="@string/zoom_in"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/toolbar_game_zoom_out"
-        android:icon="@drawable/ic_zoom_out_24dp"
-        android:title="@string/zoom_out"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/toolbar_game_puzzle_size"
         android:icon="@drawable/ic_settings_24dp"
         android:title="@string/field_size"

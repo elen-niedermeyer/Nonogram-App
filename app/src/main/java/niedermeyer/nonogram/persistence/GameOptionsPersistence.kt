@@ -39,23 +39,6 @@ class GameOptionsPersistence(private val context: Context) {
             prefsEdit.apply()
         }
 
-    var cellSize: Int
-        get() = if (Companion.cellSize > 0) {
-            Companion.cellSize
-        } else {
-            CELL_SIZE_DEFAULT
-        }
-        set(cellSize) {
-            Companion.cellSize = cellSize
-            val prefs = context.getSharedPreferences(
-                context.getString(R.string.prefs_game_options),
-                Context.MODE_PRIVATE
-            )
-            val prefsEdit = prefs.edit()
-            prefsEdit.putInt(context.getString(R.string.prefs_cell_size), cellSize)
-            prefsEdit.apply()
-        }
-
     init {
         val prefs = context.getSharedPreferences(
             context.getString(R.string.prefs_game_options),
@@ -65,19 +48,15 @@ class GameOptionsPersistence(private val context: Context) {
             prefs.getInt(context.getString(R.string.prefs_rows), FIELD_SIZE_DEFAULT)
         Companion.numberOfColumns =
             prefs.getInt(context.getString(R.string.prefs_columns), FIELD_SIZE_DEFAULT)
-        Companion.cellSize =
-            prefs.getInt(context.getString(R.string.prefs_cell_size), CELL_SIZE_DEFAULT)
     }
 
     companion object {
         // Number of rows and columns if the preferences couldn't be loaded
         private const val FIELD_SIZE_DEFAULT = 5
-        private const val CELL_SIZE_DEFAULT = 100
 
         // Static variables
         private var numberOfRows = 0
         private var numberOfColumns = 0
-        private var cellSize = 0
     }
 
 

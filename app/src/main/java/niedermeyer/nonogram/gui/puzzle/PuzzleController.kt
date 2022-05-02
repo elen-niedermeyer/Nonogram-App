@@ -3,10 +3,9 @@ package niedermeyer.nonogram.gui.puzzle
 import android.content.Context
 import android.view.View
 import niedermeyer.nonogram.gui.observer.PuzzleSolvedObserver
+import niedermeyer.nonogram.logics.Nonogram
 import niedermeyer.nonogram.persistence.puzzle.NonogramPersistence
 import niedermeyer.nonogram.persistence.puzzle.PuzzlePersistence
-import niedermeyer.nonogram.logics.Nonogram
-import java.util.ArrayList
 
 class PuzzleController(context: Context) {
     val isFirstPuzzle: Boolean

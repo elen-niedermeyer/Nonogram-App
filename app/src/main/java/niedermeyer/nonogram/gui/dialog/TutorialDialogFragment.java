@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.fragment.app.DialogFragment;
 
 import niedermeyer.nonogram.R;
-import niedermeyer.nonogram.gui.puzzle.PuzzleDisplayer;
 import niedermeyer.nonogram.logics.NonogramConstants;
 
 public class TutorialDialogFragment extends DialogFragment {
@@ -35,8 +34,6 @@ public class TutorialDialogFragment extends DialogFragment {
             {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_FILLED},
             {NonogramConstants.FIELD_FILLED, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_EMPTY, NonogramConstants.FIELD_FILLED}
     };
-
-    //private final NonogramGenerator nonogramGenerator = new NonogramGenerator();
 
     // layout elements
     private TextView title;
