@@ -79,7 +79,7 @@ class PuzzleView(
         // width = column number + row counts
         val maxCellsInRow = nonogram.columnNumber + 2 * nonogram.rowCounts!!.maxLength
         val maxWidth = displayWidth / maxCellsInRow
-        //height = row number + column counts
+        // height = row number + column counts
         val maxCellsInColumn = nonogram.rowNumber + 2 * nonogram.columnCounts!!.maxLength
         val maxHeight = displayHeight / maxCellsInColumn
 
